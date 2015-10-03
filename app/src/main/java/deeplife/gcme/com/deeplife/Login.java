@@ -1,5 +1,6 @@
 package deeplife.gcme.com.deeplife;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Login extends ActionBarActivity {
+public class Login extends Activity {
 
      // Progress Dialog
     private ProgressDialog pDialog;
@@ -57,7 +58,7 @@ public class Login extends ActionBarActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.login);
+        setContentView(R.layout.login);
 
         ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
         ed_password = (EditText) findViewById(R.id.login_password);
@@ -148,6 +149,7 @@ public class Login extends ActionBarActivity {
             String phone = ed_phoneNumber.getText().toString();
             String password = ed_password.getText().toString();
             try {
+
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("phone", phone));
                 params.add(new BasicNameValuePair("password", password));
@@ -165,8 +167,8 @@ public class Login extends ActionBarActivity {
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
                     Intent i = new Intent(Login.this, Register.class);
-                    finish();
                     startActivity(i);
+                    finish();
                     return json.getString(TAG_MESSAGE);
                 }else{
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));

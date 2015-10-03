@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_logins">#26ae90</color>
+    <color name="bg_login">#00bcd8</color>
 
-    <color name="bg_login">#febf10</color>
+    <color name="bg_logins">#febf10</color>
 
     <color name="bg_register">#2e3237</color>
     <color name="bg_main">#428bca</color>
@@ -13,7 +13,7 @@
     <color name="input_register_bg">#3b4148</color>
     <color name="input_register_hint">#5e6266</color>
     <color name="btn_login">#fff</color>
-    <color name="btn_login_bg">#00bcd8</color>
+    <color name="btn_login_bg">#febf10</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
 

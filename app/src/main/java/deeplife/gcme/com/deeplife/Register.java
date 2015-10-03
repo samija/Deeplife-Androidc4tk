@@ -14,11 +14,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Register extends ActionBarActivity implements OnClickListener{
+public class Register extends Activity implements OnClickListener{
 	
 	private EditText ed_name,ed_password,ed_phone,ed_email;
 	private Button  mRegister;
@@ -38,7 +39,9 @@ public class Register extends ActionBarActivity implements OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
 
@@ -67,7 +70,10 @@ public class Register extends ActionBarActivity implements OnClickListener{
          * Before starting background thread Show Progress Dialog
          * */
 		boolean failure = false;
-		
+        String fname;
+        String password;
+        String phone;
+        String email;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -76,39 +82,36 @@ public class Register extends ActionBarActivity implements OnClickListener{
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
+            fname = ed_name.getText().toString();
+            password = ed_password.getText().toString();
+            phone = ed_phone.getText().toString();
+            email = ed_email.getText().toString();
         }
 		
 		@Override
 		protected String doInBackground(String... args) {
 			// TODO Auto-generated method stub
-			 // Check for success tag
             int success;
-            String fname = ed_name.getText().toString();
-            String password = ed_password.getText().toString();
-            String phone = ed_phone.getText().toString();
-            String email = ed_email.getText().toString();
             try {
-                // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("fname", fname));
                 params.add(new BasicNameValuePair("password", password));
                 params.add(new BasicNameValuePair("phone", phone));
 
                 params.add(new BasicNameValuePair("email", email));
- 
+
+
                 Log.d("request!", "starting");
-                
-                //Posting user data to script 
+
                 JSONObject json = jsonParser.makeHttpRequest(
                        LOGIN_URL, "POST", params);
  
-                // full json response
                 Log.d("Login attempt", json.toString());
- 
-                // json success element
+
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                	Log.d("User Created!", json.toString());              	
+                	Log.d("User Created!", json.toString());
                 	finish();
                 	return json.getString(TAG_MESSAGE);
                 }else{
@@ -116,7 +119,8 @@ public class Register extends ActionBarActivity implements OnClickListener{
                 	return json.getString(TAG_MESSAGE);
                 	
                 }
-            } catch (JSONException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
  

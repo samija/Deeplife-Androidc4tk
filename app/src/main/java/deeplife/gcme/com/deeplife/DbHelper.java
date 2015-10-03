@@ -9,27 +9,37 @@ import android.util.Log;
         public static final String DATABASE_NAME = "deepLife";
         public static final String TABLE_USERS = "users";
         public static final String UID = "_id";
-        public static final String USER_FIRST_NAME = "fname";
-        public static final String USER_LAST_NAME = "lname";
-        public static final String USER_PASSWORD = "lname";
+        public static final String USER_NAME = "name";
+        public static final String USER_PASSWORD = "password";
         public static final String USER_PHONE_NUMBER= "phone";
         public static final String USER_PICTURE = "Link";
         public static final String USER_GENDER = "gender";
         public static final String USER_EMAIL = "email";
+
+        public static final String TABLE_DISCIPLES = "disciples";
+        public static final String DISCIPLE_ID = "disciple_id";
+        public static final String MENTOR_ID = "mentor_id";
+        public static final String BUILD_PHASE = "build_phase";
         public static final int VERSION = 1;
 
         public static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS
-        		+ "( "+ UID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_FIRST_NAME + " VARCHAR(255),"
-                +USER_LAST_NAME + " VARCHAR(255),"
+        		+ "( "+ UID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_NAME + " VARCHAR(255),"
         		+ USER_PHONE_NUMBER + " VARCHAR(255)," + USER_PASSWORD + " VARCHAR(1000),"
                 + USER_GENDER + " VARCHAR(255),"
                 + USER_EMAIL + " VARCHAR(255),"
                 + USER_PICTURE + " VARCHAR(255)); ";
+
+
+      public static final String CREATE_TABLE_DISCIPLES = "CREATE TABLE IF NOT EXISTS " + TABLE_DISCIPLES
+              + "( "+ UID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+              + DISCIPLE_ID + " VARCHAR(255),"
+              + BUILD_PHASE + " VARCHAR(255),"
+              + MENTOR_ID + " VARCHAR(255)); ";
         
 
         
         public static final String DROP_TABLE_USERS = "DROP TABLE IF EXISTS " + TABLE_USERS;
-
+        public static final String DROP_TABLE_DISCIPLES = "DROP TABLE IF EXISTS " + TABLE_DISCIPLES;
         Context context;
 
         public DbHelper(Context context) {
@@ -42,16 +52,18 @@ import android.util.Log;
 
             //db.execSQL(CREATE_MY_NEWS_TABLE);
             //Message.Message(context, "OnCreate called");  
-          Log.i("DEEP LIFE","On create called!!!");
+          Log.i("DEEP LIFE", "On create called!!!");
       	  db.execSQL(CREATE_TABLE_USERS);
+          db.execSQL(CREATE_TABLE_DISCIPLES);
 
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //Message.Message(context, "OnUpgrade called");  
-        	Log.i("DEEP LIFE","On upgrade called");
+        	Log.i("DEEP LIFE", "On upgrade called");
         	db.execSQL(DROP_TABLE_USERS);
+            db.execSQL(DROP_TABLE_DISCIPLES);
         	onCreate(db);
         }
     }

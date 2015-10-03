@@ -30,12 +30,23 @@ public class DbAdapter {
     	
     }
 
+    public long addUser(ContentValues content){
+        SQLiteDatabase db = dbhelper.getWritableDatabase();
+        long i = db.insert(dbhelper.CREATE_TABLE_USERS,null,content);
+        return i;
+    }
+
+    public long addMentor(ContentValues content){
+        SQLiteDatabase db = dbhelper.getWritableDatabase();
+        long i = db.insert(dbhelper.TABLE_DISCIPLES,null,content);
+        return i;
+    }
     
-    public Cursor getAllDesciples(){
+    public Cursor getAllUsers(){
         SQLiteDatabase db = dbhelper.getWritableDatabase();
        String[] column = {dbhelper.UID,dbhelper.USER_PHONE_NUMBER,dbhelper.USER_PASSWORD,dbhelper.UID,dbhelper.USER_PICTURE,
                dbhelper.USER_EMAIL,
-        		dbhelper.USER_GENDER,dbhelper.USER_FIRST_NAME,dbhelper.USER_LAST_NAME};
+        		dbhelper.USER_GENDER,dbhelper.USER_NAME};
         Cursor cursor = db.query(dbhelper.TABLE_USERS,column ,null, null, null, null, null);
 
         if(cursor !=null){
@@ -44,6 +55,20 @@ public class DbAdapter {
         Log.i("DEEP LIFE", "All rows got!!");
         Log.i("DEEP LIFE","Cursor count: "+cursor.getCount());
     	return cursor;
+    }
+    public Cursor getAllDisciples(int mentor_id){
+        SQLiteDatabase db = dbhelper.getWritableDatabase();
+        String[] column = {dbhelper.UID,dbhelper.USER_PHONE_NUMBER,dbhelper.USER_PASSWORD,dbhelper.UID,dbhelper.USER_PICTURE,
+                dbhelper.USER_EMAIL,
+                dbhelper.USER_GENDER,dbhelper.USER_NAME};
+        Cursor cursor = db.query(dbhelper.TABLE_USERS,column ,dbhelper.UID+"='"+mentor_id+"'", null, null, null, null);
+
+        if(cursor !=null){
+            cursor.moveToFirst();
+        }
+        Log.i("DEEP LIFE", "Got all desciples list!!");
+        Log.i("DEEP LIFE","Cursor count: "+cursor.getCount());
+        return cursor;
     }
 
 	public long deleteDesciple(int id) {
