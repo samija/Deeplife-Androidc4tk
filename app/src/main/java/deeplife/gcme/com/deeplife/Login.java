@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class Login extends ActionBarActivity {
 
-    // Progress Dialog
+     // Progress Dialog
     private ProgressDialog pDialog;
 
     // JSON parser class
@@ -56,18 +57,18 @@ public class Login extends ActionBarActivity {
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.login);
+            setContentView(R.layout.login);
 
         ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
         ed_password = (EditText) findViewById(R.id.login_password);
         bt_login = (Button) findViewById(R.id.btnLogin);
         btn_register = (Button) findViewById(R.id.btnLinkToRegisterScreen);
 
+
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkLogin(ed_phoneNumber.getText().toString(),ed_password.getText().toString());
+                new AttemptLogin().execute();
             }
         });
 
@@ -127,9 +128,6 @@ public class Login extends ActionBarActivity {
 
     class AttemptLogin extends AsyncTask<String, String, String> {
 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
         boolean failure = false;
 
         @Override
@@ -147,7 +145,7 @@ public class Login extends ActionBarActivity {
             // TODO Auto-generated method stub
             // Check for success tag
             int success;
-            String phone = ed_password.getText().toString();
+            String phone = ed_phoneNumber.getText().toString();
             String password = ed_password.getText().toString();
             try {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -155,10 +153,10 @@ public class Login extends ActionBarActivity {
                 params.add(new BasicNameValuePair("password", password));
 
                 Log.d("request!", "starting");
+
                 // getting product details by making HTTP request
-                JSONParser jsonParser = new JSONParser();
-                JSONObject json = jsonParser.makeHttpRequest(
-                        LOGIN_URL, "POST", params);
+                //JSONParser jsonParser = new JSONParser();
+                JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
 
                 Log.d("Login attempt", json.toString());
 
@@ -166,10 +164,9 @@ public class Login extends ActionBarActivity {
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    //Intent i = new Intent(Login.this, Login.class);
-                    //finish();
-                    //startActivity(i);
-                    Toast.makeText(getApplicationContext(),"Successfully Logged in!!", Toast.LENGTH_LONG);
+                    Intent i = new Intent(Login.this, Register.class);
+                    finish();
+                    startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 }else{
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));

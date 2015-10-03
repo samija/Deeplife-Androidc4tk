@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 public class Register extends ActionBarActivity implements OnClickListener{
 	
-	private EditText user, pass;
+	private EditText ed_name,ed_password,ed_phone,ed_email;
 	private Button  mRegister;
 	
 	 // Progress Dialog
@@ -31,7 +31,7 @@ public class Register extends ActionBarActivity implements OnClickListener{
     
     //php login script
     
-    private static final String LOGIN_URL = "http://10.0.2.2:1234/webservice/register.php";
+    private static final String LOGIN_URL = "http://192.168.137.1/deeplife/register.php";
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -41,21 +41,23 @@ public class Register extends ActionBarActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
-		
-		//user = (EditText)findViewById(R.id.username);
-		//pass = (EditText)findViewById(R.id.password);
-		
 
-		//mRegister = (Button)findViewById(R.id.register);
-		//mRegister.setOnClickListener(this);
+        ed_name = (EditText)findViewById(R.id.signup_first_name);
+        ed_password = (EditText)findViewById(R.id.signup_password);
+        ed_email = (EditText) findViewById(R.id.signup_email);
+        ed_phone = (EditText) findViewById(R.id.signup_phone);
+
+		mRegister = (Button)findViewById(R.id.btnregister);
+
+		mRegister.setOnClickListener(this);
 		
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
-				new CreateUser().execute();
+
+		  new CreateUser().execute();
 		
 	}
 	
@@ -81,13 +83,18 @@ public class Register extends ActionBarActivity implements OnClickListener{
 			// TODO Auto-generated method stub
 			 // Check for success tag
             int success;
-            String username = user.getText().toString();
-            String password = pass.getText().toString();
+            String fname = ed_name.getText().toString();
+            String password = ed_password.getText().toString();
+            String phone = ed_phone.getText().toString();
+            String email = ed_email.getText().toString();
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("username", username));
+                params.add(new BasicNameValuePair("fname", fname));
                 params.add(new BasicNameValuePair("password", password));
+                params.add(new BasicNameValuePair("phone", phone));
+
+                params.add(new BasicNameValuePair("email", email));
  
                 Log.d("request!", "starting");
                 
@@ -116,9 +123,7 @@ public class Register extends ActionBarActivity implements OnClickListener{
             return null;
 			
 		}
-		/**
-         * After completing background task Dismiss the progress dialog
-         * **/
+
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
