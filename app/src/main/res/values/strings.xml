@@ -11,10 +11,26 @@
     <string name="hint_last_name">Last Name</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
+    <string name="btn_add_disciple">ADD DISCIPLE</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
+
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="draweropened">Opened</string>
+    <string name="drawerclosed">Closed</string>
+
+    <string-array name="drawerentry">
+        <item>Main Menu</item>
+        <item>Profile</item>
+        <item>WIN</item>
+        <item>BUILD</item>
+        <item>SEND</item>
+        <item>Logout</item>
+    </string-array>
 
 </resources>

@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -101,19 +103,33 @@ public class Register extends Activity implements OnClickListener{
 
                 params.add(new BasicNameValuePair("email", email));
 
+                ContentValues contents = new ContentValues();
+                contents.put(DbHelper.USER_NAME,fname);
+                contents.put(DbHelper.USER_PHONE_NUMBER,phone);
+                contents.put(DbHelper.USER_EMAIL,email);
+                contents.put(DbHelper.USER_PASSWORD,password);
+                DbAdapter adapter = new DbAdapter(getBaseContext());
+                adapter.addUser(contents);
 
                 Log.d("request!", "starting");
 
                 JSONObject json = jsonParser.makeHttpRequest(
                        LOGIN_URL, "POST", params);
- 
-                Log.d("Login attempt", json.toString());
 
-                success = json.getInt(TAG_SUCCESS);
+
+ 
+                //Log.d("Login attempt", json.toString());
+
+                //success = json.getInt(TAG_SUCCESS);
+                success = 1;
+
                 if (success == 1) {
                 	Log.d("User Created!", json.toString());
+                    Intent intent = new Intent(Register.this, Login.class);
+                    startActivity(intent);
                 	finish();
-                	return json.getString(TAG_MESSAGE);
+                    return "Succssfully registered!";
+                    //return json.getString(TAG_MESSAGE);
                 }else{
                 	Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                 	return json.getString(TAG_MESSAGE);

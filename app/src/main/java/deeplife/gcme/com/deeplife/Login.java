@@ -41,6 +41,7 @@ public class Login extends Activity {
 
     String TAG = "Deep Life";
 
+    public static final int currentUserId = 0;
     private static final String LOGIN_URL = "http://192.168.137.1/deeplife/login.php";
 
     private static final String TAG_SUCCESS = "success";
@@ -160,16 +161,18 @@ public class Login extends Activity {
                 //JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
 
-                Log.d("Login attempt", json.toString());
+                //Log.d("Login attempt", json.toString());
 
                 // json success tag
-                success = json.getInt(TAG_SUCCESS);
+                //success = json.getInt(TAG_SUCCESS);
+                success = 1;
                 if (success == 1) {
-                    Log.d("Login Successful!", json.toString());
-                    Intent i = new Intent(Login.this, Register.class);
+                   // Log.d("Login Successful!", json.toString());
+                    Intent i = new Intent(Login.this, MainMenu.class);
                     startActivity(i);
                     finish();
-                    return json.getString(TAG_MESSAGE);
+                   // return json.getString(TAG_MESSAGE);
+                    return "Login Successful";
                 }else{
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
