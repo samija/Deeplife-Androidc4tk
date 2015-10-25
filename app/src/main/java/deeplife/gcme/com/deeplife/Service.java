@@ -59,9 +59,20 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2]))));
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]))));
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4]))));
+				}else if (type.equals("Send_Schedule")){
+					Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_SCHEDULES, id);
+					cur.moveToFirst();
+					params.add(new BasicNameValuePair("Task", type));
+					params.add(new BasicNameValuePair(DeepLife.SCHEDULE_COLUMN[0], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULE_COLUMN[0]))));
+					params.add(new BasicNameValuePair(DeepLife.SCHEDULE_COLUMN[1], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULE_COLUMN[1]))));
+					params.add(new BasicNameValuePair(DeepLife.SCHEDULE_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULE_COLUMN[2]))));
 				}
 			}else if(myDatabase.count(DeepLife.Table_DISCIPLES)== 0){
 				params.add(new BasicNameValuePair("Task", "Get_Disciples"));
+			}else if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
+				params.add(new BasicNameValuePair("Task", "Get_Schedule"));
+			}else if(){
+				
 			}
 			
 			return params;
