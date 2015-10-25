@@ -69,6 +69,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.data_types.Disciples;
 import deeplife.gcme.com.deeplife.database.Database;
 
 /**
@@ -80,13 +81,10 @@ public class DiscipleList extends Fragment {
 	
 	private static final int FRAGMENT_GROUPID = 30;
 	public ListView lv_disciple;
-	ArrayList<Disciple> disciples_list;
+	ArrayList<Disciples> disciples_list;
 	String tagname;
 	Button addDisciple;
-	int fallback;
-	
-	int count = 0;
-	
+
 	public static final int MENU_EDIT =1;
 	public static final int MENU_DELETE = 2;
     Dialog add;
@@ -129,8 +127,8 @@ public class DiscipleList extends Fragment {
                //AddDiscipleDialog fd = new AddDiscipleDialog();
                 //fd.show(ft,"addDisciple");
 
-				//Intent intent = new Intent(getActivity(),AddDisciple.class);
-				//startActivity(intent);
+				Intent intent = new Intent(getActivity(),AddDisciple.class);
+				startActivity(intent);
 
                 AddDiscipleDialog frag = new AddDiscipleDialog();
                 frag.show(getFragmentManager(),"addDisciple");
@@ -139,7 +137,6 @@ public class DiscipleList extends Fragment {
 
 		});
 
-		fallback = R.drawable.no_image;
 
 		return 	view;
 		
@@ -148,7 +145,8 @@ public class DiscipleList extends Fragment {
 	public void populateList(Context context){
 		//Cursor cursor = dbadapter.getAll(dbhelper.Table_DISCIPLES);
 		//MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
-		lv_disciple.setAdapter(myadapter);
+		ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
+		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(),discples));
 
 	}
 	
@@ -261,11 +259,11 @@ public class DiscipleList extends Fragment {
 */
 
 
-	public class DiscipleListAdapter extends BaseAdapter
+	public class MyDiscipleListAdapter extends BaseAdapter
 			{
 				Context context;
-				ArrayList<Disciple> disciples;
-				public DiscipleListAdapter(Context context,ArrayList<Disciple> disciple)
+				ArrayList<Disciples> disciples;
+				public MyDiscipleListAdapter(Context context,ArrayList<Disciples> disciple)
 				{
 					this.context = context;
 					disciples = disciple;
@@ -296,14 +294,10 @@ public class DiscipleList extends Fragment {
 					TextView tv_phone=(TextView)convertView.findViewById(R.id.userphone);
 					TextView tv_build_phase=(TextView)convertView.findViewById(R.id.userbuild);
 
-					final String namee = disciples.get(position).getName();
+					final String namee = disciples.get(position).getFull_Name();
 					final String phonee = disciples.get(position).getPhone();
-					final String buildd = disciples.get(position).getBuildPhase();
-					final int id = disciples.get(position).getId();
-
-
-
-
+					final String buildd = disciples.get(position).getBuild_Phase();
+					final int id = Integer.parseInt(disciples.get(position).getId());
 
 					tv_name.setText(namee);
 					tv_phone.setText(phonee);
@@ -325,7 +319,7 @@ public class DiscipleList extends Fragment {
 						public boolean onLongClick(View v) {
 							// TODO Auto-generated method stub
 
-							delete_Dialog(id,namee);
+							delete_Dialog(id, namee);
 							return true;
 						}
 					});

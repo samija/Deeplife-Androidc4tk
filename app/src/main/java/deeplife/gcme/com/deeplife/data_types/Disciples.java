@@ -1,16 +1,16 @@
 package deeplife.gcme.com.deeplife.data_types;
 
 public class Disciples {
-	private String id,FirstName,MiddleName,Phone,Email,Country;
+	private String id,Full_Name,Phone,Email,Country,Build_Phase;
 	
-	public Disciples(String firstName, String middleName, String phone,
-			String email, String country) {
+	public Disciples(String Full_Name, String middleName, String phone,
+			String email, String country,String Build_Phase) {
 		super();
-		FirstName = firstName;
-		MiddleName = middleName;
+		this.Full_Name = Full_Name;
 		Phone = phone;
 		Email = email;
 		Country = country;
+		this.Build_Phase = Build_Phase;
 	}
 	public Disciples(){
 		
@@ -22,21 +22,15 @@ public class Disciples {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getFirstName() {
-		return FirstName;
-	}
 
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
-	}
+	public String getFull_Name() {return Full_Name;	}
 
-	public String getMiddleName() {
-		return MiddleName;
-	}
+	public void setFull_Name(String full_Name) {Full_Name = full_Name;	}
 
-	public void setMiddleName(String middleName) {
-		MiddleName = middleName;
-	}
+	public String getBuild_Phase() {return Build_Phase;	}
+
+	public void setBuild_Phase(String build_Phase) {Build_Phase = build_Phase;	}
+
 
 	public String getPhone() {
 		return Phone;
