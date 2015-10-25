@@ -8,6 +8,7 @@ import android.util.Log;
 
         public static final String DATABASE_NAME = "deepLife";
         public static final String TABLE_USERS = "users";
+
         public static final String UID = "_id";
         public static final String USER_NAME = "name";
         public static final String USER_PASSWORD = "password";

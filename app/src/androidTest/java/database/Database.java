@@ -21,6 +21,8 @@ public class Database {
 		myDatabase = mySQL.getWritableDatabase();
 		mySQL.createTables(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_FIELDS);
 		mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
+		mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
+
 	}
 	public long insert(String DB_Table,ContentValues cv){
 		long state = myDatabase.insert(DB_Table, null, cv);
@@ -124,6 +126,8 @@ public class Database {
 			strs = DeepLife.DISCIPLES_COLUMN;
 		}else if(DB_Table == DeepLife.Table_LOGS){
 			strs = DeepLife.LOGS_COLUMN;
+		}else if(DB_Table == DeepLife.Table_USER){
+			strs = DeepLife.USER_COLUMN;
 		}
 		return strs;
 	}
