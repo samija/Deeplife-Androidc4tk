@@ -71,8 +71,6 @@ public class Service extends android.app.Service{
 				params.add(new BasicNameValuePair("Task", "Get_Disciples"));
 			}else if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
 				params.add(new BasicNameValuePair("Task", "Get_Schedule"));
-			}else if(){
-				
 			}
 			
 			return params;
