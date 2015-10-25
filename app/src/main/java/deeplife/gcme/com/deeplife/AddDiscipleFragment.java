@@ -41,7 +41,7 @@ public class AddDiscipleFragment extends Fragment {
 	Button addDisciple;
 
 	int fallback;
-	
+
 
 	Database dbadapter;
 	DeepLife dbhelper;
@@ -84,10 +84,12 @@ public class AddDiscipleFragment extends Fragment {
 
 					if(i!=-1){
 						Log.i("EEEEEEEEEEEEEEE", values.toString());
-						Toast.makeText(getActivity(),"Successfully Added!!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), "Successfully Added!!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(),MainMenu.class);
                         startActivity(intent);
-					}
+                        getActivity().finish();
+
+                    }
 
 			}
 		});

@@ -141,7 +141,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	        	alertbox.show();
 	        	break;
 			case R.id.options_logout:
-				Intent intent = new Intent(getBaseContext(),Login.class);
+				Intent intent = new Intent(getApplicationContext(),Login.class);
 				startActivity(intent);
 				finish();
 				break;
@@ -203,7 +203,6 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			if(arg0==1){
 				page = new Schedules();
 			}
-
 			return page;
 		}
 

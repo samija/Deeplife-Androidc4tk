@@ -129,9 +129,10 @@ public class DiscipleList extends Fragment {
 
 				Intent intent = new Intent(getActivity(),AddDisciple.class);
 				startActivity(intent);
+				getActivity().finish();
 
-                AddDiscipleDialog frag = new AddDiscipleDialog();
-                frag.show(getFragmentManager(),"addDisciple");
+                //AddDiscipleDialog frag = new AddDiscipleDialog();
+                //frag.show(getFragmentManager(),"addDisciple");
 				}
 
 
