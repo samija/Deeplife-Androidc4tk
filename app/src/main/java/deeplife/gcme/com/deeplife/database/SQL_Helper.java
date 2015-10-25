@@ -1,4 +1,4 @@
-package database;
+package deeplife.gcme.com.deeplife.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

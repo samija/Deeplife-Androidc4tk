@@ -69,6 +69,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 /**
  * A simple {@link Fragment} subclass.
  * 
@@ -89,10 +91,8 @@ public class DiscipleList extends Fragment {
 	public static final int MENU_DELETE = 2;
     Dialog add;
 
-
-	DbAdapter dbadapter;
-	DbHelper dbhelper;
-
+	Database dbadapter;
+	DeepLife dbhelper;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -103,8 +103,8 @@ public class DiscipleList extends Fragment {
 				false);
 
 
-		dbadapter = new DbAdapter(getActivity());
-		dbhelper = new DbHelper(getActivity());
+		dbadapter = new Database(getActivity());
+		dbhelper = new DeepLife();
 
 		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
 
@@ -146,8 +146,8 @@ public class DiscipleList extends Fragment {
 	}
 
 	public void populateList(Context context){
-		Cursor cursor = dbadapter.getAllDisciples();
-		MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
+		//Cursor cursor = dbadapter.getAll(dbhelper.Table_DISCIPLES);
+		//MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
 		lv_disciple.setAdapter(myadapter);
 
 	}
@@ -167,7 +167,7 @@ public class DiscipleList extends Fragment {
 	//	registerForContextMenu(newsView);
 	}
 
-    public void delete_Dialog(final int id) {
+    public void delete_Dialog(final int id,final String name) {
 
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -176,8 +176,7 @@ public class DiscipleList extends Fragment {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        DbAdapter helper = new DbAdapter(getActivity());
-                        long i = helper.deleteDesciple(id);
+                        long i = dbadapter.remove(dbhelper.Table_DISCIPLES, id);
                         if(i!=-1){
                             Log.i("DeepLife", "Successfully Deleted");
                             Toast.makeText(getActivity(),"Successfully Deleted!", Toast.LENGTH_SHORT).show();
@@ -197,6 +196,7 @@ public class DiscipleList extends Fragment {
     }
 
 
+	/*
 	class MyCursorAdapter extends CursorAdapter {
 
 		Context context;
@@ -213,10 +213,10 @@ public class DiscipleList extends Fragment {
 			TextView tv_phone = (TextView) view.findViewById(R.id.userphone);
 			TextView tv_build = (TextView) view.findViewById(R.id.userbuild);
 
-			final String name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.USER_NAME));
-			final String phone = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.USER_PHONE_NUMBER));
-			final String build = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.BUILD_PHASE));
-			final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.UID));
+			final String name = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_FIELDS[0));
+			final String phone = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_FIELDS[1]));
+			final String build = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.BUILD_PHASE));
+			final int id = cursor.getInt(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_COLUMN[0]));
 
 			//String image = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.IMAGE));
 
@@ -258,24 +258,22 @@ public class DiscipleList extends Fragment {
 
 	}
 
+*/
 
 
-/*
-	public class setadapter extends BaseAdapter
+	public class DiscipleListAdapter extends BaseAdapter
 			{
-				String[] name;
-				String[] phone;
-				String[] build;
-				public setadapter(Context context,String[] n, String[] p, String[] b)
+				Context context;
+				ArrayList<Disciple> disciples;
+				public DiscipleListAdapter(Context context,ArrayList<Disciple> disciple)
 				{
-					name = n;
-					phone = p;
-					build = b;
+					this.context = context;
+					disciples = disciple;
 				}
 				@Override
 				public int getCount() {
 					// TODO Auto-generated method stub
-					return name.length;
+					return disciples.size();
 				}
 
 				@Override
@@ -298,16 +296,12 @@ public class DiscipleList extends Fragment {
 					TextView tv_phone=(TextView)convertView.findViewById(R.id.userphone);
 					TextView tv_build_phase=(TextView)convertView.findViewById(R.id.userbuild);
 
-					DbAdapter dbadapter = new DbAdapter(getActivity());
+					final String namee = disciples.get(position).getName();
+					final String phonee = disciples.get(position).getPhone();
+					final String buildd = disciples.get(position).getBuildPhase();
+					final int id = disciples.get(position).getId();
 
-					final String namee = name[position];
-					final String phonee = phone[position];
-					final String buildd = build[position];
 
-
-					//TextView title_first = (TextView) convertView.findViewById(R.id.title_first_word);
-					//String firstowrd = news_list.get(position).getTitle().substring(0, 1);
-					 //  title_first.setText(firstowrd);
 
 
 
@@ -331,7 +325,7 @@ public class DiscipleList extends Fragment {
 						public boolean onLongClick(View v) {
 							// TODO Auto-generated method stub
 
-							//Show_DialogBox(id,name);
+							delete_Dialog(id,namee);
 							return true;
 						}
 					});
@@ -344,7 +338,7 @@ public class DiscipleList extends Fragment {
 
 
 
-			*/
+
 
 	
 }

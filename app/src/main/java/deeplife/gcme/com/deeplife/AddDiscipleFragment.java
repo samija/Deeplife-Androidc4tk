@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 /**
  * A simple {@link Fragment} subclass.
  * 
@@ -35,14 +37,14 @@ public class AddDiscipleFragment extends Fragment {
 	EditText ed_name;
 	EditText ed_email;
 	EditText ed_phone;
+    EditText ed_country;
 	Button addDisciple;
 
 	int fallback;
 	
 
-	DbAdapter dbadapter;
-	DbHelper dbhelper;
-
+	Database dbadapter;
+	DeepLife dbhelper;
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 			Bundle savedInstanceState) {
@@ -54,10 +56,10 @@ public class AddDiscipleFragment extends Fragment {
 		ed_name = (EditText) view.findViewById(R.id.adddisciple_name);
 		ed_email = (EditText) view.findViewById(R.id.add_discple_email);
 		ed_phone = (EditText) view.findViewById(R.id.add_disciple_phone);
+        ed_country = (EditText) view.findViewById(R.id.add_disciple_country);
 
-
-		dbadapter = new DbAdapter(getActivity());
-		dbhelper = new DbHelper(getActivity());
+		dbadapter = new Database(getActivity());
+		dbhelper = new DeepLife();
 
 		addDisciple = (Button) view.findViewById(R.id.btn_add_disciple);
 
@@ -69,16 +71,16 @@ public class AddDiscipleFragment extends Fragment {
 					String name = ed_name.getText().toString();
 					String email = ed_email.getText().toString();
 					String phone = ed_phone.getText().toString();
+					String country = ed_country.getText().toString();
 
 					ContentValues values = new ContentValues();
-					values.put(dbhelper.USER_NAME, name);
-					values.put(dbhelper.USER_PHONE_NUMBER, phone);
-					values.put(dbhelper.USER_PASSWORD,"");
+					values.put(dbhelper.DISCIPLES_FIELDS[0], name);
+					values.put(dbhelper.DISCIPLES_FIELDS[1], phone);
+					values.put(dbhelper.DISCIPLES_FIELDS[2],email);
+					values.put(dbhelper.DISCIPLES_FIELDS[3], "Added");
+					values.put(dbhelper.DISCIPLES_FIELDS[4], country);
 
-					values.put(dbhelper.USER_EMAIL, email);
-					values.put(dbhelper.BUILD_PHASE, "Added");
-
-					long i = dbadapter.addUser(values);
+					long i = dbadapter.insert(dbhelper.Table_DISCIPLES, values);
 
 					if(i!=-1){
 						Log.i("EEEEEEEEEEEEEEE", values.toString());

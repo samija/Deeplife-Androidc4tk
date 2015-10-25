@@ -1,4 +1,4 @@
-package connection;
+package deeplife.gcme.com.deeplife.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;

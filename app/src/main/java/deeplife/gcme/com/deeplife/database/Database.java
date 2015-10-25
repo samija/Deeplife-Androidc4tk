@@ -1,8 +1,8 @@
-package database;
+package deeplife.gcme.com.deeplife.database;
 
 import java.util.ArrayList;
 
-import data_types.Disciples;
+import deeplife.gcme.com.deeplife.data_types.Disciples;
 import deeplife.gcme.com.deeplife.DeepLife;
 
 import android.content.ContentValues;

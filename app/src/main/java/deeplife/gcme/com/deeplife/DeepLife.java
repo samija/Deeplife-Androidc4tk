@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import database.Database;
+import deeplife.gcme.com.deeplife.database.Database;
 import android.app.Application;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -14,15 +14,17 @@ public class DeepLife extends Application {
 	public static final String Table_LOGS = "LOGS";
 	public static final String Table_USER = "USER";
 
-	public static final String[] DISCIPLES_FIELDS = { "First_Name",
-			"Middle_Name", "Phone", "Email", "Country" };
-	public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
-	public static final String[] USER_FIELDS = { "Email", "Password" };
+	public static final String[] DISCIPLES_FIELDS = { "Full_Name",
+			 "Phone", "Email", "Build_phase","Country" };
 
-	public static final String[] DISCIPLES_COLUMN = { "id", "First_Name",
-			"Middle_Name", "Phone", "Email", "Country" };
+	public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
+	public static final String[] USER_FIELDS = { "Email", "Password","Phone"};
+
+	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name",
+			 "Phone", "Email", "Build_phase","Country" };
+
 	public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
-	public static final String[] USER_COLUMN = { "id", "Email", "Password" };
+	public static final String[] USER_COLUMN = { "id", "Email", "Password","Phone"};
 
 	public static Database myDatabase;
 

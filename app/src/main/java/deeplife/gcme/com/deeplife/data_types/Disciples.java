@@ -1,4 +1,4 @@
-package data_types;
+package deeplife.gcme.com.deeplife.data_types;
 
 public class Disciples {
 	private String id,FirstName,MiddleName,Phone,Email,Country;
