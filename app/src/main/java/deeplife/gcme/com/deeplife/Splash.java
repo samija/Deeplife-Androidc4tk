@@ -52,7 +52,7 @@ public class Splash extends Activity {
         splash.start();
 	}
 	public synchronized void getNextActivity() {
-		Intent intent = new Intent(this, MainMenu.class);
+		Intent intent = new Intent(this, Login.class);
 		startActivity(intent);
         finish();
 		Log.i("EEEEEEEEEEEEEEE", "Called Main Menu room");
