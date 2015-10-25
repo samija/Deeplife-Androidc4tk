@@ -147,7 +147,6 @@ public class DiscipleList extends Fragment {
 		//MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
 		ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
 		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(),discples));
-
 	}
 	
 	

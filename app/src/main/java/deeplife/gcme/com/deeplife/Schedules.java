@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 /**
  * A simple {@link Fragment} subclass.
  * 
@@ -33,7 +35,6 @@ public class Schedules extends Fragment {
 	
 	private static final int FRAGMENT_GROUPID = 30;
 	public ListView lv_disciple;
-	ArrayList<Disciple> disciples_list;
 	String tagname;
 	Button addDisciple;
 	int fallback;
@@ -49,8 +50,8 @@ public class Schedules extends Fragment {
 	String[] times = {"Thuesday 10pm", "Monday 4pm" ,"Wednesday 6pm","Sunday 8am", "Monday 4pm"};
 
 
-	DbAdapter dbadapter;
-	DbHelper dbhelper;
+	Database dbadapter;
+	DeepLife dbhelper;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,8 +63,8 @@ public class Schedules extends Fragment {
 				false);
 
 
-		dbadapter = new DbAdapter(getActivity());
-		dbhelper = new DbHelper(getActivity());
+		dbadapter = new Database(getActivity());
+		dbhelper = new DeepLife();
 
 		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
 
@@ -94,12 +95,7 @@ public class Schedules extends Fragment {
 		
 	}
 
-	public void populateList(Context context){
-		Cursor cursor = dbadapter.getAllDisciples();
 
-		MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
-		lv_disciple.setAdapter(myadapter);
-	}
 	
 	
 	@Override
@@ -146,67 +142,6 @@ public class Schedules extends Fragment {
 
 
 
-	class MyCursorAdapter extends CursorAdapter {
-
-		Context context;
-		public MyCursorAdapter(Context context, Cursor c) {
-			super(context, c,0);
-			this.context = context;
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void bindView(View view, Context arg1, Cursor cursor) {
-			// TODO Auto-generated method stub
-			TextView tv_name = (TextView) view.findViewById(R.id.userN);
-			TextView tv_phone = (TextView) view.findViewById(R.id.userphone);
-			TextView tv_build = (TextView) view.findViewById(R.id.userbuild);
-
-			final String name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.USER_NAME));
-			final String phone = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.USER_PHONE_NUMBER));
-			final String build = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.BUILD_PHASE));
-			final int id = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.UID));
-
-			//String image = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.IMAGE));
-
-			//iv.setImageBitmap(BitmapFactory.decodeFile(image));
-
-			//Log.i("Deep Life","Image Link: "+ image);
-
-			tv_name.setText(name);
-			tv_phone.setText(phone);
-			tv_build.setText(build);
-
-			view.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-
-			view.setOnLongClickListener(new OnLongClickListener() {
-
-				@Override
-				public boolean onLongClick(View v) {
-					// TODO Auto-generated method stub
-					//Show_DialogBox(id,name);
-
-					return true;
-				}
-			});
-
-		}
-
-		@Override
-		public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-			// TODO Auto-generated method stub
-			return LayoutInflater.from(context).inflate(R.layout.dislist, arg2,false);
-		}
-
-
-	}
 
 
 
@@ -246,9 +181,7 @@ public class Schedules extends Fragment {
             TextView tv_name=(TextView)convertView.findViewById(R.id.schedulename);
             TextView tv_phone=(TextView)convertView.findViewById(R.id.schedulephone);
             TextView tv_time=(TextView)convertView.findViewById(R.id.scheduletime);
-
-            DbAdapter dbadapter = new DbAdapter(getActivity());
-
+			
             final String namee = name[position];
             final String phonee = phone[position];
             final String timee = build[position];

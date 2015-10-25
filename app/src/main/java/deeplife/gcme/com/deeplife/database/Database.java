@@ -112,10 +112,12 @@ public class Database {
 			c.moveToPosition(i);
 			Disciples dis = new Disciples();
 			dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
-			dis.setFirstName(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
-			dis.setMiddleName(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+			dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+			dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
 			dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
-			dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+			dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+			dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+
 			found.add(dis);
 		}
 		return found;

@@ -21,14 +21,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 public class Register extends Activity implements OnClickListener{
 	
-	private EditText ed_name,ed_password,ed_phone,ed_email;
+	private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
 	private Button  mRegister;
 	
 	 // Progress Dialog
     private ProgressDialog pDialog;
- 
+
+    Database dbadapter;
+    DeepLife dbhelper;
+
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
     
@@ -38,7 +43,9 @@ public class Register extends Activity implements OnClickListener{
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
-	
+
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -47,11 +54,15 @@ public class Register extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
 
+        dbadapter = new Database(this);
+        dbhelper = new DeepLife();
+
+
         ed_name = (EditText)findViewById(R.id.signup_first_name);
         ed_password = (EditText)findViewById(R.id.signup_password);
         ed_email = (EditText) findViewById(R.id.signup_email);
         ed_phone = (EditText) findViewById(R.id.signup_phone);
-
+        ed_country = (EditText) findViewById(R.id.signup_country);
 		mRegister = (Button)findViewById(R.id.btnregister);
 
 		mRegister.setOnClickListener(this);
@@ -71,11 +82,11 @@ public class Register extends Activity implements OnClickListener{
 		 /**
          * Before starting background thread Show Progress Dialog
          * */
-		boolean failure = false;
-        String fname;
+        String name;
         String password;
         String phone;
         String email;
+        String country;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -85,10 +96,11 @@ public class Register extends Activity implements OnClickListener{
             pDialog.setCancelable(true);
             pDialog.show();
 
-            fname = ed_name.getText().toString();
+            name = ed_name.getText().toString();
             password = ed_password.getText().toString();
             phone = ed_phone.getText().toString();
             email = ed_email.getText().toString();
+            country = ed_country.getText().toString();
         }
 		
 		@Override
@@ -97,34 +109,33 @@ public class Register extends Activity implements OnClickListener{
             int success;
             try {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("fname", fname));
+                params.add(new BasicNameValuePair("fname", name));
                 params.add(new BasicNameValuePair("password", password));
                 params.add(new BasicNameValuePair("phone", phone));
-
                 params.add(new BasicNameValuePair("email", email));
+                params.add(new BasicNameValuePair("country", country));
 
                 ContentValues contents = new ContentValues();
-                contents.put(DbHelper.USER_NAME,fname);
-                contents.put(DbHelper.USER_PHONE_NUMBER,phone);
-                contents.put(DbHelper.USER_EMAIL,email);
-                contents.put(DbHelper.USER_PASSWORD,password);
-                DbAdapter adapter = new DbAdapter(getBaseContext());
-                adapter.addUser(contents);
+                contents.put(dbhelper.USER_FIELDS[0], name);
+                contents.put(dbhelper.USER_FIELDS[1], phone);
+                contents.put(dbhelper.USER_FIELDS[2],email);
+                contents.put(dbhelper.USER_FIELDS[3], "Added");
+                contents.put(dbhelper.USER_FIELDS[4], country);
 
-                Log.d("request!", "starting");
+                Log.d("request!", "request starting");
 
                 JSONObject json = jsonParser.makeHttpRequest(
                        LOGIN_URL, "POST", params);
-
-
- 
-                //Log.d("Login attempt", json.toString());
 
                 //success = json.getInt(TAG_SUCCESS);
                 success = 1;
 
                 if (success == 1) {
                 	Log.d("User Created!", json.toString());
+                    long i = dbadapter.insert(dbhelper.Table_USER, contents);
+                    if(i!=-1){
+                        Log.i("Deeplife","Successfully added to local database");
+                    }
                     Intent intent = new Intent(Register.this, Login.class);
                     startActivity(intent);
                 	finish();
