@@ -25,6 +25,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,6 +41,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.CursorAdapter;
 import android.text.Html;
 import android.util.Log;
@@ -54,12 +57,15 @@ import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.AbsoluteLayout;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,11 +87,8 @@ public class DiscipleList extends Fragment {
 	
 	public static final int MENU_EDIT =1;
 	public static final int MENU_DELETE = 2;
+    Dialog add;
 
-
-	String[] names = {"Roger", "Biniam", "Henock","Biruk","Selam"};
-	String[] phones = {"0916825542","09111111", "0916546565","09523536","091379341"};
-	String[] builds = {"WIN", "WIN" ,"BUILD","BUILD", "SEND"};
 
 	DbAdapter dbadapter;
 	DbHelper dbhelper;
@@ -105,37 +108,48 @@ public class DiscipleList extends Fragment {
 
 		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
 
-		//populateList(getActivity());
-		lv_disciple.setAdapter(new setadapter(getActivity(),names, phones, builds) {
-		});
-		registerForContextMenu(lv_disciple);
-		
+
+        populateList(getActivity());
+
+        add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
+        add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
 		addDisciple = (Button) view.findViewById(R.id.bt_add_disciple);
 		addDisciple.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),AddDisciple.class);
-				startActivity(intent);
-			}
+
+                //add.setContentView(R.layout.fragment_add_disciple);
+                //add.setTitle("Add Desciple");
+                //add.show();
+
+                //FragmentTransaction ft = getFragmentManager().beginTransaction();
+               //AddDiscipleDialog fd = new AddDiscipleDialog();
+                //fd.show(ft,"addDisciple");
+
+				//Intent intent = new Intent(getActivity(),AddDisciple.class);
+				//startActivity(intent);
+
+                AddDiscipleDialog frag = new AddDiscipleDialog();
+                frag.show(getFragmentManager(),"addDisciple");
+				}
+
+
 		});
+
 		fallback = R.drawable.no_image;
-
-		setHasOptionsMenu(true);
-
-		//new AsyncDownloader().execute("http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/entertainment/rss.xml");
-
 
 		return 	view;
 		
 	}
 
 	public void populateList(Context context){
-		Cursor cursor = dbadapter.getAllDisciples(Login.currentUserId);
-
+		Cursor cursor = dbadapter.getAllDisciples();
 		MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
 		lv_disciple.setAdapter(myadapter);
+
 	}
 	
 	
@@ -152,35 +166,35 @@ public class DiscipleList extends Fragment {
 		super.onResume();
 	//	registerForContextMenu(newsView);
 	}
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		// TODO Auto-generated method stub
-		super.onCreateContextMenu(menu, v, menuInfo);
-		
-		MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.main_context_menu, menu);
 
-	}
+    public void delete_Dialog(final int id) {
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		
-	       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-	        switch (item.getItemId()){
 
-	            case R.id.menu_save:
-	            	Toast.makeText(getActivity(), "Save Option Chosen", Toast.LENGTH_SHORT).show();
-	            case R.id.menu_delete:
-	            	Toast.makeText(getActivity(), "Delete Option Chosen", Toast.LENGTH_SHORT).show();
-	            default:
-	                return super.onContextItemSelected(item);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        DbAdapter helper = new DbAdapter(getActivity());
+                        long i = helper.deleteDesciple(id);
+                        if(i!=-1){
+                            Log.i("DeepLife", "Successfully Deleted");
+                            Toast.makeText(getActivity(),"Successfully Deleted!", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+//		        case DialogInterface.BUTTON_NEUTRAL:
+                    //Yes button clicked
 
-	        }
+//			            break;
 
-	}
-
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+    }
 
 
 	class MyCursorAdapter extends CursorAdapter {
@@ -216,20 +230,18 @@ public class DiscipleList extends Fragment {
 
 			view.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
-				}
-			});
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                }
+            });
 
 			view.setOnLongClickListener(new OnLongClickListener() {
 
 				@Override
 				public boolean onLongClick(View v) {
 					// TODO Auto-generated method stub
-					//Show_DialogBox(id,name);
-
+					delete_Dialog(id);
 					return true;
 				}
 			});
@@ -240,6 +252,7 @@ public class DiscipleList extends Fragment {
 		public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
 			// TODO Auto-generated method stub
 			return LayoutInflater.from(context).inflate(R.layout.dislist, arg2,false);
+
 		}
 
 
@@ -247,7 +260,7 @@ public class DiscipleList extends Fragment {
 
 
 
-
+/*
 	public class setadapter extends BaseAdapter
 			{
 				String[] name;
@@ -277,21 +290,21 @@ public class DiscipleList extends Fragment {
 				}
 				@Override
 				public View getView(int position, View convertView, ViewGroup parent) {
-	
+
 					LayoutInflater inflate = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					convertView=inflate.inflate(R.layout.dislist,null);
-					
+					convertView = inflate.inflate(R.layout.dislist,null);
+
 					TextView tv_name=(TextView)convertView.findViewById(R.id.userN);
 					TextView tv_phone=(TextView)convertView.findViewById(R.id.userphone);
 					TextView tv_build_phase=(TextView)convertView.findViewById(R.id.userbuild);
-					
+
 					DbAdapter dbadapter = new DbAdapter(getActivity());
 
 					final String namee = name[position];
 					final String phonee = phone[position];
 					final String buildd = build[position];
 
-					
+
 					//TextView title_first = (TextView) convertView.findViewById(R.id.title_first_word);
 					//String firstowrd = news_list.get(position).getTitle().substring(0, 1);
 					 //  title_first.setText(firstowrd);
@@ -301,37 +314,37 @@ public class DiscipleList extends Fragment {
 					tv_name.setText(namee);
 					tv_phone.setText(phonee);
 					tv_build_phase.setText(buildd);
-					
+
 
 				       convertView.setOnClickListener(new OnClickListener() {
-						
+
 						@Override
 						public void onClick(View v) {
 
 								//startActivity(intent);
-							
+
 						}
 					});
 				       convertView.setOnLongClickListener(new OnLongClickListener() {
-						
+
 						@Override
 						public boolean onLongClick(View v) {
 							// TODO Auto-generated method stub
-							
+
 							//Show_DialogBox(id,name);
 							return true;
 						}
 					});
-				       
-						
-					
+
+
+
 				return convertView;
 				}
 	}
 
 
 
-			
+			*/
 
 	
 }

@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,8 +49,7 @@ public class AddDiscipleFragment extends Fragment {
 		
 		
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_add_disciple, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_add_disciple, container,false);
 
 		ed_name = (EditText) view.findViewById(R.id.adddisciple_name);
 		ed_email = (EditText) view.findViewById(R.id.add_discple_email);
@@ -69,22 +69,29 @@ public class AddDiscipleFragment extends Fragment {
 					String name = ed_name.getText().toString();
 					String email = ed_email.getText().toString();
 					String phone = ed_phone.getText().toString();
+
 					ContentValues values = new ContentValues();
 					values.put(dbhelper.USER_NAME, name);
 					values.put(dbhelper.USER_PHONE_NUMBER, phone);
 					values.put(dbhelper.USER_PASSWORD,"");
 
 					values.put(dbhelper.USER_EMAIL, email);
-					values.put(dbhelper.BUILD_PHASE,"added");
-					Log.i("EEEEEEEEEEEEEEE", values.toString());
-					dbadapter.addUser(values);
+					values.put(dbhelper.BUILD_PHASE, "Added");
+
+					long i = dbadapter.addUser(values);
+
+					if(i!=-1){
+						Log.i("EEEEEEEEEEEEEEE", values.toString());
+						Toast.makeText(getActivity(),"Successfully Added!!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(),MainMenu.class);
+                        startActivity(intent);
+					}
+
 			}
 		});
 		fallback = R.drawable.no_image;
 
 		setHasOptionsMenu(true);
-
-		//new AsyncDownloader().execute("http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/entertainment/rss.xml");
 
 		return 	view;
 		

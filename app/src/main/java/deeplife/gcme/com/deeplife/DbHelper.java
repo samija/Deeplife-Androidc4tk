@@ -16,9 +16,6 @@ import android.util.Log;
         //public static final String USER_GENDER = "gender";
         public static final String USER_EMAIL = "email";
 
-        //public static final String TABLE_DISCIPLES = "disciples";
-        //public static final String DISCIPLE_ID = "disciple_id";
-        //public static final String MENTOR_ID = "mentor_id";
         public static final String BUILD_PHASE = "build_phase";
         public static final int VERSION = 2;
 
@@ -38,7 +35,6 @@ import android.util.Log;
 */
         
         public static final String DROP_TABLE_USERS = "DROP TABLE IF EXISTS " + TABLE_USERS;
-       // public static final String DROP_TABLE_DISCIPLES = "DROP TABLE IF EXISTS " + TABLE_DISCIPLES;
         Context context;
 
         public DbHelper(Context context) {
@@ -53,7 +49,6 @@ import android.util.Log;
             //Message.Message(context, "OnCreate called");  
             Log.i("DEEP LIFE", "On create called!!!");
       	  db.execSQL(CREATE_TABLE_USERS);
-         // db.execSQL(CREATE_TABLE_DISCIPLES);
 
         }
 
@@ -62,7 +57,6 @@ import android.util.Log;
             //Message.Message(context, "OnUpgrade called");  
             Log.i("DEEP LIFE", "On upgrade called");
         	db.execSQL(DROP_TABLE_USERS);
-           // db.execSQL(DROP_TABLE_DISCIPLES);
         	onCreate(db);
         }
     }

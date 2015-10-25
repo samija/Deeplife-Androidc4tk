@@ -95,7 +95,7 @@ public class Schedules extends Fragment {
 	}
 
 	public void populateList(Context context){
-		Cursor cursor = dbadapter.getAllDisciples(Login.currentUserId);
+		Cursor cursor = dbadapter.getAllDisciples();
 
 		MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
 		lv_disciple.setAdapter(myadapter);

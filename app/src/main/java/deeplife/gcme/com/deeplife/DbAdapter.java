@@ -34,7 +34,7 @@ public class DbAdapter {
         SQLiteDatabase db = dbhelper.getWritableDatabase();
         Log.i("EEEEEEEEEEEEEEE", content.toString());
 
-        long i = db.insert(dbhelper.CREATE_TABLE_USERS,null,content);
+        long i = db.insert(dbhelper.TABLE_USERS,null,content);
         return i;
     }
 
@@ -58,11 +58,11 @@ public class DbAdapter {
         Log.i("DEEP LIFE","Cursor count: "+cursor.getCount());
     	return cursor;
     }
-    public Cursor getAllDisciples(int mentor_id){
+    public Cursor getAllDisciples(){
         SQLiteDatabase db = dbhelper.getWritableDatabase();
-        String[] column = {dbhelper.UID,dbhelper.USER_PHONE_NUMBER,dbhelper.USER_PASSWORD,dbhelper.UID,
-                dbhelper.USER_EMAIL,dbhelper.USER_NAME};
-        Cursor cursor = db.query(dbhelper.TABLE_USERS,column ,dbhelper.UID+"!='"+mentor_id+"'", null, null, null, null);
+        String[] column = {dbhelper.UID,dbhelper.USER_PHONE_NUMBER,dbhelper.UID,
+                dbhelper.USER_EMAIL,dbhelper.USER_NAME,dbhelper.BUILD_PHASE};
+        Cursor cursor = db.query(dbhelper.TABLE_USERS,column ,dbhelper.UID+"!='2'", null, null, null, null);
 
         if(cursor !=null){
             cursor.moveToFirst();
@@ -75,7 +75,6 @@ public class DbAdapter {
 	public long deleteDesciple(int id) {
 		// TODO Auto-generated method stub
 		SQLiteDatabase db = dbhelper.getWritableDatabase();
-		String col;
 		long count = db.delete(dbhelper.TABLE_USERS, dbhelper.UID + " = '"+id+"'", null);
 		return count;
 	}

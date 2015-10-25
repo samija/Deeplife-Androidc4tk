@@ -3,8 +3,10 @@
     package="deeplife.gcme.com.deeplife" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
+        android:name = "deeplife.gcme.com.deeplife.DeepLife"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -50,6 +52,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".Ad"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
