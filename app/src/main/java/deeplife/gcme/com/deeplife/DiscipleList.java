@@ -57,12 +57,14 @@ import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsoluteLayout;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -140,30 +142,82 @@ public class DiscipleList extends Fragment {
 	}
 
     public void addDiscipleDialog(){
-        Dialog add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
+        final Dialog add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
         add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        add.requestWindowFeature(Window.FEATURE_NO_TITLE);
         add.setContentView(R.layout.fragment_add_disciple);
-
-
-        String[] list = CountryDetails.country;
-
-        ArrayList<String> country_list = new ArrayList<String>();
-
-        for(int i=0;i<list.length;i++){
-            country_list.add(list[i]);
-        }
-        Log.i("Deeep Lifeeeeeeeeeeee",country_list.toString());
-        Log.i("Deeeeep Lifeeeeeeee", "Coountry array length = " + country_list.size());
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(), android.R.layout.simple_spinner_item, country_list);
-
-        Spinner countries = (Spinner) add.findViewById(R.id.countries_spinner);
-
-        countries.setAdapter(new MySpinnerAdapter(getActivity(),R.layout.countries_spinner,list));
-
-        add.setTitle("Add Desciple");
         add.show();
+
+        final String[] list = CountryDetails.country;
+        final String[] codes = CountryDetails.code;
+        String[] genderarray = {"Male","Female"};
+
+
+        final Spinner countries = (Spinner) add.findViewById(R.id.countries_spinner);
+        final EditText ed_code = (EditText) add.findViewById(R.id.add_phone_country_code);
+        final EditText ed_name = (EditText) add.findViewById(R.id.adddisciple_name);
+        final EditText ed_email = (EditText) add.findViewById(R.id.add_discple_email);
+        final EditText ed_phone = (EditText) add.findViewById(R.id.add_disciple_phone);
+        final Spinner sp_gender = (Spinner) add.findViewById(R.id.gender_spinner);
+
+        countries.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner, list));
+        sp_gender.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner,genderarray));
+
+
+
+        countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int i = countries.getSelectedItemPosition();
+                ed_code.setText(codes[i]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                ed_code.setText(codes[0]);
+            }
+        });
+
+
+         final Button bt_add_pic = (Button) add.findViewById(R.id.bt_add_disciple_pic);
+        bt_add_pic.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    
+            }
+        });
+
+
+
+
+        Button bt_add_disciple = (Button) add.findViewById(R.id.btn_add_disciple);
+        bt_add_disciple.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = ed_name.getText().toString();
+                String email = ed_email.getText().toString();
+                String country = ed_code.getText().toString() + countries.getSelectedItem().toString();
+                String gender = sp_gender.getSelectedItem().toString();
+                String phone = ed_code.getText().toString() + ed_phone.getText().toString();
+
+                ContentValues values = new ContentValues();
+                values.put(dbhelper.DISCIPLES_FIELDS[0], name);
+                values.put(dbhelper.DISCIPLES_FIELDS[1], phone);
+                values.put(dbhelper.DISCIPLES_FIELDS[2],email);
+                values.put(dbhelper.DISCIPLES_FIELDS[3], "Added");
+                values.put(dbhelper.DISCIPLES_FIELDS[4], country);
+                values.put(dbhelper.DISCIPLES_FIELDS[5], gender);
+
+                long i = dbadapter.insert(dbhelper.Table_DISCIPLES,values);
+                if(i!=-1){
+                    Toast.makeText(getActivity(),"Disciple successfully added!",Toast.LENGTH_SHORT).show();
+                    add.cancel();
+                    reload();
+                }
+
+            }
+        });
+
     }
 
 	public void populateList(Context context){

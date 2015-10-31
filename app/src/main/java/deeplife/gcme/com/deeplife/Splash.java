@@ -55,6 +55,7 @@ public class Splash extends Activity {
 	public synchronized void getNextActivity() {
 		Intent intent = new Intent(this, MainMenu.class);
 		startActivity(intent);
+		finish();
 
 	}
 
