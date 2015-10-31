@@ -23,7 +23,7 @@ public class Database {
 		mySQL.createTables(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_FIELDS);
 		mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
 		mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
-		mySQL.createTables(DeepLife.Table_SCHEDULES,DeepLife.SCHEDULE_FIELDS);
+		mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULE_FIELDS);
 
 	}
 	public void dispose(){
@@ -31,6 +31,7 @@ public class Database {
 		mySQL.close();
 
 	}
+
 	public long insert(String DB_Table,ContentValues cv){
 		long state = myDatabase.insert(DB_Table, null, cv);
 		return state;
@@ -75,7 +76,13 @@ public class Database {
 		Cursor cur = myDatabase.rawQuery("select * from "+DB_Table+" where id="+id, null);
 		return cur;
 	}
+    public Cursor getData(String table,String id) {
 
+        String[] column = DeepLife.DISCIPLES_COLUMN;
+        Cursor cursor = myDatabase.query(table, column, "id"+ "='" + id + "'", null, null, null, null);
+
+        return cursor;
+    }
 
 	public long Delete_By_ID(String DB_Table,int pos){
 		String[] args = {""+pos};
@@ -123,7 +130,7 @@ public class Database {
 			dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
 			dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
 			dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
-			dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+			dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
 			dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
 			dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
 

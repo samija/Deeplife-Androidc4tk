@@ -104,16 +104,21 @@ public class Profile extends Fragment {
     public void populateView(String id){
 
         Cursor data = dbadapter.get_value_by_ID(DeepLife.Table_DISCIPLES, id);
-        Log.i("deeeeepLife",data.getCount()+"");
-        //String name = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[0]));
-        String phone = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[1]));
-        String build = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[3]));
-        String email = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[2]));
+        Log.i("deeeeepLife", data.getCount() + "");
 
-        tv_email.setText(email);
-        tv_build.setText(build);
-        //tv_name.setText(name);
-        tv_phone.setText(phone);
+        if(data != null && data.moveToFirst() && data.getCount()>0) {
+            String name = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[0]));
+            String phone = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[1]));
+            String build = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[3]));
+            String email = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[2]));
+
+            tv_email.setText(email);
+            tv_build.setText(build);
+            tv_name.setText(name);
+            tv_phone.setText(phone);
+            data.close();
+
+        }
     }
 
 	public void populateList(Context context){

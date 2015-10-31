@@ -60,12 +60,14 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AbsoluteLayout;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +89,7 @@ public class DiscipleList extends Fragment {
 
 	public static final int MENU_EDIT =1;
 	public static final int MENU_DELETE = 2;
-    Dialog add;
+
 
 	Database dbadapter;
 	DeepLife dbhelper;
@@ -109,8 +111,7 @@ public class DiscipleList extends Fragment {
 
         populateList(getActivity());
 
-        add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
-        add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
 
 		addDisciple = (Button) view.findViewById(R.id.bt_add_disciple);
 		addDisciple.setOnClickListener(new OnClickListener() {
@@ -118,17 +119,14 @@ public class DiscipleList extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
-                //add.setContentView(R.layout.fragment_add_disciple);
-                //add.setTitle("Add Desciple");
-                //add.show();
+                    addDiscipleDialog();
 
                 //FragmentTransaction ft = getFragmentManager().beginTransaction();
                //AddDiscipleDialog fd = new AddDiscipleDialog();
                 //fd.show(ft,"addDisciple");
 
-				Intent intent = new Intent(getActivity(),ProfileActivity.class);
-				startActivity(intent);
+				//Intent intent = new Intent(getActivity(),AddDisciple.class);
+				//startActivity(intent);
 
                 //AddDiscipleDialog frag = new AddDiscipleDialog();
                 //frag.show(getFragmentManager(),"addDisciple");
@@ -141,11 +139,37 @@ public class DiscipleList extends Fragment {
 		
 	}
 
+    public void addDiscipleDialog(){
+        Dialog add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
+        add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        add.setContentView(R.layout.fragment_add_disciple);
+
+
+        String[] list = CountryDetails.country;
+
+        ArrayList<String> country_list = new ArrayList<String>();
+
+        for(int i=0;i<list.length;i++){
+            country_list.add(list[i]);
+        }
+        Log.i("Deeep Lifeeeeeeeeeeee",country_list.toString());
+        Log.i("Deeeeep Lifeeeeeeee", "Coountry array length = " + country_list.size());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), android.R.layout.simple_spinner_item, country_list);
+
+        Spinner countries = (Spinner) add.findViewById(R.id.countries_spinner);
+
+        countries.setAdapter(new MySpinnerAdapter(getActivity(),R.layout.countries_spinner,list));
+
+        add.setTitle("Add Desciple");
+        add.show();
+    }
+
 	public void populateList(Context context){
-		//Cursor cursor = dbadapter.getAll(dbhelper.Table_DISCIPLES);
-		//MyCursorAdapter myadapter = new MyCursorAdapter(context, cursor);
+
 		ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
-		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(),discples));
+		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(), discples));
 	}
 	
 	
@@ -171,23 +195,23 @@ public class DiscipleList extends Fragment {
 
 	public void delete_Dialog(final int id,final String name) {
 
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
+                switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        long i = dbadapter.remove(dbhelper.Table_DISCIPLES, id);
-                        if(i!=-1){
-                            Log.i("DeepLife", "Successfully Deleted");
-                            Toast.makeText(getActivity(),"Successfully Deleted!", Toast.LENGTH_SHORT).show();
+
+                        long deleted = dbadapter.remove(DeepLife.Table_DISCIPLES,id);
+                        if(deleted!=-1){
+                            Toast.makeText(getActivity(),"Successfully Deleted",Toast.LENGTH_SHORT).show();
+                            reload();
                         }
                         break;
-//		        case DialogInterface.BUTTON_NEUTRAL:
+//				        case DialogInterface.BUTTON_NEUTRAL:
                     //Yes button clicked
 
-//			            break;
+                    //			            break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
@@ -195,75 +219,57 @@ public class DiscipleList extends Fragment {
                 }
             }
         };
+
+
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Delete Disciple ").setMessage("Do you want to delete you disciple "+name)
+                .setPositiveButton("Delete ", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener)
+//			   .setNeutralButton(" ", dialogClickListener)
+                .show();
     }
 
 
-	/*
-	class MyCursorAdapter extends CursorAdapter {
-
-		Context context;
-		public MyCursorAdapter(Context context, Cursor c) {
-			super(context, c,0);
-			this.context = context;
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void bindView(View view, Context arg1, Cursor cursor) {
-			// TODO Auto-generated method stub
-			TextView tv_name = (TextView) view.findViewById(R.id.userN);
-			TextView tv_phone = (TextView) view.findViewById(R.id.userphone);
-			TextView tv_build = (TextView) view.findViewById(R.id.userbuild);
-
-			final String name = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_FIELDS[0));
-			final String phone = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_FIELDS[1]));
-			final String build = cursor.getString(cursor.getColumnIndexOrThrow(dbhelper.BUILD_PHASE));
-			final int id = cursor.getInt(cursor.getColumnIndexOrThrow(dbhelper.DISCIPLES_COLUMN[0]));
-
-			//String image = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.IMAGE));
-
-			//iv.setImageBitmap(BitmapFactory.decodeFile(image));
-
-			//Log.i("Deep Life","Image Link: "+ image);
-
-			tv_name.setText(name);
-			tv_phone.setText(phone);
-			tv_build.setText(build);
-
-			view.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                }
-            });
-
-			view.setOnLongClickListener(new OnLongClickListener() {
-
-				@Override
-				public boolean onLongClick(View v) {
-					// TODO Auto-generated method stub
-					delete_Dialog(id);
-					return true;
-				}
-			});
-
-		}
-
-		@Override
-		public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
-			// TODO Auto-generated method stub
-			return LayoutInflater.from(context).inflate(R.layout.dislist, arg2,false);
-
-		}
+    public void reload(){
+        dbadapter.dispose();
+        Intent intent = new Intent(this.getActivity(),MainMenu.class);
+        startActivity(intent);
+    }
 
 
-	}
+    public class MySpinnerAdapter extends ArrayAdapter<String> {
 
-*/
+        String[] object;
+        public MySpinnerAdapter(Context ctx, int txtViewResourceId, String[] objects) {
+            super(ctx, txtViewResourceId, objects);
+            this.object = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt) {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
+                    false);
+            TextView main_text = (TextView) mySpinner
+                    .findViewById(R.id.spinner_text);
+            main_text.setText(object[position]);
+
+            return mySpinner;
+        }
+    }
 
 
-	public class MyDiscipleListAdapter extends BaseAdapter
+
+
+    public class MyDiscipleListAdapter extends BaseAdapter
 			{
 				Context context;
 				ArrayList<Disciples> disciples;
@@ -294,6 +300,8 @@ public class DiscipleList extends Fragment {
 					LayoutInflater inflate = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					convertView = inflate.inflate(R.layout.dislist,null);
 
+                    ImageView dialer = (ImageView) convertView.findViewById(R.id.disciple_phoneimage);
+
 					TextView tv_name=(TextView)convertView.findViewById(R.id.userN);
 					TextView tv_phone=(TextView)convertView.findViewById(R.id.userphone);
 					TextView tv_build_phase=(TextView)convertView.findViewById(R.id.userbuild);
@@ -308,19 +316,26 @@ public class DiscipleList extends Fragment {
 					tv_phone.setText(phonee);
 					tv_build_phase.setText(buildd);
 
-					tv_name.setOnClickListener(new OnClickListener() {
+                    convertView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(DiscipleList.this.getActivity().getApplicationContext(), ProfileActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("id",idstring);
+                            b.putString("id", idstring);
                             intent.putExtras(b);
-                            Log.i("Deeeeeeep Life", idstring);
                             startActivity(intent);
                         }
                     });
 
-                    tv_phone.setOnClickListener(new OnClickListener() {
+                    convertView.setOnLongClickListener(new OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            delete_Dialog(id,namee);
+                            return true;
+                        }
+                    });
+
+                    dialer.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -328,25 +343,9 @@ public class DiscipleList extends Fragment {
                             startActivity(intent);
                         }
                     });
-				       convertView.setOnClickListener(new OnClickListener() {
 
-						@Override
-						public void onClick(View v) {
-								//startActivity(intent);
 
-						}
-					});
 
-				       convertView.setOnLongClickListener(new OnLongClickListener() {
-
-						@Override
-						public boolean onLongClick(View v) {
-							// TODO Auto-generated method stub
-
-							delete_Dialog(id, namee);
-							return true;
-						}
-					});
 
 
 

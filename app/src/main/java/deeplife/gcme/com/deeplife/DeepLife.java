@@ -38,7 +38,7 @@ public class DeepLife extends Application {
 		super.onCreate();
 		myDatabase = new Database(this);
 		Intent intent = new Intent(this, Service.class);
-		startService(intent);
+		//startService(intent);
 	}
 
 	public static void Send_Log(String Type, String id) {

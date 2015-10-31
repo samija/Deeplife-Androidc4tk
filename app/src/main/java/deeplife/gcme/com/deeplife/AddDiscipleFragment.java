@@ -56,7 +56,6 @@ public class AddDiscipleFragment extends Fragment {
 		ed_name = (EditText) view.findViewById(R.id.adddisciple_name);
 		ed_email = (EditText) view.findViewById(R.id.add_discple_email);
 		ed_phone = (EditText) view.findViewById(R.id.add_disciple_phone);
-        ed_country = (EditText) view.findViewById(R.id.add_disciple_country);
 
 		dbadapter = new Database(getActivity());
 		dbhelper = new DeepLife();
@@ -71,14 +70,13 @@ public class AddDiscipleFragment extends Fragment {
 					String name = ed_name.getText().toString();
 					String email = ed_email.getText().toString();
 					String phone = ed_phone.getText().toString();
-					String country = ed_country.getText().toString();
+					//String country = ed_country.getText().toString();
 
 					ContentValues values = new ContentValues();
 					values.put(dbhelper.DISCIPLES_FIELDS[0], name);
 					values.put(dbhelper.DISCIPLES_FIELDS[1], phone);
 					values.put(dbhelper.DISCIPLES_FIELDS[2],email);
 					values.put(dbhelper.DISCIPLES_FIELDS[3], "Added");
-					values.put(dbhelper.DISCIPLES_FIELDS[4], country);
 
 					long i = dbadapter.insert(dbhelper.Table_DISCIPLES, values);
 
