@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,13 +39,12 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 
 	String[] drawerlistitems;
 
+    String disciple_id = "1";
 
 
-    String disciple_id;
 
 	ViewPager viewpager;
 	ActionBarDrawerToggle drawerListener;
-
 
 
 	@Override
@@ -54,14 +54,9 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		setContentView(R.layout.welcome);
 		getActionBar().setTitle("Disciples");
 
+        disciple_id = getIntent().getExtras().getString("id");
 
-		Bundle extras = getIntent().getExtras();
-		if(extras!=null){
-            disciple_id = extras.getString("id");
-		}
-
-
-		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
+        drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
 		viewpager = (ViewPager) findViewById(R.id.welcome_viewpager);
 		viewpager.setAdapter(new MyAdpater(getSupportFragmentManager()));
@@ -94,6 +89,8 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 
 
 		getOverflowMenu();
+
+
 	}
 	
 	private void getOverflowMenu() {
@@ -111,6 +108,9 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 	 }
 
 
+    public String getDisciple_id(){
+        return this.disciple_id;
+    }
 
 
 
@@ -123,7 +123,7 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
+        super.onConfigurationChanged(newConfig);
 		//drawerListener.onConfigurationChanged(newConfig);
 	}
 	
@@ -220,7 +220,8 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		@Override
 		public Fragment getItem(int arg0) {
 			if(arg0==0){
-				page = new Profile(disciple_id);
+				page = new Profile();
+
 			}
 
 			return page;

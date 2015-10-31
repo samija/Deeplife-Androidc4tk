@@ -311,8 +311,11 @@ public class DiscipleList extends Fragment {
 					tv_name.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                            intent.putExtra("id", idstring);
+                            Intent intent = new Intent(DiscipleList.this.getActivity().getApplicationContext(), ProfileActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("id",idstring);
+                            intent.putExtras(b);
+                            Log.i("Deeeeeeep Life", idstring);
                             startActivity(intent);
                         }
                     });

@@ -44,22 +44,21 @@ public class Profile extends Fragment {
 	Database dbadapter;
 	DeepLife dbhelper;
 
-    public Profile(String id){
-        this.disciple_id = id;
-    }
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		
+
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.disciple_dashboard, container,
 				false);
 
+        ProfileActivity myactivity = (ProfileActivity) getActivity();
+
 		dbadapter = new Database(getActivity());
 		dbhelper = new DeepLife();
 
-
+        disciple_id = myactivity.getDisciple_id();
 
         tv_build = (TextView) view.findViewById(R.id.profile_build_stage);
         tv_name = (TextView) view.findViewById(R.id.profile_name);
