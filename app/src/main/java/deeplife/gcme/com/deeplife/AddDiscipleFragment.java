@@ -101,8 +101,12 @@ public class AddDiscipleFragment extends Fragment {
 		
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		dbadapter.dispose();
+	}
 
-	
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub

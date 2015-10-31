@@ -1,15 +1,10 @@
 package deeplife.gcme.com.deeplife;
 
-import java.lang.reflect.Field;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,7 +23,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainMenu extends FragmentActivity implements OnItemClickListener {
+import java.lang.reflect.Field;
+
+public class ProfileActivity extends FragmentActivity implements OnItemClickListener {
 
 	DrawerLayout drawerLayout;
 	ListView dlist;
@@ -44,7 +40,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
-		getActionBar().setTitle("Welcome");
+		getActionBar().setTitle("Disciple Profile");
 
 		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
@@ -55,13 +51,13 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				// TODO Auto-generated method stub
-				Toast.makeText(MainMenu.this, "Opened", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ProfileActivity.this, "Opened", Toast.LENGTH_SHORT).show();
 			}
 			@Override
 					public void onDrawerClosed(View drawerView) {
 						// TODO Auto-generated method stub
 					//	super.onDrawerClosed(drawerView);
-				Toast.makeText(MainMenu.this, "Closed", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ProfileActivity.this, "Closed", Toast.LENGTH_SHORT).show();
 					
 			}
 			
@@ -112,8 +108,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		inflater.inflate(R.menu.option_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -199,18 +194,16 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		@Override
 		public Fragment getItem(int arg0) {
 			if(arg0==0){
-				page = new DiscipleList();
+				page = new Profile();
 			}
-			if(arg0==1){
-				page = new Schedules();
-			}
+
 			return page;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 2;
+			return 1;
 		}
 		
 		@Override
@@ -233,7 +226,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	//	selectItem(arg2);
 		switch(arg2){
 		case 0: 
-			Intent intent0 = new Intent(this, MainMenu.class);
+			Intent intent0 = new Intent(this, ProfileActivity.class);
 			startActivity(intent0);
 			break;
 		case 1:

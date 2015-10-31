@@ -127,9 +127,8 @@ public class DiscipleList extends Fragment {
                //AddDiscipleDialog fd = new AddDiscipleDialog();
                 //fd.show(ft,"addDisciple");
 
-				Intent intent = new Intent(getActivity(),AddDisciple.class);
+				Intent intent = new Intent(getActivity(),ProfileActivity.class);
 				startActivity(intent);
-				getActivity().finish();
 
                 //AddDiscipleDialog frag = new AddDiscipleDialog();
                 //frag.show(getFragmentManager(),"addDisciple");
@@ -137,7 +136,6 @@ public class DiscipleList extends Fragment {
 
 
 		});
-
 
 		return 	view;
 		
@@ -165,7 +163,13 @@ public class DiscipleList extends Fragment {
 	//	registerForContextMenu(newsView);
 	}
 
-    public void delete_Dialog(final int id,final String name) {
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		dbadapter.dispose();
+	}
+
+	public void delete_Dialog(final int id,final String name) {
 
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -302,8 +306,7 @@ public class DiscipleList extends Fragment {
 					tv_name.setText(namee);
 					tv_phone.setText(phonee);
 					tv_build_phase.setText(buildd);
-
-
+					
 				       convertView.setOnClickListener(new OnClickListener() {
 
 						@Override

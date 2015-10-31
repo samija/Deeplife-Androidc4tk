@@ -24,8 +24,9 @@ public class Splash extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
-                .penaltyDeath().build());
+        //StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+        //        .penaltyDeath().build());
+
     /*
 		new Handler().postAtTime(new Runnable() {
 			
@@ -54,11 +55,12 @@ public class Splash extends Activity {
 	public synchronized void getNextActivity() {
 		Intent intent = new Intent(this, MainMenu.class);
 		startActivity(intent);
-        finish();
-		Log.i("EEEEEEEEEEEEEEE", "Called Main Menu room");
-		
-		finish();
+
 	}
 
-    
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+	}
 }
