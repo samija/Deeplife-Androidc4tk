@@ -183,7 +183,7 @@ public class DiscipleList extends Fragment {
         bt_add_pic.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                    
+                
             }
         });
 
