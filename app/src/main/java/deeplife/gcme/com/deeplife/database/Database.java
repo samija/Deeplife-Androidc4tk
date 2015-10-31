@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Database {
 	private SQLiteDatabase myDatabase;
@@ -72,8 +73,10 @@ public class Database {
 	}
 	public Cursor get_value_by_ID (String DB_Table,String id){
 		Cursor cur = myDatabase.rawQuery("select * from "+DB_Table+" where id="+id, null);
-		return cur;	
+		return cur;
 	}
+
+
 	public long Delete_By_ID(String DB_Table,int pos){
 		String[] args = {""+pos};
 		long val = myDatabase.delete(DB_Table, "id = ?", args);
