@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.data_types.Disciples;
@@ -32,12 +35,18 @@ public class Profile extends Fragment {
 
 	public ListView lv_schedule;
 
+    TextView tv_build, tv_name, tv_phone, tv_gender,tv_email;
+    String disciple_id;
 	ArrayList<String> schedule_list;
 
 	Button addDisciple;
 
 	Database dbadapter;
 	DeepLife dbhelper;
+
+    public Profile(String id){
+        this.disciple_id = id;
+    }
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -49,6 +58,16 @@ public class Profile extends Fragment {
 
 		dbadapter = new Database(getActivity());
 		dbhelper = new DeepLife();
+
+
+
+        tv_build = (TextView) view.findViewById(R.id.profile_build_stage);
+        tv_name = (TextView) view.findViewById(R.id.profile_name);
+        tv_phone = (TextView) view.findViewById(R.id.profile_phone);
+        tv_gender = (TextView) view.findViewById(R.id.profile_gender);
+        tv_email = (TextView) view.findViewById(R.id.profile_email);
+
+        populateView(disciple_id);
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
@@ -82,14 +101,28 @@ public class Profile extends Fragment {
 		
 	}
 
+    public void populateView(String id){
+
+        Cursor data = dbadapter.get_value_by_ID(DeepLife.Table_DISCIPLES, id);
+        String name = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[0]));
+        String phone = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[1]));
+        String build = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[3]));
+        String email = data.getString(data.getColumnIndexOrThrow(DeepLife.DISCIPLES_FIELDS[2]));
+
+        tv_email.setText(email);
+        tv_build.setText(build);
+        tv_name.setText(name);
+        tv_phone.setText(phone);
+    }
+
 	public void populateList(Context context){
 
 		//ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
 		//lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(),discples));
 	}
-	
-	
-	@Override
+
+
+    @Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 	//	unregisterForContextMenu(newsView);

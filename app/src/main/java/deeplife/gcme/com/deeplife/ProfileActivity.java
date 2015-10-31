@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -21,31 +22,50 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Field;
+
+import deeplife.gcme.com.deeplife.database.Database;
 
 public class ProfileActivity extends FragmentActivity implements OnItemClickListener {
 
 	DrawerLayout drawerLayout;
 	ListView dlist;
-	
+
 	String[] drawerlistitems;
-	
+
+
+
+    String disciple_id;
+
 	ViewPager viewpager;
 	ActionBarDrawerToggle drawerListener;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
-		getActionBar().setTitle("Disciple Profile");
+		getActionBar().setTitle("Disciples");
+
+
+		Bundle extras = getIntent().getExtras();
+		if(extras!=null){
+            disciple_id = extras.getString("id");
+		}
+
 
 		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
 		viewpager = (ViewPager) findViewById(R.id.welcome_viewpager);
 		viewpager.setAdapter(new MyAdpater(getSupportFragmentManager()));
+
 		drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.drawericon,
 				R.string.draweropened, R.string.drawerclosed){
 			@Override
@@ -53,6 +73,7 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 				// TODO Auto-generated method stub
 				Toast.makeText(ProfileActivity.this, "Opened", Toast.LENGTH_SHORT).show();
 			}
+
 			@Override
 					public void onDrawerClosed(View drawerView) {
 						// TODO Auto-generated method stub
@@ -88,7 +109,12 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 	       e.printStackTrace();
 	   }
 	 }
-	@Override
+
+
+
+
+
+    @Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onPostCreate(savedInstanceState);
@@ -194,7 +220,7 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		@Override
 		public Fragment getItem(int arg0) {
 			if(arg0==0){
-				page = new Profile();
+				page = new Profile(disciple_id);
 			}
 
 			return page;

@@ -302,20 +302,38 @@ public class DiscipleList extends Fragment {
 					final String phonee = disciples.get(position).getPhone();
 					final String buildd = disciples.get(position).getBuild_Phase();
 					final int id = Integer.parseInt(disciples.get(position).getId());
+                    final String idstring = disciples.get(position).getId();
 
 					tv_name.setText(namee);
 					tv_phone.setText(phonee);
 					tv_build_phase.setText(buildd);
-					
+
+					tv_name.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                            intent.putExtra("id", idstring);
+                            startActivity(intent);
+                        }
+                    });
+
+                    tv_phone.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+phonee));
+                            startActivity(intent);
+                        }
+                    });
 				       convertView.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-
 								//startActivity(intent);
 
 						}
 					});
+
 				       convertView.setOnLongClickListener(new OnLongClickListener() {
 
 						@Override
