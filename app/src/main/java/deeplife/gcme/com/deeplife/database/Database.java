@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package deeplife.gcme.com.deeplife.database; ///
+=======
+package deeplife.gcme.com.deeplife.database;//
+>>>>>>> origin/master
 
 import java.util.ArrayList;
 

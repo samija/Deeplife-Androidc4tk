@@ -39,7 +39,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import deeplife.gcme.com.deeplife.data_types.Disciples;
 import deeplife.gcme.com.deeplife.data_types.Schedule;
@@ -167,11 +170,18 @@ public class Schedules extends Fragment {
                 String disc = ed_disc.getText().toString();
                 String name = names.getSelectedItem().toString();
                 String time = tp_time.getCurrentHour().toString() + tp_time.getCurrentMinute();
-                //String date = dp_date.getDayOfMonth();
 
-                ContentValues values = new ContentValues();
+                //get date
+                int day = dp_date.getDayOfMonth();
+                int month = dp_date.getMonth();
+                int year =  dp_date.getYear();
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                Date date = calendar.getTime();
+
+                        ContentValues values = new ContentValues();
                 values.put(dbhelper.SCHEDULES_FIELDS[0], phone);
-                values.put(dbhelper.SCHEDULES_FIELDS[1], time);
+                values.put(dbhelper.SCHEDULES_FIELDS[1], date + time);
                 values.put(dbhelper.SCHEDULES_FIELDS[2],0);
                 values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
 
