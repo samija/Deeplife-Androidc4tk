@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +46,7 @@ public class Profile extends Fragment {
     TextView tv_build, tv_name, tv_phone, tv_gender,tv_email;
 
     ImageButton imageView;
+    ImageView profile_pic;
 
     String disciple_id;
 	ArrayList<String> schedule_list;
@@ -79,8 +81,8 @@ public class Profile extends Fragment {
         tv_gender = (TextView) view.findViewById(R.id.profile_gender);
         tv_email = (TextView) view.findViewById(R.id.profile_email);
 
-        imageView = (ImageButton) view.findViewById(R.id.profile_pic);
-
+        imageView = (ImageButton) view.findViewById(R.id.profile_cover);
+        profile_pic = (ImageView) view.findViewById(R.id.profile_pic);
 
         populateView(disciple_id);
 
@@ -128,11 +130,20 @@ public class Profile extends Fragment {
             String phone = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[1]));
             String build = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[3]));
             String email = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[2]));
+            String gender = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[5]));
+            String country = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[4]));
+            String picture = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[6]));
 
             tv_email.setText(email);
             tv_build.setText(build);
             tv_name.setText(name);
             tv_phone.setText(phone);
+            tv_gender.setText(gender);
+
+            if(picture!=null){
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                profile_pic.setImageBitmap(BitmapFactory.decodeFile(picture, options));            }
 
             data.close();
 
@@ -200,7 +211,16 @@ public class Profile extends Fragment {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
-        this.updateImageView(BitmapFactory.decodeFile(filePath, options));
+        ContentValues content = new ContentValues();
+        content.put(dbhelper.DISCIPLES_FIELDS[6],mCurrentPhotoPath);
+        long i = dbadapter.update(dbhelper.Table_DISCIPLES,content,Integer.parseInt(disciple_id));
+        if(i!=-1){
+            Toast.makeText(getActivity(),"Profile Picture changed!",Toast.LENGTH_SHORT).show();
+            this.updateImageView(BitmapFactory.decodeFile(filePath, options));
+        }
+        else{
+            Toast.makeText(getActivity(),"There was an error! Couldn't change picture", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -208,8 +228,10 @@ public class Profile extends Fragment {
     private void updateImageView(Bitmap newImage) {
         BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 500, 0);
 
+
         this.image = bitmapProcessor.getBitmap();
-        this.imageView.setImageBitmap(this.image);
+        this.profile_pic.setImageBitmap(this.image);
+
     }
     
     

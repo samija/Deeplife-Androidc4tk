@@ -133,6 +133,8 @@ public class Database {
 			dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
 			dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
 			dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+			dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
+			dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
 
 			found.add(dis);
 		}
