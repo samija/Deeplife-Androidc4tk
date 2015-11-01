@@ -19,13 +19,13 @@ public class DeepLife extends Application {
 			 "Phone", "Email", "Build_phase","Country","Gender","Picture" };
 
 	public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
-	public static final String[] SCHEDULE_FIELDS = { "DiscipleId","Time", "Description" };
+	public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
 	public static final String[] USER_FIELDS = { "Name","Email", "Password","Phone"};
 
 	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name",
 			 "Phone", "Email", "Build_phase","Country","Gender","Picture" };
-	public static final String[] SCHEDULE_COLUMN = { "id","Disciple_Id","Time", "Description" };
+	public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
 	public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
 	public static final String[] USER_COLUMN = { "id", "Name","Email", "Password","Phone"};
@@ -36,18 +36,29 @@ public class DeepLife extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		myDatabase = new Database(this);
+		myDatabase = new Database(getApplicationContext());
 		Intent intent = new Intent(this, Service.class);
-		//startService(intent);
-	}
+		if(myDatabase.count(Table_USER)==1){
+			startService(intent);
+		}
 
-	public static void Send_Log(String Type, String id) {
-		ContentValues cv_log = new ContentValues();
-		cv_log.put(LOGS_FIELDS[0], Type);
-		cv_log.put(LOGS_FIELDS[1], id);
-		myDatabase.insert(DeepLife.Table_LOGS, cv_log);
 	}
-
+	//Register User Profile
+	public static void Register_Profile(JSONArray NOTIS) throws JSONException {
+		myDatabase.Delete_All(Table_USER);
+		if (NOTIS.length() > 0) {
+			for (int i = 0; i < NOTIS.length(); i++) {
+				JSONObject obj = NOTIS.getJSONObject(i);
+				ContentValues sch_vals = new ContentValues();
+				sch_vals.put(USER_FIELDS[0], obj.getString(USER_FIELDS[0]));
+				sch_vals.put(USER_FIELDS[1], obj.getString(USER_FIELDS[1]));
+				sch_vals.put(USER_FIELDS[2], obj.getString(USER_FIELDS[2]));
+				sch_vals.put(USER_FIELDS[3], obj.getString(USER_FIELDS[3]));
+				sch_vals.put(USER_FIELDS[4], obj.getString(USER_FIELDS[4]));
+				myDatabase.insert(Table_USER, sch_vals);
+			}
+		}
+	}
 	public static void Register_disciple(JSONArray NOTIS) throws JSONException {
 		if (NOTIS.length() > 0) {
 			for (int i = 0; i < NOTIS.length(); i++) {
@@ -57,8 +68,20 @@ public class DeepLife extends Application {
 				sch_vals.put(DISCIPLES_FIELDS[1], obj.getString(DISCIPLES_FIELDS[1]));
 				sch_vals.put(DISCIPLES_FIELDS[2], obj.getString(DISCIPLES_FIELDS[2]));
 				sch_vals.put(DISCIPLES_FIELDS[3], obj.getString(DISCIPLES_FIELDS[3]));
-				sch_vals.put(DISCIPLES_FIELDS[4], obj.getString(DISCIPLES_FIELDS[4]));
 				myDatabase.insert(Table_DISCIPLES, sch_vals);
+			}
+		}
+	}
+	public static void Register_Schedule(JSONArray NOTIS) throws JSONException {
+		if (NOTIS.length() > 0) {
+			for (int i = 0; i < NOTIS.length(); i++) {
+				JSONObject obj = NOTIS.getJSONObject(i);
+				ContentValues sch_vals = new ContentValues();
+				sch_vals.put(SCHEDULES_FIELDS[0], obj.getString(SCHEDULES_FIELDS[0]));
+				sch_vals.put(SCHEDULES_FIELDS[1], obj.getString(SCHEDULES_FIELDS[1]));
+				sch_vals.put(SCHEDULES_FIELDS[2], obj.getString(SCHEDULES_FIELDS[2]));
+				sch_vals.put(SCHEDULES_FIELDS[3], obj.getString(SCHEDULES_FIELDS[3]));
+				myDatabase.insert(Table_SCHEDULES, sch_vals);
 			}
 		}
 	}

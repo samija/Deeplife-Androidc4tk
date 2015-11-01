@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -30,7 +32,15 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import deeplife.gcme.com.deeplife.data_types.Disciples;
 import deeplife.gcme.com.deeplife.database.Database;
@@ -56,6 +66,8 @@ public class Profile extends Fragment {
 	Database dbadapter;
 	DeepLife dbhelper;
     private String mCurrentPhotoPath;
+    private String newCurrentPhotoPath;
+
     private Bitmap image;
 
 
@@ -194,8 +206,6 @@ public class Profile extends Fragment {
     }
 
 
-
-
     private void imageFromGallery(int resultCode, Intent data) {
         Uri selectedImage = data.getData();
         String [] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -211,32 +221,95 @@ public class Profile extends Fragment {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
-        ContentValues content = new ContentValues();
-        content.put(dbhelper.DISCIPLES_FIELDS[6],mCurrentPhotoPath);
-        long i = dbadapter.update(dbhelper.Table_DISCIPLES,content,Integer.parseInt(disciple_id));
-        if(i!=-1){
-            Toast.makeText(getActivity(),"Profile Picture changed!",Toast.LENGTH_SHORT).show();
-            this.updateImageView(BitmapFactory.decodeFile(filePath, options));
-        }
-        else{
-            Toast.makeText(getActivity(),"There was an error! Couldn't change picture", Toast.LENGTH_SHORT).show();
-        }
-    }
+        FileOutputStream out = null;
+        FileInputStream in;
 
+        Bitmap newScaledImage = scaleBitmap(BitmapFactory.decodeFile(filePath, options), 300f, 300f);
+        File newImageFile;
+
+        try {
+            newImageFile = createImageFile();
+            in = new FileInputStream(filePath);
+            out = new FileOutputStream(newCurrentPhotoPath);
+            //out = new FileOutputStream(newImageFile);
+            copyFile(in,out);
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
+            out = null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(newCurrentPhotoPath!=null) {
+            //then add new image to database
+            ContentValues content = new ContentValues();
+            content.put(dbhelper.DISCIPLES_FIELDS[6], newCurrentPhotoPath);
+            long i = dbadapter.update(dbhelper.Table_DISCIPLES, content, Integer.parseInt(disciple_id));
+            if (i != -1) {
+                Toast.makeText(getActivity(), "Profile Picture changed!", Toast.LENGTH_SHORT).show();
+                this.updateImageView(BitmapFactory.decodeFile(newCurrentPhotoPath, options));
+            } else {
+                Toast.makeText(getActivity(), "There was an error! Couldn't change picture", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+    }
 
 
     private void updateImageView(Bitmap newImage) {
-        BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 500, 0);
+      // BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 250, 250, 0);
 
-
-        this.image = bitmapProcessor.getBitmap();
-        this.profile_pic.setImageBitmap(this.image);
-
+        //this.image = bitmapProcessor.getBitmap();
+        //this.profile_pic.setImageBitmap(this.image);
+        this.profile_pic.setImageBitmap(BitmapFactory.decodeFile(newCurrentPhotoPath));
     }
-    
-    
-    
-    
+
+    public static Bitmap scaleBitmap(Bitmap bitmapToScale, float newWidth, float newHeight) {
+                if(bitmapToScale == null)
+                    return null;
+        //get the original width and height
+                int width = bitmapToScale.getWidth();
+                int height = bitmapToScale.getHeight();
+        // create a matrix for the manipulation
+                Matrix matrix = new Matrix();
+
+        // resize the bit map
+                matrix.postScale(newWidth / width, newHeight / height);
+
+        // recreate the new Bitmap and set it back
+                return Bitmap.createBitmap(bitmapToScale, 0, 0, bitmapToScale.getWidth(), bitmapToScale.getHeight(), matrix, true);
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        String storageDir = Environment.getExternalStorageDirectory() + "DeepLife/profilepics";
+        File dir = new File(storageDir);
+        if (!dir.exists())
+            dir.mkdir();
+
+        File image = new File(storageDir + "/" + imageFileName + ".jpg");
+
+        // Save a file: path for use with ACTION_VIEW intents
+        newCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
+    }
+
+
     
 	public void delete_Dialog(final int id,final String name) {
 

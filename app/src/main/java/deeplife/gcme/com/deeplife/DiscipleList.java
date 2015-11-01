@@ -215,7 +215,7 @@ public class DiscipleList extends Fragment {
 
 	public void populateList(Context context){
 
-		ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
+		ArrayList<Disciples> discples = dbadapter.getDisciples();
 		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(), discples));
 	}
 	
