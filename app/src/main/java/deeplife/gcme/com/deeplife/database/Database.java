@@ -22,6 +22,7 @@ public class Database {
 		mySQL.createTables(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_FIELDS);
 		mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
 		mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
+		mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULE_FIELDS);
 
 	}
 	public long insert(String DB_Table,ContentValues cv){
