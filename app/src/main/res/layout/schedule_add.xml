@@ -36,7 +36,7 @@
                 <TimePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/schedule_time_picker"
+                    android:id="@+id/schedule_add_time_picker"
                     android:layout_marginBottom="10dp"
                     android:layout_gravity="center_horizontal" />
 
@@ -46,7 +46,7 @@
 
 
                 <EditText
-                    android:id="@+id/adddisciple_name"
+                    android:id="@+id/schedule_add_disc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

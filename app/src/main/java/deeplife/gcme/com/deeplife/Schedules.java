@@ -1,6 +1,8 @@
 package deeplife.gcme.com.deeplife;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.CursorAdapter;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -20,12 +24,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -78,9 +88,9 @@ public class Schedules extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+                addScheduleDialog();
 
-
-			}
+            }
 		});
 
 		setHasOptionsMenu(true);
@@ -97,6 +107,90 @@ public class Schedules extends Fragment {
         lv_schedule.setAdapter(new MyDiscipleListAdapter(context,schedules));
 
     }
+
+
+
+
+
+    public void addScheduleDialog(){
+        final Dialog add = new Dialog(getActivity().getBaseContext());
+
+        add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        add.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        add.setContentView(R.layout.schedule_add);
+
+        WindowManager window = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        window.getDefaultDisplay().getMetrics(dm);
+        double wid = dm.widthPixels*0.9;
+        double hei = dm.heightPixels*0.8;
+        int width = (int) wid;
+        int height = (int) hei;
+        add.getWindow().setLayout(width, height);
+
+
+        add.show();
+
+        ArrayList<String> list = dbadapter.get_all_in_column(dbhelper.Table_DISCIPLES,dbhelper.DISCIPLES_FIELDS[0]);
+
+
+
+        final Spinner names = (Spinner) add.findViewById(R.id.schedule_add_name);
+        final EditText ed_disc = (EditText) add.findViewById(R.id.schedule_add_disc);
+        final TimePicker tp_time = (TimePicker) add.findViewById(R.id.schedule_add_time_picker);
+
+        final String phone = "091177";
+        names.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner, list));
+
+
+        names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //int i = names.getSelectedItemPosition();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+        Button bt_add_disciple = (Button) add.findViewById(R.id.btn_add_disciple);
+        bt_add_disciple.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String disc = ed_disc.getText().toString();
+                String name = names.getSelectedItem().toString();
+                String time = tp_time.getCurrentHour().toString() + tp_time.getCurrentMinute();
+
+                ContentValues values = new ContentValues();
+                values.put(dbhelper.SCHEDULES_FIELDS[0], phone);
+                values.put(dbhelper.SCHEDULES_FIELDS[1], time);
+                values.put(dbhelper.SCHEDULES_FIELDS[2],0);
+                values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
+
+                long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
+                if(i!=-1){
+                    //insert the disciple to log table
+                    ContentValues cv1 = new ContentValues();
+                    cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Schedule");
+                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
+                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                        Log.i("Deep Life", "Successfully Added to Log");
+                    }
+
+                    Toast.makeText(getActivity(),"Disciple successfully added!",Toast.LENGTH_SHORT).show();
+                    add.cancel();
+                    reload();
+                }
+            }
+        });
+
+    }
+
 
 
     @Override
@@ -183,6 +277,43 @@ public class Schedules extends Fragment {
         Intent intent = new Intent(this.getActivity(),MainMenu.class);
         startActivity(intent);
     }
+
+
+
+
+
+    public class MySpinnerAdapter extends ArrayAdapter<String> {
+
+        ArrayList<String> object;
+        public MySpinnerAdapter(Context ctx, int txtViewResourceId, ArrayList<String> objects) {
+            super(ctx, txtViewResourceId, objects);
+            this.object = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt) {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
+                    false);
+            TextView main_text = (TextView) mySpinner
+                    .findViewById(R.id.spinner_text);
+            main_text.setText(object.get(position));
+
+            return mySpinner;
+        }
+    }
+
+
+
+
     public class MyDiscipleListAdapter extends BaseAdapter
     {
         Context context;
