@@ -1,10 +1,15 @@
 package deeplife.gcme.com.deeplife;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.CursorAdapter;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -18,12 +23,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.data_types.Disciples;
+import deeplife.gcme.com.deeplife.data_types.Schedule;
 import deeplife.gcme.com.deeplife.database.Database;
 
 /**
@@ -34,21 +42,13 @@ public class Schedules extends Fragment {
 
 	
 	private static final int FRAGMENT_GROUPID = 30;
-	public ListView lv_disciple;
-	String tagname;
-	Button addDisciple;
+	public ListView lv_schedule;
+
+	Button addSchedule;
 	int fallback;
-	
-	int count = 0;
-	
-	public static final int MENU_EDIT =1;
-	public static final int MENU_DELETE = 2;
 
 
-	String[] names = {"Roger", "Biniam", "Henock","Biruk","Selam"};
-	String[] phones = {"0916825542","09111111", "0916546565","09523536","091379341"};
-	String[] times = {"Thuesday 10pm", "Monday 4pm" ,"Wednesday 6pm","Sunday 8am", "Monday 4pm"};
-
+	ArrayList<Schedule> schedules;
 
 	Database dbadapter;
 	DeepLife dbhelper;
@@ -59,33 +59,29 @@ public class Schedules extends Fragment {
 		
 		
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_disciples_list, container,
+		View view = inflater.inflate(R.layout.schedule_list, container,
 				false);
 
 
 		dbadapter = new Database(getActivity());
 		dbhelper = new DeepLife();
 
-		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
+        lv_schedule = (ListView) view.findViewById(R.id.ls_schedule);
+
+        
+        populateList(getActivity());
 
 
-        lv_disciple.setAdapter(new setadapter(getActivity(),names, phones, times));
-
-            //populateList(getActivity());
-
-		registerForContextMenu(lv_disciple);
-		
-		addDisciple = (Button) view.findViewById(R.id.bt_add_disciple);
-		addDisciple.setOnClickListener(new OnClickListener() {
+        addSchedule = (Button) view.findViewById(R.id.bt_add_schedule);
+        addSchedule.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),AddDisciple.class);
-				startActivity(intent);
+
+
 			}
 		});
-		fallback = R.drawable.no_image;
 
 		setHasOptionsMenu(true);
 
@@ -96,9 +92,14 @@ public class Schedules extends Fragment {
 	}
 
 
-	
-	
-	@Override
+    public void populateList(Context context){
+        ArrayList<Schedule> schedules = dbadapter.get_All_Schedule();
+        lv_schedule.setAdapter(new MyDiscipleListAdapter(context,schedules));
+
+    }
+
+
+    @Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 	//	unregisterForContextMenu(newsView);
@@ -141,25 +142,61 @@ public class Schedules extends Fragment {
 	}
 
 
+    public void delete_Dialog(final int id) {
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+
+                        long deleted = dbadapter.remove(DeepLife.Table_SCHEDULES,id);
+                        if(deleted!=-1){
+                            Toast.makeText(getActivity(),"Successfully Deleted",Toast.LENGTH_SHORT).show();
+                            reload();
+                        }
+                        break;
+//				        case DialogInterface.BUTTON_NEUTRAL:
+                    //Yes button clicked
+
+                    //			            break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
 
 
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Remove Schedule ").setMessage("Are You sure you want to remove this schedule" )
+                .setPositiveButton("Yes ", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+//			   .setNeutralButton(" ", dialogClickListener)
+                .show();
+    }
 
-
-    public class setadapter extends BaseAdapter
+    public void reload(){
+        dbadapter.dispose();
+        Intent intent = new Intent(this.getActivity(),MainMenu.class);
+        startActivity(intent);
+    }
+    public class MyDiscipleListAdapter extends BaseAdapter
     {
-        String[] name;
-        String[] phone;
-        String[] build;
-        public setadapter(Context context,String[] n, String[] p, String[] b)
+        Context context;
+        ArrayList<Schedule> schedule;
+        public MyDiscipleListAdapter(Context context,ArrayList<Schedule> schedule)
         {
-            name = n;
-            phone = p;
-            build = b;
+            this.context = context;
+            this.schedule = schedule;
         }
+
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return name.length;
+            return schedule.size();
         }
 
         @Override
@@ -176,48 +213,35 @@ public class Schedules extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             LayoutInflater inflate = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView=inflate.inflate(R.layout.schedule,null);
+            convertView = inflate.inflate(R.layout.schedule,null);
+
 
             TextView tv_name=(TextView)convertView.findViewById(R.id.schedulename);
             TextView tv_phone=(TextView)convertView.findViewById(R.id.schedulephone);
+            TextView tv_disc=(TextView)convertView.findViewById(R.id.scheduledisciption);
             TextView tv_time=(TextView)convertView.findViewById(R.id.scheduletime);
 
-            final String namee = name[position];
-            final String phonee = phone[position];
-            final String timee = build[position];
 
 
-            //TextView title_first = (TextView) convertView.findViewById(R.id.title_first_word);
-            //String firstowrd = news_list.get(position).getTitle().substring(0, 1);
-            //  title_first.setText(firstowrd);
+            //final String name = schedule.get(position).ge;
+            final String phone = schedule.get(position).getDis_Phone();
+            final String time = schedule.get(position).getAlarm_Time();
+            final String discription = schedule.get(position).getDescription();
+            final int id = Integer.parseInt(schedule.get(position).getID());
+
+            tv_name.setText(" Roger");
+            tv_phone.setText(phone);
+            tv_time.setText(time);
+            tv_disc.setText(discription);
 
 
-
-            tv_name.setText(namee);
-            tv_phone.setText(phonee);
-            tv_time.setText(timee);
-
-
-            convertView.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-
-                    //startActivity(intent);
-
-                }
-            });
             convertView.setOnLongClickListener(new OnLongClickListener() {
-
                 @Override
                 public boolean onLongClick(View v) {
-                    // TODO Auto-generated method stub
-
-                    //Show_DialogBox(id,name);
+                    delete_Dialog(id);
                     return true;
                 }
             });
-
 
 
             return convertView;

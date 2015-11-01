@@ -55,7 +55,7 @@ public class Profile extends Fragment {
 
     TextView tv_build, tv_name, tv_phone, tv_gender,tv_email;
 
-    ImageButton imageView;
+    ImageButton imageButton;
     ImageView profile_pic;
 
     String disciple_id;
@@ -70,7 +70,7 @@ public class Profile extends Fragment {
 
     private Bitmap image;
 
-
+    public final static int CHANGE_PIC = 1;
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -93,12 +93,12 @@ public class Profile extends Fragment {
         tv_gender = (TextView) view.findViewById(R.id.profile_gender);
         tv_email = (TextView) view.findViewById(R.id.profile_email);
 
-        imageView = (ImageButton) view.findViewById(R.id.profile_cover);
+        imageButton = (ImageButton) view.findViewById(R.id.profile_cover);
         profile_pic = (ImageView) view.findViewById(R.id.profile_pic);
 
         populateView(disciple_id);
 
-        imageView.setOnClickListener(new ImagePickListener());
+        imageButton.setOnClickListener(new ImagePickListener());
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
@@ -162,13 +162,6 @@ public class Profile extends Fragment {
         }
     }
 
-	public void populateList(Context context){
-
-		//ArrayList<Disciples> discples = dbadapter.getDisciples(dbhelper.Table_DISCIPLES);
-		//lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(),discples));
-	}
-
-
     @Override
 	public void onPause() {
 		// TODO Auto-generated method stub
@@ -190,15 +183,13 @@ public class Profile extends Fragment {
 	}
 
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode== Activity.RESULT_OK){
             Log.i("Deeeep Life","On Activity result called");
             switch (requestCode){
-                case 1:
+                case CHANGE_PIC:
                     this.imageFromGallery(resultCode,data);
                     break;
             }
@@ -219,22 +210,23 @@ public class Profile extends Fragment {
 
         mCurrentPhotoPath = filePath;
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
+        options.inSampleSize = 2;
 
-        FileOutputStream out = null;
-        FileInputStream in;
+        OutputStream out;
+        InputStream in;
 
-        Bitmap newScaledImage = scaleBitmap(BitmapFactory.decodeFile(filePath, options), 300f, 300f);
-        File newImageFile;
+        //Bitmap newScaledImage = scaleBitmap(BitmapFactory.decodeFile(filePath, options), 300f, 300f);
 
         try {
-            newImageFile = createImageFile();
-            in = new FileInputStream(filePath);
-            out = new FileOutputStream(newCurrentPhotoPath);
-            //out = new FileOutputStream(newImageFile);
-            copyFile(in,out);
-            in.close();
-            in = null;
+           File newImageFile = createImageFile();
+            //in = new FileInputStream(new File(mCurrentPhotoPath));
+            out = new FileOutputStream(new File(newCurrentPhotoPath));
+            //BitmapFactory.decodeFile(mCurrentPhotoPath).compress(Bitmap.CompressFormat.JPEG,50,out) ;
+            scaleBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath, options), 590f, 450f).compress(Bitmap.CompressFormat.JPEG,80,out);
+
+            //copyFile(in,out);
+            //in.close();
+            //in = null;
             out.flush();
             out.close();
             out = null;
@@ -255,10 +247,7 @@ public class Profile extends Fragment {
             }
         }
 
-
-
     }
-
 
     private void updateImageView(Bitmap newImage) {
       // BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 250, 250, 0);
@@ -288,11 +277,14 @@ public class Profile extends Fragment {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        String storageDir = Environment.getExternalStorageDirectory() + "DeepLife/profilepics";
+        String storageDir = Environment.getExternalStorageDirectory() + "/deeplife";
         File dir = new File(storageDir);
-        if (!dir.exists())
-            dir.mkdir();
+        if (!dir.exists()) {
+            if(dir.mkdir()){
+                Log.i("Deep Life", "Directory created!");
+            }
 
+        }
         File image = new File(storageDir + "/" + imageFileName + ".jpg");
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -414,7 +406,7 @@ public class Profile extends Fragment {
         public void onClick(View v) {
             Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.setType("image/*");
-            startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
+            startActivityForResult(Intent.createChooser(intent, "Deep Life"), CHANGE_PIC);
 
         }
     }

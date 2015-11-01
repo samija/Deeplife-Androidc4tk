@@ -46,7 +46,7 @@
                     android:text="Meet"
                     android:gravity="center_horizontal"
                     android:textColor="#3eb1c8"
-                    android:textSize="24sp" />
+                    android:textSize="20dp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     android:id="@+id/schedulename"
                     android:gravity="center_horizontal"
                     android:textColor="#3eb1c8"
-                    android:textSize="24sp" />
+                    android:textSize="20dp" />
                 </FrameLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,14 +63,14 @@
                     android:background="#f9b625"></LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_width="150dp"
-                        android:layout_height="58dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:weightSum="1">
 
                         <ImageView
@@ -78,10 +78,10 @@
                             android:layout_height="44dp"
                             android:id="@+id/phoneimage"
                             android:src="@drawable/phone"
-                            android:layout_weight="2.42" />
+                             />
 
                         <TextView
-                            android:layout_width="114dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0910015581"
                             android:id="@+id/schedulephone"
@@ -96,22 +96,59 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="1">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        >
 
-
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="44dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:id="@+id/scheduletimepic"
+                            android:src="@drawable/phone"
+                            />
 
                         <TextView
-                            android:layout_width="114dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Build State"
+                            android:text="Time"
                             android:id="@+id/scheduletime"
                             android:gravity="center_vertical|center_horizontal"
                             android:layout_marginLeft="2dp"
-                            android:layout_marginBottom="3dp"
-                            android:layout_marginTop="15dp"
-                            android:textSize="15dp" />
+                            android:textSize="15dp"
+                            android:layout_marginTop="15dp"/>
+
                     </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="44dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:id="@+id/schedule_disc_image"
+                            android:src="@drawable/phone"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Discription"
+                            android:id="@+id/scheduledisciption"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_marginLeft="2dp"
+                            android:textSize="15dp"
+                            android:layout_marginTop="15dp"/>
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
