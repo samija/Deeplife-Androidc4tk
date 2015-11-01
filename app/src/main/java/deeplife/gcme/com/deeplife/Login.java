@@ -43,7 +43,7 @@ public class Login extends Activity {
     String TAG = "Deep Life";
 
     public static final int currentUserId = 0;
-    private static final String LOGIN_URL = "http://192.168.137.1/deeplife/login.php";
+    private static final String LOGIN_URL = "http://192.168.137.1/Deeplife-Android-php-C4tk/API.php";
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -180,11 +180,14 @@ public class Login extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             pDialog.dismiss();
-            //success = 1;
-            if (success == "1") {
+            if (Req_Res.length() >0) {
                 // Log.d("Login Successful!", json.toString());
                 Intent i = new Intent(Login.this, MainMenu.class);
                 startActivity(i);
+
+                Intent service = new Intent(Login.this,Service.class);
+                startService(service);
+
                 finish();
                 // return json.getString(TAG_MESSAGE);
             }else{

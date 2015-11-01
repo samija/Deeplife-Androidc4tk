@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,19 +25,20 @@ import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.database.Database;
 
-public class Register extends Activity implements OnClickListener{
-	
-	private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
-	private Button  mRegister;
-	
-	 // Progress Dialog
+public class Register extends Activity{
+
+	//private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
+	private Button  Register;
+    private EditText Full_Name,Email,Phone,Country,Pass;
+
+    // Progress Dialog
     private ProgressDialog pDialog;
 
     Database dbadapter;
     DeepLife dbhelper;
 
     // JSON parser class
-    JSONParser jsonParser = new JSONParser();
+    JSONParser jsonParser;
     
     //php login script
     
@@ -43,11 +46,9 @@ public class Register extends Activity implements OnClickListener{
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+    private Context myContext;
 
-
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -56,115 +57,98 @@ public class Register extends Activity implements OnClickListener{
 
         dbadapter = new Database(this);
         dbhelper = new DeepLife();
+        myContext = this;
+        jsonParser = new JSONParser();
+        Init();
 
-
-        ed_name = (EditText)findViewById(R.id.signup_first_name);
-        ed_password = (EditText)findViewById(R.id.signup_password);
-        ed_email = (EditText) findViewById(R.id.signup_email);
-        ed_phone = (EditText) findViewById(R.id.signup_phone);
-        ed_country = (EditText) findViewById(R.id.signup_country);
-		mRegister = (Button)findViewById(R.id.btnregister);
-
-		mRegister.setOnClickListener(this);
-		
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+    private void Init(){
+        Full_Name = (EditText) findViewById(R.id.signup_first_name);
+        Email = (EditText) findViewById(R.id.signup_email);
+        Phone = (EditText) findViewById(R.id.signup_phone);
+        Country = (EditText) findViewById(R.id.signup_country);
+        Pass = (EditText) findViewById(R.id.signup_password);
 
-		  new CreateUser().execute();
-		
-	}
-	
-	class CreateUser extends AsyncTask<String, String, String> {
+        Register =  (Button) findViewById(R.id.btnregister);
+        Register.setOnClickListener(new OnClickListener() {
 
-		 /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        String name;
-        String password;
-        String phone;
-        String email;
-        String country;
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("Task", "Register"));
+                params.add(new BasicNameValuePair("Full_Name", Full_Name.getText().toString()));
+                params.add(new BasicNameValuePair("Password", Pass.getText().toString()));
+                params.add(new BasicNameValuePair("Email", Email.getText().toString()));
+                params.add(new BasicNameValuePair("Email_Phone", Email.getText().toString()));
+                params.add(new BasicNameValuePair("Phone", Phone.getText().toString()));
+                params.add(new BasicNameValuePair("Pic", Country.getText().toString()));
+                params.add(new BasicNameValuePair("Country", Country.getText().toString()));
+                new Make_Request(params).execute();
+            }
+        });
+    }
+    public class Make_Request extends AsyncTask<String, String, String>{
+        private List<NameValuePair> _params = new ArrayList<NameValuePair>();
+        private String Result,msg;
+        private JSONArray Req_Res = new JSONArray();
+        private ProgressDialog myDialog;
+
+
+        public Make_Request(List<NameValuePair> param){
+            _params = param;
+            msg = "-";
+        }
         @Override
         protected void onPreExecute() {
+            // TODO Auto-generated method stub
             super.onPreExecute();
-            pDialog = new ProgressDialog(Register.this);
-            pDialog.setMessage("Creating User...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-
-            name = ed_name.getText().toString();
-            password = ed_password.getText().toString();
-            phone = ed_phone.getText().toString();
-            email = ed_email.getText().toString();
-            country = ed_country.getText().toString();
+            myDialog = new ProgressDialog(myContext);
+            myDialog.setTitle("Authenticating ...");
+            myDialog.setCancelable(true);
+            myDialog.show();
+            Toast.makeText(myContext, "Request Started", Toast.LENGTH_SHORT).show();
         }
-		
-		@Override
-		protected String doInBackground(String... args) {
-			// TODO Auto-generated method stub
-            int success;
+        @Override
+        protected String doInBackground(String... params) {
+            // TODO Auto-generated method stub
             try {
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("fname", name));
-                params.add(new BasicNameValuePair("password", password));
-                params.add(new BasicNameValuePair("phone", phone));
-                params.add(new BasicNameValuePair("email", email));
-                params.add(new BasicNameValuePair("country", country));
-
-                ContentValues contents = new ContentValues();
-                contents.put(dbhelper.USER_FIELDS[0], name);
-                contents.put(dbhelper.USER_FIELDS[1], phone);
-                contents.put(dbhelper.USER_FIELDS[2],email);
-                contents.put(dbhelper.USER_FIELDS[3], "Added");
-                contents.put(dbhelper.USER_FIELDS[4], country);
-
-                Log.d("request!", "request starting");
-
-                JSONObject json = jsonParser.makeHttpRequest(
-                       LOGIN_URL, "POST", params);
-
-                //success = json.getInt(TAG_SUCCESS);
-                success = 1;
-
-                if (success == 1) {
-                	Log.d("User Created!", json.toString());
-                    long i = dbadapter.insert(dbhelper.Table_USER, contents);
-                    if(i!=-1){
-                        Log.i("Deeplife","Successfully added to local database");
-                    }
-                    Intent intent = new Intent(Register.this, Login.class);
-                    startActivity(intent);
-                	finish();
-                    return "Succssfully registered!";
-                    //return json.getString(TAG_MESSAGE);
-                }else{
-                	Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-                	return json.getString(TAG_MESSAGE);
-                	
-                }
-
+                JSONObject myObject = jsonParser.makeHttpRequest("http://192.168.137.1/Deeplife-Android-php-C4tk/API.php", "POST", _params);
+                Req_Res = myObject.getJSONArray("User_Profile");
+                msg = Req_Res.toString();
             } catch (Exception e) {
-                e.printStackTrace();
+                // TODO: handle exception
+                msg = e.toString();
             }
- 
             return null;
-			
-		}
-
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
-            pDialog.dismiss();
-            if (file_url != null){
-            	Toast.makeText(Register.this, file_url, Toast.LENGTH_LONG).show();
-            }
- 
         }
-		
-	}
+        @Override
+        protected void onPostExecute(String result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+            //Toast.makeText(myContext, msg, Toast.LENGTH_LONG).show();
+            if(Req_Res.length()>0){
+                try {
+                    DeepLife.Register_Profile(Req_Res);
+                    Toast.makeText(myContext, msg, Toast.LENGTH_LONG).show();
+
+                    Intent service = new Intent(Register.this,Service.class);
+                    startService(service);
+
+                    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            myDialog.cancel();
+        }
+
+    }
 		 
 
 }

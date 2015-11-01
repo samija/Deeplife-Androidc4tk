@@ -164,11 +164,9 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		        case DialogInterface.BUTTON_POSITIVE:
 		            //Yes button clicked
 					 System.exit(0);
-					//Get_Assignments.update_List_View();
 		            break;
 //		        case DialogInterface.BUTTON_NEUTRAL:
 		            //Yes button clicked
-		        	
 //			            break;
 
 		        case DialogInterface.BUTTON_NEGATIVE:

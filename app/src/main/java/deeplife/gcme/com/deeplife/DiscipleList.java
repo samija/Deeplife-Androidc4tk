@@ -203,6 +203,14 @@ public class DiscipleList extends Fragment {
 
                 long i = dbadapter.insert(dbhelper.Table_DISCIPLES,values);
                 if(i!=-1){
+                    //insert the disciple to log table
+                    ContentValues cv1 = new ContentValues();
+                    cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Disciple");
+                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_COLUMN[0]));
+                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                        Log.i("Deep Life", "Successfully Added to Log");
+                    }
+
                     Toast.makeText(getActivity(),"Disciple successfully added!",Toast.LENGTH_SHORT).show();
                     add.cancel();
                     reload();

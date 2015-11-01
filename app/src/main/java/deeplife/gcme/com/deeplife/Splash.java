@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 
 public class Splash extends Activity {
 
@@ -54,11 +56,20 @@ public class Splash extends Activity {
 	}
 	public synchronized void getNextActivity() {
 
+        Database myDatabase = new Database(this);
 
-		Intent intent = new Intent(this, Login.class);
-		startActivity(intent);
-		finish();
-
+        int count = myDatabase.count(DeepLife.Table_USER);
+        if(count == 1){
+            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
+        }
 	}
 
 	@Override

@@ -60,6 +60,9 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2]))));
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]))));
 					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4]))));
+					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[5], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5]))));
+					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[6], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6]))));
+					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[7], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7]))));
 				}else if(type.equals("Send_Schedule")){
 					Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_SCHEDULES, id);
 					cur.moveToFirst();
