@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-package deeplife.gcme.com.deeplife.database; ///
-=======
-package deeplife.gcme.com.deeplife.database;//
->>>>>>> origin/master
+
+package deeplife.gcme.com.deeplife.database;/////
 
 import java.util.ArrayList;
 
@@ -17,9 +14,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class Database {
+
+	private SQLiteDatabase myDatabase;
+	private SQL_Helper mySQL;
+	private Context myContext;
+	
+	public Database(Context context){
+		myContext = context;
+		mySQL = new SQL_Helper(myContext);
+		myDatabase = mySQL.getWritableDatabase();
+		mySQL.createTables(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_FIELDS);
+		mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
+		mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
+		mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULE_FIELDS);
+
     private SQLiteDatabase myDatabase;
     private SQL_Helper mySQL;
     private Context myContext;
+   
 
     public Database(Context context){
         myContext = context;
