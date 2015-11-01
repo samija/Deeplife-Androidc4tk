@@ -74,7 +74,7 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4]))));
 				}
 			}else{
-				msg = "dd";
+				msg = "dd"+myDatabase.count(DeepLife.Table_DISCIPLES);
 				if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
 					params.add(new BasicNameValuePair("Task1", "My_Disciples"));
 				}else{
@@ -98,6 +98,7 @@ public class Service extends android.app.Service{
 		@Override
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
+            msg = msg +"00000000000000";
 			try {
 				JSONObject myObject = myParser.makeHttpRequest(	"http://192.168.137.1/Deeplife-Android-php-C4tk/API.php", "POST", init());
 				msg = msg + myObject.toString() +"\n............."+init().toString();

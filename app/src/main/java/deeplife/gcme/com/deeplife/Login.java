@@ -182,13 +182,19 @@ public class Login extends Activity {
             pDialog.dismiss();
             if (Req_Res.length() >0) {
                 // Log.d("Login Successful!", json.toString());
-                Intent i = new Intent(Login.this, MainMenu.class);
-                startActivity(i);
+                try {
+                    DeepLife.Register_Profile(Req_Res);
+                    Intent i = new Intent(Login.this, MainMenu.class);
+                    startActivity(i);
 
-                Intent service = new Intent(Login.this,Service.class);
-                startService(service);
+                    Intent service = new Intent(Login.this,Service.class);
+                    startService(service);
 
-                finish();
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 // return json.getString(TAG_MESSAGE);
             }else{
                 // Log.d("Login Failure!", json.getString("Msg"));

@@ -16,7 +16,7 @@ public class DeepLife extends Application {
 	public static final String Table_USER = "USER";
 
 	public static final String[] DISCIPLES_FIELDS = { "Full_Name",
-			 "Phone", "Email", "Country","Build_phase","Gender","Picture" };
+			 "Email", "Phone", "Country","Build_phase","Gender","Picture" };
 
 	public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
 	public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
@@ -24,7 +24,8 @@ public class DeepLife extends Application {
 	public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country" };
 
 	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name",
-			 "Phone", "Email", "Country","Build_phase","Gender","Picture" };
+			"Email", "Phone", "Country","Build_phase","Gender","Picture" };
+
 	public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
 	public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
