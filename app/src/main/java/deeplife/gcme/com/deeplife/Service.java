@@ -122,7 +122,7 @@ public class Service extends android.app.Service{
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 			if(Task.equals("1")){
 				myDatabase.deleteTop(DeepLife.Table_LOGS);
 				Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
