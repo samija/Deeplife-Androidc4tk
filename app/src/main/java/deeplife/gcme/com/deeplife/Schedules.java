@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -138,6 +139,7 @@ public class Schedules extends Fragment {
 
         final Spinner names = (Spinner) add.findViewById(R.id.schedule_add_name);
         final EditText ed_disc = (EditText) add.findViewById(R.id.schedule_add_disc);
+        final DatePicker dp_date = (DatePicker) add.findViewById(R.id.schedule_add_date);
         final TimePicker tp_time = (TimePicker) add.findViewById(R.id.schedule_add_time_picker);
 
         final String phone = "091177";
@@ -165,6 +167,7 @@ public class Schedules extends Fragment {
                 String disc = ed_disc.getText().toString();
                 String name = names.getSelectedItem().toString();
                 String time = tp_time.getCurrentHour().toString() + tp_time.getCurrentMinute();
+                //String date = dp_date.getDayOfMonth();
 
                 ContentValues values = new ContentValues();
                 values.put(dbhelper.SCHEDULES_FIELDS[0], phone);
@@ -190,6 +193,7 @@ public class Schedules extends Fragment {
         });
 
     }
+
 
 
 
