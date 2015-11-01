@@ -100,7 +100,7 @@ public class Service extends android.app.Service{
 			// TODO Auto-generated method stub
             msg = msg +"00000000000000";
 			try {
-				JSONObject myObject = myParser.makeHttpRequest(	"http://192.168.137.1/Deeplife-Android-php-C4tk/API.php", "POST", init());
+				JSONObject myObject = myParser.makeHttpRequest(	"http://api.cccsea.org/API.php", "POST", init());
 				msg = msg + myObject.toString() +"\n............."+init().toString();
 				Task = myObject.getString("Task");
 				DeepLife.Register_disciple(myObject.getJSONArray("Disciples"));

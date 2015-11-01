@@ -15,17 +15,13 @@
             android:layout_width="90dip"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:id="@+id/imageView"
-                android:src="@drawable/pic" />
+
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_height="100dp"
                 android:id="@+id/imageView2"
-                android:src="@drawable/back" />
+                android:src="@drawable/iconschedule" />
         </FrameLayout>
 
         <LinearLayout
@@ -50,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="75dp"
+                    android:layout_marginLeft="25dp"
                     android:text="USER NAME"
                     android:id="@+id/schedulename"
                     android:gravity="center_horizontal"
@@ -79,16 +75,15 @@
                             android:id="@+id/phoneimage"
                             android:src="@drawable/phone"
                              />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0910015581"
-                            android:id="@+id/schedulephone"
+                            android:text="Discription"
+                            android:id="@+id/scheduledisciption"
                             android:layout_marginLeft="2dp"
                             android:textSize="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="3dp" />
+                            android:layout_marginTop="15dp"/>
+
 
                     </LinearLayout>
 
@@ -104,7 +99,7 @@
                             android:layout_height="44dp"
                             android:gravity="center_vertical|center_horizontal"
                             android:id="@+id/scheduletimepic"
-                            android:src="@drawable/phone"
+                            android:src="@drawable/iconschedule"
                             />
 
                         <TextView
@@ -134,15 +129,16 @@
                             android:id="@+id/schedule_disc_image"
                             android:src="@drawable/phone"
                             />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Discription"
-                            android:id="@+id/scheduledisciption"
+                            android:text="0910015581"
+                            android:id="@+id/schedulephone"
                             android:layout_marginLeft="2dp"
                             android:textSize="15dp"
-                            android:layout_marginTop="15dp"/>
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="3dp" />
+
 
                     </LinearLayout>
 

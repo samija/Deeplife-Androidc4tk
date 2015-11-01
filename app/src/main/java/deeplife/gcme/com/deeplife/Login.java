@@ -43,7 +43,7 @@ public class Login extends Activity {
     String TAG = "Deep Life";
 
     public static final int currentUserId = 0;
-    private static final String LOGIN_URL = "http://192.168.137.1/Deeplife-Android-php-C4tk/API.php";
+    private static final String LOGIN_URL = "http://api.cccsea.org/API.php";
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";

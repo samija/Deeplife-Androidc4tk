@@ -42,7 +42,7 @@ public class Register extends Activity{
     
     //php login script
     
-    private static final String LOGIN_URL = "http://192.168.137.1/deeplife/register.php";
+    private static final String LOGIN_URL = "http://api.cccsea.org/API.php";
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -114,7 +114,7 @@ public class Register extends Activity{
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
             try {
-                JSONObject myObject = jsonParser.makeHttpRequest("http://192.168.137.1/Deeplife-Android-php-C4tk/API.php", "POST", _params);
+                JSONObject myObject = jsonParser.makeHttpRequest(LOGIN_URL, "POST", _params);
                 Req_Res = myObject.getJSONArray("User_Profile");
                 msg = Req_Res.toString();
             } catch (Exception e) {
