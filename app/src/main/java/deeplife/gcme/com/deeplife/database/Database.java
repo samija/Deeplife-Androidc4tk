@@ -18,20 +18,7 @@ public class Database {
 	private SQLiteDatabase myDatabase;
 	private SQL_Helper mySQL;
 	private Context myContext;
-	
-	public Database(Context context){
-		myContext = context;
-		mySQL = new SQL_Helper(myContext);
-		myDatabase = mySQL.getWritableDatabase();
-		mySQL.createTables(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_FIELDS);
-		mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
-		mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
-		mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULE_FIELDS);
 
-    private SQLiteDatabase myDatabase;
-    private SQL_Helper mySQL;
-    private Context myContext;
-   
 
     public Database(Context context){
         myContext = context;
@@ -42,7 +29,6 @@ public class Database {
         mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
     }
-
 
     public void dispose(){
         myDatabase.close();

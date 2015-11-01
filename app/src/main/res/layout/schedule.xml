@@ -87,7 +87,6 @@
                             android:id="@+id/schedulephone"
                             android:layout_marginLeft="2dp"
                             android:textSize="15dp"
-                            android:gravity="center_vertical|center_horizontal"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="3dp" />
 
@@ -111,10 +110,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+
                             android:text="Time"
                             android:id="@+id/scheduletime"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:layout_marginLeft="2dp"
+                            android:paddingLeft="5dp"
                             android:textSize="15dp"
                             android:layout_marginTop="15dp"/>
 
@@ -141,7 +140,6 @@
                             android:layout_height="wrap_content"
                             android:text="Discription"
                             android:id="@+id/scheduledisciption"
-                            android:gravity="center_vertical|center_horizontal"
                             android:layout_marginLeft="2dp"
                             android:textSize="15dp"
                             android:layout_marginTop="15dp"/>
