@@ -111,6 +111,20 @@ public class Database {
         }
         return found;
     }
+    public String get_DiscipleName(String phone){
+		String Name = null;
+		String DB_Table = DeepLife.Table_DISCIPLES;
+		Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+		c.moveToFirst();
+		for(int i=0;i<c.getCount();i++){
+			c.moveToPosition(i);
+			String str = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]));
+			if(str.equals(phone)){
+				Name = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1]));
+			}
+		}
+		return Name;
+	}
     public ArrayList<Disciples> getDisciples(){
         String DB_Table = DeepLife.Table_DISCIPLES;
         ArrayList<Disciples> found = new ArrayList<Disciples>();
