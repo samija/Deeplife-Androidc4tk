@@ -1,15 +1,11 @@
 package deeplife.gcme.com.deeplife;
 
-import java.lang.reflect.Field;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,52 +13,67 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainMenu extends FragmentActivity implements OnItemClickListener {
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Field;
+
+import deeplife.gcme.com.deeplife.database.Database;
+
+public class ProfileActivity extends FragmentActivity implements OnItemClickListener {
 
 	DrawerLayout drawerLayout;
 	ListView dlist;
-	
+
 	String[] drawerlistitems;
-	
+
+    String disciple_id = "1";
+
+
+
 	ViewPager viewpager;
 	ActionBarDrawerToggle drawerListener;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
-		getActionBar().setTitle("Welcome");
+		getActionBar().setTitle("Disciples");
 
-		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
+        disciple_id = getIntent().getExtras().getString("id");
+
+        drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
 		viewpager = (ViewPager) findViewById(R.id.welcome_viewpager);
 		viewpager.setAdapter(new MyAdpater(getSupportFragmentManager()));
+
 		drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.drawericon,
 				R.string.draweropened, R.string.drawerclosed){
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				// TODO Auto-generated method stub
-				Toast.makeText(MainMenu.this, "Opened", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ProfileActivity.this, "Opened", Toast.LENGTH_SHORT).show();
 			}
+
 			@Override
 					public void onDrawerClosed(View drawerView) {
 						// TODO Auto-generated method stub
 					//	super.onDrawerClosed(drawerView);
-				Toast.makeText(MainMenu.this, "Closed", Toast.LENGTH_SHORT).show();
-					
+				Toast.makeText(ProfileActivity.this, "Closed", Toast.LENGTH_SHORT).show();
 			}
 			
 		};
@@ -77,6 +88,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 
 		getOverflowMenu();
+
+
 	}
 	
 	private void getOverflowMenu() {
@@ -92,7 +105,15 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	       e.printStackTrace();
 	   }
 	 }
-	@Override
+
+
+    public String getDisciple_id(){
+        return this.disciple_id;
+    }
+
+
+
+    @Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onPostCreate(savedInstanceState);
@@ -101,7 +122,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
+        super.onConfigurationChanged(newConfig);
 		//drawerListener.onConfigurationChanged(newConfig);
 	}
 	
@@ -112,8 +133,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		inflater.inflate(R.menu.option_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -164,9 +184,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		        case DialogInterface.BUTTON_POSITIVE:
 		            //Yes button clicked
 					 System.exit(0);
+					//Get_Assignments.update_List_View();
 		            break;
 //		        case DialogInterface.BUTTON_NEUTRAL:
 		            //Yes button clicked
+		        	
 //			            break;
 
 		        case DialogInterface.BUTTON_NEGATIVE:
@@ -197,18 +219,17 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		@Override
 		public Fragment getItem(int arg0) {
 			if(arg0==0){
-				page = new DiscipleList();
+				page = new Profile();
+
 			}
-			if(arg0==1){
-				page = new Schedules();
-			}
+
 			return page;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 2;
+			return 1;
 		}
 		
 		@Override
@@ -231,7 +252,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	//	selectItem(arg2);
 		switch(arg2){
 		case 0: 
-			Intent intent0 = new Intent(this, MainMenu.class);
+			Intent intent0 = new Intent(this, ProfileActivity.class);
 			startActivity(intent0);
 			break;
 		case 1:

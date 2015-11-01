@@ -23,6 +23,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,7 @@ public class Login extends Activity {
     String TAG = "Deep Life";
 
     public static final int currentUserId = 0;
-    private static final String LOGIN_URL = "http://192.168.137.1/deeplife/login.php";
+    private static final String LOGIN_URL = "http://192.168.137.1/Deeplife-Android-php-C4tk/API.php";
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
@@ -131,6 +132,8 @@ public class Login extends Activity {
     class AttemptLogin extends AsyncTask<String, String, String> {
 
         boolean failure = false;
+        private JSONArray Req_Res = new JSONArray();
+        String success;
 
         @Override
         protected void onPreExecute() {
@@ -146,38 +149,25 @@ public class Login extends Activity {
         protected String doInBackground(String... args) {
             // TODO Auto-generated method stub
             // Check for success tag
-            int success;
             String phone = ed_phoneNumber.getText().toString();
             String password = ed_password.getText().toString();
             try {
 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("phone", phone));
-                params.add(new BasicNameValuePair("password", password));
+                params.add(new BasicNameValuePair("Task", "Authenticate"));
+                params.add(new BasicNameValuePair("Email_Phone", phone));
+                params.add(new BasicNameValuePair("Password", password));
 
                 Log.d("request!", "starting");
 
                 // getting product details by making HTTP request
                 //JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
-
-                //Log.d("Login attempt", json.toString());
+                Req_Res = json.getJSONArray("User_Profile");
 
                 // json success tag
-                //success = json.getInt(TAG_SUCCESS);
-                success = 1;
-                if (success == 1) {
-                   // Log.d("Login Successful!", json.toString());
-                    Intent i = new Intent(Login.this, MainMenu.class);
-                    startActivity(i);
-                    finish();
-                   // return json.getString(TAG_MESSAGE);
-                    return "Login Successful";
-                }else{
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-                    return json.getString(TAG_MESSAGE);
+                success = json.getString("Task");
 
-                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -186,15 +176,30 @@ public class Login extends Activity {
 
         }
 
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             pDialog.dismiss();
-            if (file_url != null){
-                Toast.makeText(Login.this, file_url, Toast.LENGTH_LONG).show();
+            if (Req_Res.length() >0) {
+                // Log.d("Login Successful!", json.toString());
+                try {
+                    DeepLife.Register_Profile(Req_Res);
+                    Intent i = new Intent(Login.this, MainMenu.class);
+                    startActivity(i);
+
+                    Intent service = new Intent(Login.this,Service.class);
+                    startService(service);
+
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // return json.getString(TAG_MESSAGE);
+            }else{
+                // Log.d("Login Failure!", json.getString("Msg"));
             }
-
         }
-
     }
 
 

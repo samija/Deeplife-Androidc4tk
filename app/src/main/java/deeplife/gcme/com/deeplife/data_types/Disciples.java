@@ -1,7 +1,7 @@
 package deeplife.gcme.com.deeplife.data_types;
 
 public class Disciples {
-	private String id,Full_Name,Phone,Email,Country,Build_Phase;
+	private String id,Full_Name,Phone,Email,Country,Build_Phase,Gender,Picture;
 	
 	public Disciples(String Full_Name, String middleName, String phone,
 			String email, String country,String Build_Phase) {
@@ -14,6 +14,22 @@ public class Disciples {
 	}
 	public Disciples(){
 		
+	}
+
+	public String getGender() {
+		return Gender;
+	}
+
+	public void setGender(String gender) {
+		Gender = gender;
+	}
+
+	public String getPicture() {
+		return Picture;
+	}
+
+	public void setPicture(String picture) {
+		Picture = picture;
 	}
 
 	public String getId() {

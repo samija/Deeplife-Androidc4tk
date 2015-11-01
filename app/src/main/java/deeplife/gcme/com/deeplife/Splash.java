@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 
+import deeplife.gcme.com.deeplife.database.Database;
+
 
 public class Splash extends Activity {
 
@@ -24,8 +26,9 @@ public class Splash extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
-                .penaltyDeath().build());
+        //StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
+        //        .penaltyDeath().build());
+
     /*
 		new Handler().postAtTime(new Runnable() {
 			
@@ -52,13 +55,26 @@ public class Splash extends Activity {
         splash.start();
 	}
 	public synchronized void getNextActivity() {
-		Intent intent = new Intent(this, Login.class);
-		startActivity(intent);
-        finish();
-		Log.i("EEEEEEEEEEEEEEE", "Called Main Menu room");
-		
-		finish();
+
+        Database myDatabase = new Database(this);
+
+        int count = myDatabase.count(DeepLife.Table_USER);
+        if(count == 1){
+            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
+        }
 	}
 
-    
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+	}
 }
