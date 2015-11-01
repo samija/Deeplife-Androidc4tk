@@ -24,6 +24,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -40,11 +41,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.CursorAdapter;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -83,19 +86,16 @@ import deeplife.gcme.com.deeplife.database.Database;
 public class DiscipleList extends Fragment {
 
 	
-	private static final int FRAGMENT_GROUPID = 30;
 	public ListView lv_disciple;
-	ArrayList<Disciples> disciples_list;
-	String tagname;
 	Button addDisciple;
 
-	public static final int MENU_EDIT =1;
-	public static final int MENU_DELETE = 2;
-
+    String mCurrentPhotoPath;
 
 	Database dbadapter;
 	DeepLife dbhelper;
-	@Override
+
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
@@ -104,16 +104,12 @@ public class DiscipleList extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_disciples_list, container,
 				false);
 
-
 		dbadapter = new Database(getActivity());
 		dbhelper = new DeepLife();
 
 		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
 
-
         populateList(getActivity());
-
-
 
 		addDisciple = (Button) view.findViewById(R.id.bt_add_disciple);
 		addDisciple.setOnClickListener(new OnClickListener() {
@@ -121,17 +117,7 @@ public class DiscipleList extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-                    addDiscipleDialog();
-
-                //FragmentTransaction ft = getFragmentManager().beginTransaction();
-               //AddDiscipleDialog fd = new AddDiscipleDialog();
-                //fd.show(ft,"addDisciple");
-
-				//Intent intent = new Intent(getActivity(),AddDisciple.class);
-				//startActivity(intent);
-
-                //AddDiscipleDialog frag = new AddDiscipleDialog();
-                //frag.show(getFragmentManager(),"addDisciple");
+				addDiscipleDialog();
 				}
 
 
@@ -141,11 +127,28 @@ public class DiscipleList extends Fragment {
 		
 	}
 
+
+
+
+
     public void addDiscipleDialog(){
-        final Dialog add = new Dialog(DiscipleList.this.getActivity().getBaseContext());
+        final Dialog add = new Dialog(getActivity().getBaseContext());
+
         add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         add.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         add.setContentView(R.layout.fragment_add_disciple);
+
+        WindowManager window = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        window.getDefaultDisplay().getMetrics(dm);
+        double wid = dm.widthPixels*0.9;
+        double hei = dm.heightPixels*0.8;
+        int width = (int) wid;
+        int height = (int) hei;
+        add.getWindow().setLayout(width, height);
+
+
         add.show();
 
         final String[] list = CountryDetails.country;
@@ -161,7 +164,7 @@ public class DiscipleList extends Fragment {
         final Spinner sp_gender = (Spinner) add.findViewById(R.id.gender_spinner);
 
         countries.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner, list));
-        sp_gender.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner,genderarray));
+        sp_gender.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner, genderarray));
 
 
 
@@ -177,16 +180,6 @@ public class DiscipleList extends Fragment {
                 ed_code.setText(codes[0]);
             }
         });
-
-
-         final Button bt_add_pic = (Button) add.findViewById(R.id.bt_add_disciple_pic);
-        bt_add_pic.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
-
 
 
 

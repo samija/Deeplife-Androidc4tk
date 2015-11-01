@@ -11,13 +11,37 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
 
-        <ImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/pic"/>
+        >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageButton
+                    android:id="@+id/profile_pic"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@null"
+                    android:src="@drawable/pic"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageButton
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@null"
+                    android:src="@drawable/back"/>
+            </LinearLayout>
+        </FrameLayout>
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -27,8 +51,9 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal"
                 android:textSize="25dp"
+                android:textColor="@color/bg_login"
                 android:text="dasdgkajldkgjl"/>
         </LinearLayout>
     </LinearLayout>
@@ -42,14 +67,15 @@
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="2dp"
+            android:layout_height="3dp"
             android:src="@drawable/divider"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="25dp"
-            android:text="Build Stage"/>
+            android:textColor="@color/bg_login"
+            android:textSize="20dp"
+            android:text="BUILD STAGE"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -60,14 +86,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:textSize="20dp"
-                android:text="WIN"/>
+                android:textSize="17dp"
+                android:text="Win"/>
             <Button
                 android:id="@+id/profile_complete_build"
+                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-
+                android:textColor="@color/input_login_hint"
                 android:textSize="14dp"
                 android:text="Complete Build"/>
         </LinearLayout>
@@ -87,14 +114,16 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="3dp"
             android:src="@drawable/divider"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="25dp"
-            android:text="Contact"/>
+            android:textSize="20dp"
+            android:textColor="@color/bg_login"
+
+            android:text="CONTACT"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -130,14 +159,15 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="3dp"
             android:src="@drawable/divider"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="25dp"
-            android:text="Email"/>
+            android:textSize="20dp"
+            android:textColor="@color/bg_login"
+            android:text="EMAIL"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -165,14 +195,16 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="3dp"
             android:src="@drawable/divider"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="25dp"
-            android:text="Schedule"/>
+            android:textSize="20dp"
+            android:textColor="@color/bg_login"
+
+            android:text="SCHEDULE"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -199,14 +231,15 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="3dp"
             android:src="@drawable/divider"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="25dp"
-            android:text="Personal Info"/>
+            android:textSize="20dp"
+            android:textColor="@color/bg_login"
+            android:text="PERSONAL INFO"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

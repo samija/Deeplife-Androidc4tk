@@ -74,7 +74,6 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 						// TODO Auto-generated method stub
 					//	super.onDrawerClosed(drawerView);
 				Toast.makeText(ProfileActivity.this, "Closed", Toast.LENGTH_SHORT).show();
-					
 			}
 			
 		};

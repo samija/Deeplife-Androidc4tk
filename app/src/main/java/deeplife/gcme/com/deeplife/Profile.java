@@ -1,11 +1,16 @@
 package deeplife.gcme.com.deeplife;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +21,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +43,9 @@ public class Profile extends Fragment {
 	public ListView lv_schedule;
 
     TextView tv_build, tv_name, tv_phone, tv_gender,tv_email;
+
+    ImageButton imageView;
+
     String disciple_id;
 	ArrayList<String> schedule_list;
 
@@ -43,9 +53,11 @@ public class Profile extends Fragment {
 
 	Database dbadapter;
 	DeepLife dbhelper;
+    private String mCurrentPhotoPath;
+    private Bitmap image;
 
 
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -67,7 +79,12 @@ public class Profile extends Fragment {
         tv_gender = (TextView) view.findViewById(R.id.profile_gender);
         tv_email = (TextView) view.findViewById(R.id.profile_email);
 
+        imageView = (ImageButton) view.findViewById(R.id.profile_pic);
+
+
         populateView(disciple_id);
+
+        imageView.setOnClickListener(new ImagePickListener());
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
@@ -116,6 +133,7 @@ public class Profile extends Fragment {
             tv_build.setText(build);
             tv_name.setText(name);
             tv_phone.setText(phone);
+
             data.close();
 
         }
@@ -148,6 +166,56 @@ public class Profile extends Fragment {
 		dbadapter.dispose();
 	}
 
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode== Activity.RESULT_OK){
+            Log.i("Deeeep Life","On Activity result called");
+            switch (requestCode){
+                case 1:
+                    this.imageFromGallery(resultCode,data);
+                    break;
+            }
+        }
+    }
+
+
+
+
+    private void imageFromGallery(int resultCode, Intent data) {
+        Uri selectedImage = data.getData();
+        String [] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        mCurrentPhotoPath = filePath;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+
+        this.updateImageView(BitmapFactory.decodeFile(filePath, options));
+    }
+
+
+
+    private void updateImageView(Bitmap newImage) {
+        BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 500, 0);
+
+        this.image = bitmapProcessor.getBitmap();
+        this.imageView.setImageBitmap(this.image);
+    }
+    
+    
+    
+    
+    
 	public void delete_Dialog(final int id,final String name) {
 
 
@@ -246,8 +314,19 @@ public class Profile extends Fragment {
 	}
 
 
+    class ImagePickListener implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
+
+        }
+    }
 
 
 
-	
+
+
+
 }

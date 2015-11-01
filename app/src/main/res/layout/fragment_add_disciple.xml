@@ -13,13 +13,20 @@
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:layout_marginTop="85dp"
-                android:layout_marginBottom="40dp"
                 >
+                <TextView
+                    android:id="@+id/tv_thanks"
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dip"
+                    android:gravity="center_horizontal"
+                    android:text="@string/register_a_disciple"
+                    android:textColor="@color/btn_login"
+                    android:layout_marginBottom="25dp"/>
 
                 <EditText
                     android:id="@+id/adddisciple_name"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -33,7 +40,7 @@
 
                 <EditText
                     android:id="@+id/add_discple_email"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -45,9 +52,12 @@
                     android:textColorHint="@color/input_login_hint" />
 
                 <Spinner
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/countries_spinner"
+                    android:background="@color/white"
+                    android:layout_marginBottom="10dp"
+
                     >
 
                 </Spinner>
@@ -81,7 +91,7 @@
                     android:text="-"/>
                 <EditText
                     android:id="@+id/add_disciple_phone"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -96,27 +106,12 @@
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:id="@+id/gender_spinner"
                     android:entries="@array/gender"
                     >
 
                 </Spinner>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_disciple_pic"
-                    android:id="@+id/bt_add_disciple_pic"
-                    android:textColor="@color/input_login_hint"
-                    android:background="@color/white"
-                    />
-
-                <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/pic"
-                    android:id="@+id/add_disciple_image"
-                    android:layout_gravity="center_horizontal" />
 
 
                 <!-- Add Button -->
@@ -127,7 +122,7 @@
                     android:id="@+id/btn_add_disciple"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="15dp"
                     android:background="@color/btn_login_bg"
                     android:text="@string/btn_add_disciple"
                     android:textColor="@color/btn_login" />

@@ -17,6 +17,8 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_add_disciple">ADD DISCIPLE</string>
+    <string name="register_a_disciple">Please add your disciple correctly</string>
+
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="welcome">Welcome</string>
