@@ -28,7 +28,7 @@ import android.widget.Toast;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.registration.Login;
+import deeplife.gcme.com.deeplife.Registration.Login;
 
 public class MainMenu extends FragmentActivity implements OnItemClickListener {
 

@@ -18,10 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Activities.MainMenu;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.database.Database;
+import deeplife.gcme.com.deeplife.Database.Database;
 
 /**
  * A simple {@link Fragment} subclass.

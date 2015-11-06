@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.registration;
+package deeplife.gcme.com.deeplife.Registration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Models.CountryDetails;
-import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Parsers.JSONParser;
 import deeplife.gcme.com.deeplife.Activities.MainMenu;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Services.Service;
-import deeplife.gcme.com.deeplife.database.Database;
+import deeplife.gcme.com.deeplife.Database.Database;
 
 public class Register extends Activity{
 

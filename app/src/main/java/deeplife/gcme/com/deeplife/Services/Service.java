@@ -7,9 +7,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import deeplife.gcme.com.deeplife.DeepLife;
-import deeplife.gcme.com.deeplife.connection.JSONParser;
-import deeplife.gcme.com.deeplife.database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Parsers.JSONParser;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;

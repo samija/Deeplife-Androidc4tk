@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.adapters;
+package deeplife.gcme.com.deeplife.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

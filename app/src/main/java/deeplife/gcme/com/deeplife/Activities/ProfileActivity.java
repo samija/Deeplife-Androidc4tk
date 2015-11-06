@@ -27,7 +27,7 @@ import java.lang.reflect.Field;
 
 import deeplife.gcme.com.deeplife.Fragments.Profile;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.registration.Login;
+import deeplife.gcme.com.deeplife.Registration.Login;
 
 public class ProfileActivity extends FragmentActivity implements OnItemClickListener {
 

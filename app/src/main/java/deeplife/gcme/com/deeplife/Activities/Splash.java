@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Activities;
 
 
 
@@ -7,9 +7,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Window;
 
-import deeplife.gcme.com.deeplife.Activities.MainMenu;
-import deeplife.gcme.com.deeplife.database.Database;
-import deeplife.gcme.com.deeplife.registration.Login;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Registration.Login;
 
 
 public class Splash extends Activity {

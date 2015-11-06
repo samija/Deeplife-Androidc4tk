@@ -1,10 +1,9 @@
 
-package deeplife.gcme.com.deeplife.database;/////
+package deeplife.gcme.com.deeplife.Database;/////
 
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Models.Disciples;
-import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 
 import android.content.ContentValues;

@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.registration;
+package deeplife.gcme.com.deeplife.Registration;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Parsers.JSONParser;
 import deeplife.gcme.com.deeplife.Activities.MainMenu;
 import deeplife.gcme.com.deeplife.R;
