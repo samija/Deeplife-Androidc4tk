@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class Register extends Activity{
 
 	//private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
 	private Button  Register;
-    private EditText Full_Name,Email,Phone,Country,Pass;
+    private EditText Full_Name,Email,Phone,Country,Pass,Ed_Codes;
     private Spinner sp_countries;
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -52,8 +53,6 @@ public class Register extends Activity{
     
     private static final String LOGIN_URL = "http://api.cccsea.org/API.php";
 
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
     private Context myContext;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +75,18 @@ public class Register extends Activity{
         sp_countries = (Spinner) findViewById(R.id.signup_countries_spinner);
         sp_countries.setAdapter(new MySpinnerAdapter(this, R.layout.countries_spinner, list));
 
+        sp_countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int i = sp_countries.getSelectedItemPosition();
+                Ed_Codes.setText(codes[i]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Ed_Codes.setText(codes[0]);
+            }
+        });
 
 	}
 
@@ -85,7 +96,7 @@ public class Register extends Activity{
         Email = (EditText) findViewById(R.id.signup_email);
         Phone = (EditText) findViewById(R.id.signup_phone);
         Pass = (EditText) findViewById(R.id.signup_password);
-
+        Ed_Codes = (EditText) findViewById(R.id.signup_code);
         Register =  (Button) findViewById(R.id.btnregister);
 
 
