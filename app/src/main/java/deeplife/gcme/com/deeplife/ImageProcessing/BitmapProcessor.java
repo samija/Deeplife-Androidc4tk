@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.ImageProcessing;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

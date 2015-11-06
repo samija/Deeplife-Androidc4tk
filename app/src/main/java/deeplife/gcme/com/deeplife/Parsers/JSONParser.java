@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Parsers;
  
 import java.io.BufferedReader;
 import java.io.IOException;

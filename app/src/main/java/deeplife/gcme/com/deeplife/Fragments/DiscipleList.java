@@ -1,82 +1,43 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Fragments;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.CursorAdapter;
-import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsoluteLayout;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import deeplife.gcme.com.deeplife.data_types.Disciples;
+import deeplife.gcme.com.deeplife.Activities.ProfileActivity;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Activities.MainMenu;
+import deeplife.gcme.com.deeplife.Models.CountryDetails;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.adapters.MySpinnerAdapter;
+import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.database.Database;
 
 /**
@@ -290,37 +251,6 @@ public class DiscipleList extends Fragment {
         Intent intent = new Intent(this.getActivity(),MainMenu.class);
         startActivity(intent);
     }
-
-
-    public class MySpinnerAdapter extends ArrayAdapter<String> {
-
-        String[] object;
-        public MySpinnerAdapter(Context ctx, int txtViewResourceId, String[] objects) {
-            super(ctx, txtViewResourceId, objects);
-            this.object = objects;
-        }
-
-        @Override
-        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
-            return getCustomView(position, cnvtView, prnt);
-        }
-        @Override
-        public View getView(int pos, View cnvtView, ViewGroup prnt) {
-            return getCustomView(pos, cnvtView, prnt);
-        }
-        public View getCustomView(int position, View convertView,
-                                  ViewGroup parent) {
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
-                    false);
-            TextView main_text = (TextView) mySpinner
-                    .findViewById(R.id.spinner_text);
-            main_text.setText(object[position]);
-
-            return mySpinner;
-        }
-    }
-
 
 
 

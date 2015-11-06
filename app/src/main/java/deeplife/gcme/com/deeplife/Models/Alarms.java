@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.data_types;
+package deeplife.gcme.com.deeplife.Models;
 
 public class Alarms {
 	private String ID,Alarm_Time,Alarm_Repet,Description;

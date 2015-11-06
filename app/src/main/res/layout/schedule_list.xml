@@ -33,7 +33,6 @@
         android:id="@+id/bt_add_schedule"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:text="+"
         android:layout_margin="5dp"
         android:textColor="#FFFFFF"
         android:layout_gravity="bottom|right"

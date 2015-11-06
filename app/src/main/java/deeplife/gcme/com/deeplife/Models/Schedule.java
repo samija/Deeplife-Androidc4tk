@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.data_types;
+package deeplife.gcme.com.deeplife.Models;
 
 public class Schedule {
 	private String ID,Dis_Phone,Alarm_Time,Alarm_Repeat,Description;

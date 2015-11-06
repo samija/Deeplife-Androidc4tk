@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Models;
 
 /**
  * Created by rog on 10/31/2015.

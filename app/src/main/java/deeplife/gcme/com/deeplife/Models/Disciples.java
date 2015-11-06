@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife.data_types;
+package deeplife.gcme.com.deeplife.Models;
 
 public class Disciples {
 	private String id,Full_Name,Phone,Email,Country,Build_Phase,Gender,Picture;

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/bg_login"
     android:gravity="center"
+
+    >
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -13,9 +21,7 @@
     android:paddingBottom="20dp"
     android:src="@drawable/deeplifelogo"
     />
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -23,6 +29,7 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
+        android:layout_marginTop="25dp"
         android:paddingRight="20dp" >
 
         <EditText
@@ -76,6 +83,7 @@
             android:textSize="15dp" />
     </LinearLayout>
 
-</ScrollView>
+
 
 </LinearLayout>
+</ScrollView>

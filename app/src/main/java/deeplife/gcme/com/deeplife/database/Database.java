@@ -3,15 +3,14 @@ package deeplife.gcme.com.deeplife.database;/////
 
 import java.util.ArrayList;
 
-import deeplife.gcme.com.deeplife.data_types.Disciples;
+import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.DeepLife;
-import deeplife.gcme.com.deeplife.data_types.Schedule;
+import deeplife.gcme.com.deeplife.Models.Schedule;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class Database {
 

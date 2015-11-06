@@ -1,7 +1,6 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,10 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +37,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import deeplife.gcme.com.deeplife.data_types.Disciples;
+import deeplife.gcme.com.deeplife.Activities.AddDisciple;
+import deeplife.gcme.com.deeplife.Activities.ProfileActivity;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.database.Database;
 
 /**

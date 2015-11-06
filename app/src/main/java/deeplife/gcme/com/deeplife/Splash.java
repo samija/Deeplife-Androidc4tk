@@ -3,17 +3,13 @@ package deeplife.gcme.com.deeplife;
 
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.StrictMode;
-import android.telephony.SignalStrength;
-import android.util.Log;
-import android.view.Menu;
 import android.view.Window;
 
+import deeplife.gcme.com.deeplife.Activities.MainMenu;
 import deeplife.gcme.com.deeplife.database.Database;
+import deeplife.gcme.com.deeplife.registration.Login;
 
 
 public class Splash extends Activity {

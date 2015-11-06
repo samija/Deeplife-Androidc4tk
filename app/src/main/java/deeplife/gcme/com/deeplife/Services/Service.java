@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.connection.JSONParser;
 import deeplife.gcme.com.deeplife.database.Database;
 import android.content.Context;

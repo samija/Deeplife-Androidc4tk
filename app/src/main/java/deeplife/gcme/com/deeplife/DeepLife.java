@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import deeplife.gcme.com.deeplife.Services.Service;
 import deeplife.gcme.com.deeplife.database.Database;
 import android.app.Application;
 import android.content.ContentValues;

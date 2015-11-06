@@ -1,21 +1,17 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.registration;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -30,6 +26,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Parsers.JSONParser;
+import deeplife.gcme.com.deeplife.Activities.MainMenu;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.Services.Service;
 
 
 public class Login extends Activity {

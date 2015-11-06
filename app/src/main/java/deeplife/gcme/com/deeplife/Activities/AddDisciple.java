@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,6 +24,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+
+import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.registration.Login;
 
 public class AddDisciple extends FragmentActivity implements OnItemClickListener {
 

@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.registration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +9,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.Models.CountryDetails;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.Parsers.JSONParser;
+import deeplife.gcme.com.deeplife.Activities.MainMenu;
+import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.Services.Service;
 import deeplife.gcme.com.deeplife.database.Database;
 
 public class Register extends Activity{
@@ -30,7 +38,7 @@ public class Register extends Activity{
 	//private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
 	private Button  Register;
     private EditText Full_Name,Email,Phone,Country,Pass;
-
+    private Spinner sp_countries;
     // Progress Dialog
     private ProgressDialog pDialog;
 
@@ -55,22 +63,33 @@ public class Register extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
 
+        final String[] list = CountryDetails.country;
+        final String[] codes = CountryDetails.code;
+
         dbadapter = new Database(this);
         dbhelper = new DeepLife();
         myContext = this;
         jsonParser = new JSONParser();
+
         Init();
+
+        sp_countries = (Spinner) findViewById(R.id.signup_countries_spinner);
+        sp_countries.setAdapter(new MySpinnerAdapter(this, R.layout.countries_spinner, list));
+
 
 	}
 
     private void Init(){
+
         Full_Name = (EditText) findViewById(R.id.signup_first_name);
         Email = (EditText) findViewById(R.id.signup_email);
         Phone = (EditText) findViewById(R.id.signup_phone);
-        Country = (EditText) findViewById(R.id.signup_country);
         Pass = (EditText) findViewById(R.id.signup_password);
 
         Register =  (Button) findViewById(R.id.btnregister);
+
+
+
         Register.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -83,8 +102,8 @@ public class Register extends Activity{
                 params.add(new BasicNameValuePair("Email", Email.getText().toString()));
                 params.add(new BasicNameValuePair("Email_Phone", Email.getText().toString()));
                 params.add(new BasicNameValuePair("Phone", Phone.getText().toString()));
-                params.add(new BasicNameValuePair("Pic", Country.getText().toString()));
-                params.add(new BasicNameValuePair("Country", Country.getText().toString()));
+                params.add(new BasicNameValuePair("Pic", null));
+                params.add(new BasicNameValuePair("Country", sp_countries.getSelectedItem().toString()));
                 new Make_Request(params).execute();
             }
         });
@@ -148,6 +167,35 @@ public class Register extends Activity{
             myDialog.cancel();
         }
 
+    }
+
+    public class MySpinnerAdapter extends ArrayAdapter<String> {
+
+        String[] object;
+        public MySpinnerAdapter(Context ctx, int txtViewResourceId, String[] objects) {
+            super(ctx, txtViewResourceId, objects);
+            this.object = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt) {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
+                    false);
+            TextView main_text = (TextView) mySpinner
+                    .findViewById(R.id.spinner_text);
+            main_text.setText(object[position]);
+
+            return mySpinner;
+        }
     }
 		 
 
