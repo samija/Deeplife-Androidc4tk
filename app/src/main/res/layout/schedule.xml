@@ -34,7 +34,7 @@
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:layout_width="296dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -62,10 +62,7 @@
                             android:textSize="20dp" />
                     </LinearLayout>
                 </FrameLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#f9b625"></LinearLayout>
+
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -76,11 +73,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="1">
+                        >
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="44dp"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
                             android:id="@+id/phoneimage"
                             android:src="@drawable/phone"
                              />
@@ -100,13 +97,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         >
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="44dp"
-                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
                             android:id="@+id/scheduletimepic"
                             android:src="@drawable/iconschedule"
                             />
@@ -114,12 +109,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:layout_gravity="center_horizontal|center_vertical"
                             android:text="Time"
                             android:id="@+id/scheduletime"
                             android:paddingLeft="5dp"
                             android:textSize="15dp"
-                            android:layout_marginTop="15dp"/>
+                            />
 
                     </LinearLayout>
 
@@ -128,12 +123,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         >
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="44dp"
+                            android:layout_width="25dp"
+                            android:layout_height="30dp"
                             android:gravity="center_vertical|center_horizontal"
                             android:id="@+id/schedule_disc_image"
                             android:src="@drawable/phone"
@@ -141,16 +135,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|center_horizontal"
                             android:text="0910015581"
                             android:id="@+id/schedulephone"
                             android:layout_marginLeft="2dp"
                             android:textSize="15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="3dp" />
+                            />
 
 
                     </LinearLayout>
-
 
                 </LinearLayout>
             </LinearLayout>
