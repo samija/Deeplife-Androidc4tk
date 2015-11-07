@@ -53,6 +53,9 @@ public class Splash extends Activity {
 	}
 	public synchronized void getNextActivity() {
 
+        Intent intent = new Intent(this, WinActivity.class);
+        startActivity(intent);
+        finish();
 
         /*
         Database myDatabase = new Database(this);

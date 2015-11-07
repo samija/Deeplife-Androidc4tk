@@ -1,4 +1,4 @@
-package deeplife.gcme.com.deeplife;
+package deeplife.gcme.com.deeplife.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
+import deeplife.gcme.com.deeplife.R;
 
 /**
  * Created by rog on 11/7/2015.
@@ -38,6 +39,7 @@ public class WinActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winactivity);
 
+        // Instantiate a ViewPager and a PagerAdapter.
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.win_viewpage);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
