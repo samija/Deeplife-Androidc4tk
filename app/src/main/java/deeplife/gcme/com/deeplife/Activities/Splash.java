@@ -51,6 +51,7 @@ public class Splash extends Activity {
         
         splash.start();
 	}
+
 	public synchronized void getNextActivity() {
 
         Intent intent = new Intent(this, WinActivity.class);

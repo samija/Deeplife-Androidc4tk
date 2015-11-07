@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import deeplife.gcme.com.deeplife.Activities.WinActivity;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
 
@@ -19,7 +18,7 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 
-public class WinFragment extends Fragment {
+public class BuildFragment extends Fragment {
 
     public static final String ARG_PAGE = "page";
 
@@ -28,8 +27,8 @@ public class WinFragment extends Fragment {
 
     public static ArrayList<Question> questions = new ArrayList<Question>();
 
-    public static WinFragment create(int pageNumber) {
-        WinFragment fragment = new WinFragment();
+    public static BuildFragment create(int pageNumber) {
+        BuildFragment fragment = new BuildFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
 

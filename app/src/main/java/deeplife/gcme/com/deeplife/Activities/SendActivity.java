@@ -5,26 +5,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
-import deeplife.gcme.com.deeplife.Fragments.AddDiscipleDialog;
-import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
-import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
 
 /**
  * Created by rog on 11/7/2015.
  */
-public class WinActivity extends FragmentActivity {
+public class SendActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 5;
 

@@ -199,6 +199,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		public Fragment getItem(int arg0) {
 			if(arg0==0){
 				page = new DiscipleList();
+
 			}
 			if(arg0==1){
 				page = new Schedules();
