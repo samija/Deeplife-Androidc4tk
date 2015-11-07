@@ -194,15 +194,8 @@ public class Schedules extends Fragment {
                 values.put(dbhelper.SCHEDULES_FIELDS[2],0);
                 values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
 
-
-
-                AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                //alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-                am.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000*30, DeepLife.AlarmPendingIntent);
-
+                DeepLife.Set_Alarm(calendar);
                 Toast.makeText(getActivity(),"Alarm Set",Toast.LENGTH_LONG).show();
-
-
                 long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
                 if(i!=-1){
                     //insert the disciple to log table
