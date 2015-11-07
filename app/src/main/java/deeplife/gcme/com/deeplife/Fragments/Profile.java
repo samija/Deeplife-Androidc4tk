@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,10 +60,10 @@ public class Profile extends Fragment {
     String disciple_id;
 	ArrayList<String> schedule_list;
 
-	Button addDisciple;
 
 	Database dbadapter;
 	DeepLife dbhelper;
+
     private String mCurrentPhotoPath;
     private String newCurrentPhotoPath;
 
@@ -100,30 +101,6 @@ public class Profile extends Fragment {
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
-		addDisciple = (Button) view.findViewById(R.id.profile_add_button);
-		addDisciple.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-                //add.setContentView(R.layout.fragment_add_disciple);
-                //add.setTitle("Add Desciple");
-                //add.show();
-
-                //FragmentTransaction ft = getFragmentManager().beginTransaction();
-               //AddDiscipleDialog fd = new AddDiscipleDialog();
-                //fd.show(ft,"addDisciple");
-
-				Intent intent = new Intent(getActivity(),AddDisciple.class);
-				startActivity(intent);
-
-                //AddDiscipleDialog frag = new AddDiscipleDialog();
-                //frag.show(getFragmentManager(),"addDisciple");
-				}
-
-
-		});
 
 
 		return 	view;
@@ -151,13 +128,16 @@ public class Profile extends Fragment {
             tv_gender.setText(gender);
 
             if(picture!=null){
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
-                profile_pic.setImageBitmap(BitmapFactory.decodeFile(picture, options));            }
 
-            data.close();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                //options.inSampleSize = 4;
+                Bitmap image = BitmapFactory.decodeFile(picture);
+                profile_pic.setImageBitmap(image);
+            }
 
         }
+        data.close();
+
     }
 
     @Override

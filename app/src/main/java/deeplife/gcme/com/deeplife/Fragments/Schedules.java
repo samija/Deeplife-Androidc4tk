@@ -1,13 +1,20 @@
 package deeplife.gcme.com.deeplife.Fragments;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.CursorAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,20 +34,24 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Activities.MainMenu;
-import deeplife.gcme.com.deeplife.Models.Schedule;
+import deeplife.gcme.com.deeplife.Alarm.Alarm_BroadCast;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.Models.Disciples;
+import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Database.Database;
 
 /**
@@ -112,6 +123,7 @@ public class Schedules extends Fragment {
 
 
     public void addScheduleDialog(){
+        Toast.makeText(getActivity(),"Add Schedule",Toast.LENGTH_LONG).show();
         final Dialog add = new Dialog(getActivity().getBaseContext());
 
         add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
@@ -172,13 +184,24 @@ public class Schedules extends Fragment {
                 int year =  dp_date.getYear();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
+                calendar.set(Calendar.HOUR_OF_DAY, tp_time.getCurrentHour());
+                calendar.set(Calendar.MINUTE,tp_time.getCurrentMinute());
                 Date date = calendar.getTime();
 
                         ContentValues values = new ContentValues();
                 values.put(dbhelper.SCHEDULES_FIELDS[0], phone);
-                values.put(dbhelper.SCHEDULES_FIELDS[1], date + time);
+                values.put(dbhelper.SCHEDULES_FIELDS[1], calendar.getTime().toString());
                 values.put(dbhelper.SCHEDULES_FIELDS[2],0);
                 values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
+
+
+
+                AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                //alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                am.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000*30, DeepLife.AlarmPendingIntent);
+
+                Toast.makeText(getActivity(),"Alarm Set",Toast.LENGTH_LONG).show();
+
 
                 long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
                 if(i!=-1){
@@ -190,7 +213,7 @@ public class Schedules extends Fragment {
                         Log.i("Deep Life", "Successfully Added to Log");
                     }
 
-                    Toast.makeText(getActivity(),"Disciple successfully added!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
                     add.cancel();
                     reload();
                 }
@@ -273,7 +296,7 @@ public class Schedules extends Fragment {
         };
 
 
-        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Remove Schedule ").setMessage("Are You sure you want to remove this schedule" )
                 .setPositiveButton("Yes ", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)

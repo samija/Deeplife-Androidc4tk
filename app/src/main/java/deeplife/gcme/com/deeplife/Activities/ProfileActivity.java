@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,12 +45,15 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 	ActionBarDrawerToggle drawerListener;
 
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
 		getActionBar().setTitle("Disciples");
+
+
 
         disciple_id = getIntent().getExtras().getString("id");
 

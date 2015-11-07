@@ -4,10 +4,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import deeplife.gcme.com.deeplife.Alarm.Alarm_BroadCast;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Services.Service;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 
 public class DeepLife extends Application {
@@ -16,16 +21,14 @@ public class DeepLife extends Application {
 	public static final String Table_LOGS = "LOGS";
 	public static final String Table_USER = "USER";
 
-	public static final String[] DISCIPLES_FIELDS = { "Full_Name",
-			 "Email", "Phone", "Country","Build_phase","Gender","Picture" };
+	public static final String[] DISCIPLES_FIELDS = { "Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
 
 	public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
 	public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
 	public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country" };
 
-	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name",
-			"Email", "Phone", "Country","Build_phase","Gender","Picture" };
+	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
 
 	public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
@@ -34,6 +37,9 @@ public class DeepLife extends Application {
 
 	public static Database myDatabase;
 
+    public static Intent AlarmIntent;
+    public static PendingIntent AlarmPendingIntent;
+
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -41,9 +47,10 @@ public class DeepLife extends Application {
 		myDatabase = new Database(getApplicationContext());
 		Intent intent = new Intent(this, Service.class);
 		if(myDatabase.count(Table_USER)==1){
-			startService(intent);
+			//startService(intent);
 		}
-
+        AlarmIntent = new Intent(this, Alarm_BroadCast.class);
+        AlarmPendingIntent = PendingIntent.getBroadcast(this,0,AlarmIntent,0);
 	}
 	//Register User Profile
 	public static void Register_Profile(JSONArray NOTIS) throws JSONException {

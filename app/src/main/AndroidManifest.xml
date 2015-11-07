@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name = ".Database.DeepLife"
@@ -67,10 +69,22 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Alarm.AlarmActivity"
+            android:theme="@android:style/Theme.Dialog">
+
+        </activity>
+
         <service
             android:name=".Services.Service"
             android:enabled="true"
             />
+        <receiver android:name=".Alarm.Alarm_BroadCast"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
