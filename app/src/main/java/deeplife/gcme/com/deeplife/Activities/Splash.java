@@ -54,7 +54,8 @@ public class Splash extends Activity {
 
 	public synchronized void getNextActivity() {
 
-        Intent intent = new Intent(this, WinActivity.class);
+        Intent intent = new Intent(this, MainMenu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
 
