@@ -1,6 +1,7 @@
 package deeplife.gcme.com.deeplife.Activities;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,8 +26,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.Adapters.Profile_Adapter;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
+import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Registration.Login;
 
@@ -67,9 +70,13 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			}
 			
 		};
-		
+		ArrayList<Disciples> ben = new ArrayList<>();
+        ben.add(new Disciples());
+        ben.add(new Disciples());
+        ben.add(new Disciples());
+
 		dlist = (ListView) findViewById(R.id.drawerList);
-		dlist.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawerlistitems));
+		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
 		dlist.setOnItemClickListener(this);
 		
 		//drawerLayout.setDrawerListener(drawerListener);
