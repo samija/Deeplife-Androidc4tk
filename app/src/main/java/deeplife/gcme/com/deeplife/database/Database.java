@@ -39,6 +39,7 @@ public class Database {
     public long Delete_All(String DB_Table){
         long state = myDatabase.delete(DB_Table, null, null);
         return state;
+        
     }
     public long remove(String DB_Table,int id){
         String[] args = {""+id};
