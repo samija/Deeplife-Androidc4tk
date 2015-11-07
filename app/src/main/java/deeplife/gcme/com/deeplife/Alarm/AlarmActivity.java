@@ -42,6 +42,7 @@ public class AlarmActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.alarm_activity);
         /*
         setContentView(R.layout.activity_my);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
