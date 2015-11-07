@@ -15,6 +15,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.Calendar;
+
 public class DeepLife extends Application {
 	public static final String Table_DISCIPLES = "DISCIPLES";
 	public static final String Table_SCHEDULES = "SCHEDULES";
@@ -36,14 +38,23 @@ public class DeepLife extends Application {
 	public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country" };
 
 	public static Database myDatabase;
-
+    public static Context myContext;
     public static Intent AlarmIntent;
     public static PendingIntent AlarmPendingIntent;
+    public static AlarmManager am;
 
+    public static void Set_Alarm(Calendar calendar){
+        am.set(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmPendingIntent);
+       // am.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000*30, DeepLife.AlarmPendingIntent);
+    }
+    public static void Cancel_Alarm(){
+        am.cancel(AlarmPendingIntent);
+    }
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+        myContext = this;
 		myDatabase = new Database(getApplicationContext());
 		Intent intent = new Intent(this, Service.class);
 		if(myDatabase.count(Table_USER)==1){
@@ -51,6 +62,7 @@ public class DeepLife extends Application {
 		}
         AlarmIntent = new Intent(this, Alarm_BroadCast.class);
         AlarmPendingIntent = PendingIntent.getBroadcast(this,0,AlarmIntent,0);
+        am = (AlarmManager) myContext.getSystemService(Context.ALARM_SERVICE);
 	}
 	//Register User Profile
 	public static void Register_Profile(JSONArray NOTIS) throws JSONException {
