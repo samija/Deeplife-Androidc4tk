@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class AlarmActivity extends Activity {
     private TimePicker alarmTimePicker;
     private static AlarmActivity inst;
     private TextView alarmTextView;
+    private Button Cancel,Snooze;
 
     public static AlarmActivity instance() {
         return inst;
@@ -43,6 +45,24 @@ public class AlarmActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm_activity);
+        Cancel = (Button) findViewById(R.id.alarm_stop);
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeepLife.Cancel_Alarm();
+                finish();
+            }
+        });
+        Snooze = (Button) findViewById(R.id.alarm_snooz);
+        Snooze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeepLife.Cancel_Alarm();
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.SECOND,10);
+                DeepLife.Set_Alarm(cal);
+            }
+        });
         /*
         setContentView(R.layout.activity_my);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
