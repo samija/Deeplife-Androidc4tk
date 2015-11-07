@@ -54,6 +54,7 @@ public class Splash extends Activity {
 	public synchronized void getNextActivity() {
 
 
+        /*
         Database myDatabase = new Database(this);
 
         int count = myDatabase.count(DeepLife.Table_USER);
@@ -68,6 +69,7 @@ public class Splash extends Activity {
             startActivity(intent);
             finish();
         }
+        */
 
 	}
 

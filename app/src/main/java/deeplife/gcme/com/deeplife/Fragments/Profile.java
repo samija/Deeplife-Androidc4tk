@@ -101,8 +101,6 @@ public class Profile extends Fragment {
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
-
-
 		return 	view;
 		
 	}
