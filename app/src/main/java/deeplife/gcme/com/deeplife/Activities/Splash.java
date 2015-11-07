@@ -5,7 +5,10 @@ package deeplife.gcme.com.deeplife.Activities;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.Window;
+
+
 
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Database.Database;
@@ -26,7 +29,7 @@ public class Splash extends Activity {
         //StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog()
         //        .penaltyDeath().build());
 
-    /*
+
 		new Handler().postAtTime(new Runnable() {
 			
 			@Override
@@ -35,7 +38,7 @@ public class Splash extends Activity {
 				getNextActivity();
 			}
 		}, 5000);
-	*/
+
         Thread splash = new Thread(){
         	@Override
         	public void run() {
@@ -54,12 +57,12 @@ public class Splash extends Activity {
 
 	public synchronized void getNextActivity() {
 
-        Intent intent = new Intent(this, MainMenu.class);
+       /* Intent intent = new Intent(this, MainMenu.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
 
-        /*
+
         Database myDatabase = new Database(this);
 
         int count = myDatabase.count(DeepLife.Table_USER);
@@ -74,7 +77,7 @@ public class Splash extends Activity {
             startActivity(intent);
             finish();
         }
-        */
+
 
 	}
 
