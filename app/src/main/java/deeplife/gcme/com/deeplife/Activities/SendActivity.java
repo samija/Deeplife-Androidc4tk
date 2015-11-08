@@ -7,12 +7,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Fragments.Send_Thank_You;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
+import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
 
 /**
@@ -20,14 +27,25 @@ import deeplife.gcme.com.deeplife.R;
  */
 public class SendActivity extends FragmentActivity {
 
-    private static final int NUM_PAGES = 5;
-
-
-    private ViewPager mPager;
-
+    public static WinViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
+    public static final String SEND = "SEND";
+    public int NUM_PAGES;
 
+    public static ArrayList<Question> questions;
+
+//    public static String[] answers;
+ //   public static String[] answerchoices;
+
+    public static ArrayList<String> answers;
+
+    public static ArrayList<String> answerchoices;
+    public static int answer_index = 0;
+
+    public static int DISCIPLE_ID;
+    Database dbadapter;
+    DeepLife dbhelper;
 
 
     @Override
@@ -35,23 +53,72 @@ public class SendActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winactivity);
 
+        mPager = (WinViewPager) findViewById(R.id.win_viewpager);
+        mPager.setSwipeable(true);
+
+        Bundle extras = this.getIntent().getExtras();
+
+        if(extras!=null){
+            DISCIPLE_ID = Integer.parseInt(extras.getString("disciple_id").toString());
+        }
+        else{
+            return;
+        }
+
+        //initialize data
+        init();
 
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        // Instantiate a ViewPager and a PagerAdapter.
-       // mPager = (ViewPager) findViewById(R.id.win_viewpage);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
+
+
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // When changing pages, reset the action bar actions since they are dependent
-                // on which page is currently active. An alternative approach is to have each
-                // fragment expose actions itself (rather than the activity exposing actions),
-                // but for simplicity, the activity provides the actions in this sample.
-                invalidateOptionsMenu();
+                //invalidateOptionsMenu();
+                answers.set(position-1,answerchoices.get(answer_index));
+                Log.i("Deep Life", answers.get(position));
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbadapter.dispose();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    public void init(){
+        //initialize database files
+        dbadapter = new Database(this);
+        dbhelper = new DeepLife();
+
+
+        //set the max number of pages from db
+        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,SEND));
+        NUM_PAGES++;
+
+        Log.i("Deep Life", "The Page number inside win activity is "+NUM_PAGES+"");
+
+        questions = dbadapter.get_All_Questions(SEND);
+
+        answers = new ArrayList<String>();
+        answerchoices = new ArrayList<String>();
+        answerchoices.add("Yes");
+        answerchoices.add("No");
+
+        for(int i=0; i<NUM_PAGES;i++){
+            answers.add("");
+        }
+        Log.i("Deep Life", "Array size for answers is " +answers.size());
+
+
     }
 
     @Override
@@ -84,7 +151,6 @@ public class SendActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Navigate "up" the demo structure to the launchpad activity.
-                // See http://developer.android.com/design/patterns/navigation.html for more.
                 //NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
 
@@ -104,6 +170,8 @@ public class SendActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -111,18 +179,26 @@ public class SendActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position>3){
-                Win_Thank_You finish = new Win_Thank_You();
-                return finish;
+
+
+            if(position==NUM_PAGES-1){
+                return new Send_Thank_You();
             }
-            else {
-                return WinFragment.create(position);
-            }
+
+            return WinFragment.create(position);
+
             }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
         }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return SEND;
+        }
     }
+
 }

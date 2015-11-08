@@ -59,16 +59,16 @@ public class WinFragment extends Fragment {
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
         tv_note = (TextView) rootView.findViewById(R.id.win_note);
-        Log.i("Deep Life", "The Page number inside win fragment is " + getPageNumber() + "");
 
         if(getPageNumber()<WinActivity.questions.size()) {
             tv_qdisc.setText(WinActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(WinActivity.questions.get(getPageNumber()).getNote());
 
             if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                WinActivity.mPager.setSwipeable(false);
+                    WinActivity.mPager.setSwipeable(false);
             }
         }
+
 
         rb_yes.setOnClickListener(new View.OnClickListener() {
             @Override

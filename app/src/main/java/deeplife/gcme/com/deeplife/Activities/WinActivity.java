@@ -86,7 +86,6 @@ public class WinActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 //invalidateOptionsMenu();
-               // answers[position-1] = answerchoices[answer_index].toString();
                 answers.set(position-1,answerchoices.get(answer_index));
                 Log.i("Deep Life", answers.get(position));
             }
@@ -162,7 +161,6 @@ public class WinActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Navigate "up" the demo structure to the launchpad activity.
-                // See http://developer.android.com/design/patterns/navigation.html for more.
                 //NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
 

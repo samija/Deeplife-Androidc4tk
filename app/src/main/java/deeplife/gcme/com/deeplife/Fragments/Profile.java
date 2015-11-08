@@ -39,7 +39,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import deeplife.gcme.com.deeplife.Activities.AddDisciple;
+import deeplife.gcme.com.deeplife.Activities.BuildActivity;
 import deeplife.gcme.com.deeplife.Activities.ProfileActivity;
+import deeplife.gcme.com.deeplife.Activities.SendActivity;
 import deeplife.gcme.com.deeplife.Activities.WinActivity;
 import deeplife.gcme.com.deeplife.Activities.WinViewPager;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
@@ -126,6 +128,8 @@ public class Profile extends Fragment {
             String picture = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[6]));
 
             tv_email.setText(email);
+            if(build.endsWith("SEND"))
+                tv_build.setText("COMPLETED");
             tv_build.setText(build);
             tv_name.setText(name);
             tv_phone.setText(phone);
@@ -143,8 +147,22 @@ public class Profile extends Fragment {
             btn_complet.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(build=="Added") {
+                    if(build.endsWith("Added")) {
                         Intent intent = new Intent(Profile.this.getActivity(), WinActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("disciple_id", disciple_id);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                    else if(build.endsWith("WIN")){
+                        Intent intent = new Intent(Profile.this.getActivity(), BuildActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("disciple_id", disciple_id);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                    else if(build.endsWith("BUILD")){
+                        Intent intent = new Intent(Profile.this.getActivity(), SendActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("disciple_id", disciple_id);
                         intent.putExtras(bundle);

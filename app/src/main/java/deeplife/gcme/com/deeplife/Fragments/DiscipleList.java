@@ -150,16 +150,16 @@ public class DiscipleList extends Fragment {
             public void onClick(View v) {
                 String name = ed_name.getText().toString();
                 String email = ed_email.getText().toString();
-                String country = ed_code.getText().toString() + countries.getSelectedItem().toString();
+                String country = countries.getSelectedItem().toString();
                 String gender = sp_gender.getSelectedItem().toString();
                 String phone = ed_code.getText().toString() + ed_phone.getText().toString();
 
                 ContentValues values = new ContentValues();
                 values.put(dbhelper.DISCIPLES_FIELDS[0], name);
-                values.put(dbhelper.DISCIPLES_FIELDS[1], phone);
-                values.put(dbhelper.DISCIPLES_FIELDS[2],email);
-                values.put(dbhelper.DISCIPLES_FIELDS[3], "Added");
-                values.put(dbhelper.DISCIPLES_FIELDS[4], country);
+                values.put(dbhelper.DISCIPLES_FIELDS[1], email);
+                values.put(dbhelper.DISCIPLES_FIELDS[2],phone);
+                values.put(dbhelper.DISCIPLES_FIELDS[3], country);
+                values.put(dbhelper.DISCIPLES_FIELDS[4], "Added");
                 values.put(dbhelper.DISCIPLES_FIELDS[5], gender);
 
                 long i = dbadapter.insert(dbhelper.Table_DISCIPLES,values);

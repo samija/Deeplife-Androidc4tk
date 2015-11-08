@@ -181,8 +181,8 @@ public int count_Questions(String DB_Table, String Category){
             Disciples dis = new Disciples();
             dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
             dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
-            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
-            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
             dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
             dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
             dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));

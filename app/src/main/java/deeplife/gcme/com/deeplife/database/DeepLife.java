@@ -42,7 +42,6 @@ public class DeepLife extends Application {
 
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
-
     public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
     public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };

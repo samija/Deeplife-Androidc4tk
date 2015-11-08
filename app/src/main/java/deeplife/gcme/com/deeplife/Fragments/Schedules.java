@@ -216,7 +216,11 @@ public class Schedules extends Fragment {
     }
 
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dbadapter.dispose();
+    }
 
     @Override
 	public void onPause() {
