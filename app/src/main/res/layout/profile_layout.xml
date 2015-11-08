@@ -2,26 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:background="@drawable/background"
         android:layout_height="150dp">
         <FrameLayout
             android:layout_width="140dp"
-            android:layout_height="140dp">
+            android:layout_height="140dp"
+            android:layout_gravity="center_horizontal|center_vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/crop_image">
             </LinearLayout>
             <ImageView
+                android:id="@+id/profile_image_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/pic"/>
         </FrameLayout>
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
