@@ -49,15 +49,18 @@ public class Win_Thank_You extends Fragment {
                     cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
                     cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(i));
 
-                    db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                    Log.i("Deep Life", "Question Answer field updated");
+                    long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                    if(check!=-1)
+                        Log.i("Deep Life", "Question Answer field updated");
                 }
 
                 ContentValues cv_build = new ContentValues();
                 cv_build.put(DeepLife.DISCIPLES_FIELDS[4],"BUILD");
-                db.update(DeepLife.Table_DISCIPLES,cv_build,WinActivity.DISCIPLE_ID);
-
-                getNextActivity();
+                long update_state = db.update(DeepLife.Table_DISCIPLES,cv_build,WinActivity.DISCIPLE_ID);
+                if(update_state!=-1) {
+                    Toast.makeText(getActivity(),"Successfully Finished Build Stage!",Toast.LENGTH_LONG).show();
+                    getNextActivity();
+                }
             }
         });
         return viewGroup;

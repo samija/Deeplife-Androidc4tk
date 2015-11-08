@@ -186,11 +186,9 @@ public class Login extends Activity {
                 // Log.d("Login Successful!", json.toString());
                 try {
                     DeepLife.Register_Profile(Req_Res);
+
                     Intent i = new Intent(Login.this, MainMenu.class);
                     startActivity(i);
-
-                    Intent service = new Intent(Login.this,Service.class);
-                    startService(service);
 
                     finish();
                 } catch (JSONException e) {

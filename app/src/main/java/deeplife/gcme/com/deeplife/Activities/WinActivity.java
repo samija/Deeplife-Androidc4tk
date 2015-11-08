@@ -52,6 +52,7 @@ public class WinActivity extends FragmentActivity {
     Database dbadapter;
     DeepLife dbhelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,18 @@ public class WinActivity extends FragmentActivity {
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
         mPager.setSwipeable(true);
 
+        Bundle extras = this.getIntent().getExtras();
+
+        if(extras!=null){
+            DISCIPLE_ID = Integer.parseInt(extras.getString("disciple_id").toString());
+        }
+        else{
+            return;
+        }
+
+
+
+        Log.i("Deep Life","The disciple Id is: "+DISCIPLE_ID+"");
 
         //initialize data
         init();
@@ -74,7 +87,7 @@ public class WinActivity extends FragmentActivity {
             public void onPageSelected(int position) {
                 //invalidateOptionsMenu();
                // answers[position-1] = answerchoices[answer_index].toString();
-                answers.set(position,answerchoices.get(answer_index));
+                answers.set(position-1,answerchoices.get(answer_index));
                 Log.i("Deep Life", answers.get(position));
             }
         });
@@ -99,7 +112,9 @@ public class WinActivity extends FragmentActivity {
 
 
         //set the max number of pages from db
-        NUM_PAGES = dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN) + 1;
+        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
+        NUM_PAGES++;
+
         Log.i("Deep Life", "The Page number inside win activity is "+NUM_PAGES+"");
 
         questions = dbadapter.get_All_Questions(WIN);

@@ -55,15 +55,19 @@ public class Profile_Adapter extends BaseAdapter {
         if(position == 0){
             convertView = layoutInflater.inflate(R.layout.profile_layout,null);
             TextView Labele = (TextView) convertView.findViewById(R.id.profile_state);
-            if(DeepLife.isConnectingToInternet()){
-                Labele.setText("Online");
-            }else{
-                Labele.setText("Offline");
-            }
+            //if(DeepLife.isConnectingToInternet()){
+            //    Labele.setText("Online");
+            //}else{
+             //   Labele.setText("Offline");
+           // }
+            Labele.setText("Offline");
+
+
         }else{
             convertView = layoutInflater.inflate(R.layout.profile_items,null);
             ImageView Icon = (ImageView) convertView.findViewById(R.id.profile_icon);
             TextView Labele = (TextView) convertView.findViewById(R.id.profile_item_name);
+
             if(position == 1){
                 Icon.setBackgroundResource(R.drawable.account);
                 String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[0]);

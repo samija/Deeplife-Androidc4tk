@@ -169,6 +169,7 @@ public int count_Questions(String DB_Table, String Category){
         }
         return found;
     }
+
     public ArrayList<Disciples> getDisciples(){
         String DB_Table = DeepLife.Table_DISCIPLES;
         ArrayList<Disciples> found = new ArrayList<Disciples>();
@@ -182,15 +183,16 @@ public int count_Questions(String DB_Table, String Category){
             dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
             dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
             dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
-            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
-            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
             dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
             dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
             found.add(dis);
         }
         return found;
     }
-    public ArrayList<Schedule> get_All_Schedule(){
+
+     public ArrayList<Schedule> get_All_Schedule(){
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);

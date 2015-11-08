@@ -40,6 +40,8 @@ import java.util.Date;
 
 import deeplife.gcme.com.deeplife.Activities.AddDisciple;
 import deeplife.gcme.com.deeplife.Activities.ProfileActivity;
+import deeplife.gcme.com.deeplife.Activities.WinActivity;
+import deeplife.gcme.com.deeplife.Activities.WinViewPager;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Database.Database;
@@ -56,6 +58,8 @@ public class Profile extends Fragment {
 
     ImageButton imageButton;
     ImageView profile_pic;
+
+    Button btn_complet;
 
     String disciple_id;
 	ArrayList<String> schedule_list;
@@ -86,6 +90,7 @@ public class Profile extends Fragment {
         disciple_id = myactivity.getDisciple_id();
         Log.i("Deeeeep Life",disciple_id + "");
 
+        btn_complet = (Button) view.findViewById(R.id.btn_complete_build);
         tv_build = (TextView) view.findViewById(R.id.profile_build_stage);
         tv_name = (TextView) view.findViewById(R.id.profile_name);
         tv_phone = (TextView) view.findViewById(R.id.profile_phone);
@@ -101,6 +106,7 @@ public class Profile extends Fragment {
 
 		lv_schedule = (ListView) view.findViewById(R.id.profile_schedule_list);
 
+
 		return 	view;
 		
 	}
@@ -112,11 +118,11 @@ public class Profile extends Fragment {
 
         if(data != null && data.moveToFirst() && data.getCount()>0) {
             String name = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[0]));
-            String phone = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[1]));
-            String build = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[3]));
-            String email = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[2]));
+            String email = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[1]));
+            String phone = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[2]));
+            String country = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[3]));
+            final String build = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[4]));
             String gender = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[5]));
-            String country = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[4]));
             String picture = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[6]));
 
             tv_email.setText(email);
@@ -133,6 +139,19 @@ public class Profile extends Fragment {
                 profile_pic.setImageBitmap(image);
                 profile_pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
+
+            btn_complet.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(build=="Added") {
+                        Intent intent = new Intent(Profile.this.getActivity(), WinActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("disciple_id", disciple_id);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }
+            });
 
         }
         data.close();

@@ -60,8 +60,8 @@ public class Splash extends Activity {
         Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
         finish();
-*/
 
+*/
         Database myDatabase = new Database(this);
 
         int count = myDatabase.count(DeepLife.Table_USER);
@@ -76,7 +76,6 @@ public class Splash extends Activity {
             startActivity(intent);
             finish();
         }
-
 
 	}
 
