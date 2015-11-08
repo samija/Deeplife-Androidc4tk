@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -37,6 +38,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 	DrawerLayout drawerLayout;
 	ListView dlist;
+    private AlertDialog.Builder builder;
+    private Context myContext;
 	
 	String[] drawerlistitems;
 	
@@ -49,7 +52,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
 		getActionBar().setTitle("Welcome");
-
+        myContext = this;
 		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
 		viewpager = (ViewPager) findViewById(R.id.welcome_viewpager);
@@ -78,6 +81,13 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		dlist = (ListView) findViewById(R.id.drawerList);
 		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
 		dlist.setOnItemClickListener(this);
+        dlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Show_DialogBox("What are you doing?",1);
+                return false;
+            }
+        });
 		
 		//drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
@@ -86,6 +96,25 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 		getOverflowMenu();
 	}
+    public void Show_DialogBox(String messge,int type){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+        builder = new AlertDialog.Builder(myContext);
+        builder.setTitle("DeepLife:").setMessage(messge).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
 	
 	private void getOverflowMenu() {
 

@@ -80,7 +80,13 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		};
 		
 		dlist = (ListView) findViewById(R.id.drawerList);
-		dlist.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawerlistitems));
+        dlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                return false;
+            }
+        });
 		dlist.setOnItemClickListener(this);
 		
 		//drawerLayout.setDrawerListener(drawerListener);
