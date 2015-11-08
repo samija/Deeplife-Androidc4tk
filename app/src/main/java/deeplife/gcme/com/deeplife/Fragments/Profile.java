@@ -131,6 +131,7 @@ public class Profile extends Fragment {
                 //options.inSampleSize = 4;
                 Bitmap image = BitmapFactory.decodeFile(picture);
                 profile_pic.setImageBitmap(image);
+                profile_pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
 
         }
