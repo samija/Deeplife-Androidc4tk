@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +31,13 @@ public class WinFragment extends Fragment {
     RadioGroup rdGroup;
     RadioButton rb_yes;
     RadioButton rb_no;
-    TextView tv_qdisc;
-
-    public static ArrayList<Question> questions = new ArrayList<Question>();
-
+    TextView tv_qdisc, tv_note;
 
     public static WinFragment create(int pageNumber) {
         WinFragment fragment = new WinFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
-        Bundle b = new Bundle();
         fragment.setArguments(args);
-        WinActivity.mPager.setSwipeable(false);
         return fragment;
     }
 
@@ -49,15 +45,7 @@ public class WinFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        questions.add(new Question("1", "Win", "Is your disciple filled with the Holy Spirit? To be filled with Holy Spirit means ...."));
-        questions.add(new Question("2","Win","Is your sdfhsdfhsdfhsdfhsdfhsdfhsdfhsdf  sdfhsdfh sdfh sdf hsdfh sdfh sdfh sdfh ...."));
-        questions.add(new Question("3","Win","When changing pages, reset the action bar actions since they are dependent...."));
-        questions.add(new Question("4","Win","fragment expose actions itself (rather than the activity exposing actions),...."));
-        questions.add(new Question("5", "Win", "Is your disciple filled with the Holy Spirit? To be filled with Holy Spirit means ...."));
-
         mPageNumber = getArguments().getInt(ARG_PAGE);
-
     }
 
     @Override
@@ -67,20 +55,31 @@ public class WinFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.winfragment, container, false);
 
-        //((TextView) rootView.findViewById(android.R.id.text1)).setText(
-         //       getString(R.string.title_template_step, mPageNumber + 1));
-
          tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
+        tv_note = (TextView) rootView.findViewById(R.id.win_note);
+        Log.i("Deep Life", "The Page number inside win fragment is "+getPageNumber() + "");
+        if(getPageNumber()>4) {
+            tv_qdisc.setText(WinActivity.questions.get(getPageNumber() - 2).getDescription());
+            tv_note.setText(WinActivity.questions.get(getPageNumber() - 2).getNote());
+        }
 
-        tv_qdisc.setText(questions.get(mPageNumber).getDescription());
+        if(!rb_no.isSelected() & !rb_yes.isSelected()){
+            WinActivity.mPager.setSwipeable(false);
+        }
 
 
         rb_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                WinActivity.mPager.setSwipeable(true);
+            }
+        });
+        rb_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 WinActivity.mPager.setSwipeable(true);
             }
         });

@@ -57,6 +57,8 @@ public class Splash extends Activity {
 
 	public synchronized void getNextActivity() {
 
+		//Database db = new Database(this);
+		//db.populateQuestions();
         Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
         finish();

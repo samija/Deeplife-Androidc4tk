@@ -6,15 +6,41 @@ package deeplife.gcme.com.deeplife.Models;
 public class Question {
 
     String id;
-    String catagory;
+    String category;
     String description;
 
+    String note;
+    String mandatory;
+
+    public Question(){
+
+    }
 
     public Question(String id, String catagory, String desc){
         this.id = id;
-        this.catagory = catagory;
+        this.category = catagory;
         this.description = desc;
     }
+
+
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getMandatory() {
+        return mandatory;
+    }
+
+    public void setMandatory(String mandatory) {
+        this.mandatory = mandatory;
+    }
+
+
     public String getId() {
         return id;
     }
@@ -23,12 +49,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getCatagory() {
-        return catagory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatagory(String catagory) {
-        this.catagory = catagory;
+    public void setCategory(String catagory) {
+        this.category = catagory;
     }
 
     public String getDescription() {
