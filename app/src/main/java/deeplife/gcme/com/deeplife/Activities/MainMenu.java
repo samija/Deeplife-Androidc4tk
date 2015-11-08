@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	DrawerLayout drawerLayout;
 	ListView dlist;
     private AlertDialog.Builder builder;
+    private AlertDialog.Builder myBuilder;
     private Context myContext;
 	
 	String[] drawerlistitems;
@@ -81,11 +84,10 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		dlist = (ListView) findViewById(R.id.drawerList);
 		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
 		dlist.setOnItemClickListener(this);
-        dlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        dlist.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Show_DialogBox("What are you doing?",1);
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Show_DialogBox("Change Value",1);
             }
         });
 		
@@ -96,7 +98,38 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 		getOverflowMenu();
 	}
+    public void user_input(){
+        Toast.makeText(myContext,"Toasted",Toast.LENGTH_LONG).show();
+        LayoutInflater LI = LayoutInflater.from(myContext);
+        View view1 = LI.inflate(R.layout.dialog_1,null);
+        myBuilder.setView(view1);
 
+        final EditText userInput = (EditText) view1.findViewById(R.id.editTextDialogUserInput);
+        // set dialog message
+        myBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = myBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+    }
     public void Show_DialogBox(String messge,int type){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -113,8 +146,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
             }
         };
         builder = new AlertDialog.Builder(myContext);
-        builder.setTitle("DeepLife:").setMessage(messge).setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+        LayoutInflater LI = LayoutInflater.from(myContext);
+        View view1 = LI.inflate(R.layout.dialog_1,null);
+        builder.setView(view1);
+        builder.setPositiveButton("Save", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener).show();
     }
 	
 	private void getOverflowMenu() {

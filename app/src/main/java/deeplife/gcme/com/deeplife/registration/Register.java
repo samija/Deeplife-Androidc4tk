@@ -111,9 +111,11 @@ public class Register extends Activity{
                 params.add(new BasicNameValuePair("Full_Name", Full_Name.getText().toString()));
                 params.add(new BasicNameValuePair("Password", Pass.getText().toString()));
                 params.add(new BasicNameValuePair("Email", Email.getText().toString()));
-                params.add(new BasicNameValuePair("Email_Phone", Email.getText().toString()));
                 params.add(new BasicNameValuePair("Phone", Phone.getText().toString()));
-                params.add(new BasicNameValuePair("Pic", null));
+                params.add(new BasicNameValuePair("Build_phase", "Added"));
+                params.add(new BasicNameValuePair("Gender", "Male"));
+                params.add(new BasicNameValuePair("Build_phase", Phone.getText().toString()));
+                params.add(new BasicNameValuePair("Picture", null));
                 params.add(new BasicNameValuePair("Country", sp_countries.getSelectedItem().toString()));
                 new Make_Request(params).execute();
             }
@@ -208,6 +210,4 @@ public class Register extends Activity{
             return mySpinner;
         }
     }
-		 
-
 }
