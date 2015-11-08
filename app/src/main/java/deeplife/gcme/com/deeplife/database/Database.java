@@ -26,6 +26,7 @@ public class Database {
         mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
         mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
+        mySQL.createTables(DeepLife.Table_QUESTION,DeepLife.QUESTION_FIELDS);
     }
 
     public void dispose(){
@@ -164,6 +165,7 @@ public class Database {
         }
         return found;
     }
+
     public ArrayList<Schedule> get_Schedule(String Dis_ID){
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
@@ -184,6 +186,7 @@ public class Database {
         }
         return found;
     }
+
     private String[] getColumns(String DB_Table){
         String[] strs = null;
         if(DB_Table == DeepLife.Table_DISCIPLES){
@@ -194,6 +197,8 @@ public class Database {
             strs = DeepLife.USER_COLUMN;
         }else if(DB_Table == DeepLife.Table_SCHEDULES){
             strs = DeepLife.SCHEDULES_COLUMN;
+        } else if(DB_Table == DeepLife.Table_QUESTION){
+            strs = DeepLife.QIESTIONS_COLUMN;
         }
         return strs;
     }

@@ -11,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,7 @@ public class WinActivity extends FragmentActivity {
 
     private PagerAdapter mPagerAdapter;
 
+    public static boolean ALLOW_SWIPE = false;
 
 
 
@@ -43,18 +46,25 @@ public class WinActivity extends FragmentActivity {
 
 
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.win_viewpage);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+        mPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                    if(ALLOW_SWIPE){
+                        return false;
+                    }
+                return true;
+            }
+
+
+        });
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // When changing pages, reset the action bar actions since they are dependent
-                // on which page is currently active. An alternative approach is to have each
-                // fragment expose actions itself (rather than the activity exposing actions),
-                // but for simplicity, the activity provides the actions in this sample.
+
                 invalidateOptionsMenu();
             }
         });
@@ -130,5 +140,24 @@ public class WinActivity extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position){
+                case 0:
+                    return "Welcome";
+                case 1:
+                    return "2 Left";
+                case 2:
+                    return "1 Left";
+                case 3:
+                    return "Last";
+                case 4:
+                    return "Finish";
+            }
+            return null;
+        }
     }
+
 }
