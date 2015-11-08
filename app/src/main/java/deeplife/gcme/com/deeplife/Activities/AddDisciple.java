@@ -30,8 +30,6 @@ import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Registration.Login;
 
 public class AddDisciple extends FragmentActivity implements OnItemClickListener {
-
-
 	DrawerLayout drawerLayout;
 	ListView dlist;
 	

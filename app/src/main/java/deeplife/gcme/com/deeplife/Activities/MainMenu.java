@@ -96,6 +96,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 		getOverflowMenu();
 	}
+
     public void Show_DialogBox(String messge,int type){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -154,7 +155,10 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		
+        if(drawerListener.onOptionsItemSelected(item)){
+            return true;
+        }
+
 	//	if(drawerListener.onOptionsItemSelected(item)){
 	//		return true;
 	//	}
