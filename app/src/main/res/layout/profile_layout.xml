@@ -38,6 +38,7 @@
             android:layout_margin="10sp"
             android:background="@drawable/logoicon_ldpi"/>
         <TextView
+            android:id="@+id/profile_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"

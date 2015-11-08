@@ -14,6 +14,8 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.util.Calendar;
 
@@ -22,7 +24,10 @@ public class DeepLife extends Application {
 	public static final String Table_SCHEDULES = "SCHEDULES";
 	public static final String Table_LOGS = "LOGS";
 	public static final String Table_USER = "USER";
-	public static final String Table_QUESTION = "QUESTIONS";
+	public static final String Table_QUESTION_LIST = "QUESTION_LIST";
+	public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
+
+
 
 	public static final String[] DISCIPLES_FIELDS = { "Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
 
@@ -31,7 +36,9 @@ public class DeepLife extends Application {
 
 	public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country" };
 
-	public static final String[] QUESTION_FIELDS = {"Title","Description", "Category"};
+	public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
+
+	public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer"};
 
 
 	public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
@@ -40,7 +47,10 @@ public class DeepLife extends Application {
 
 	public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
 	public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country" };
-	public static final String[] QIESTIONS_COLUMN = {"id", "Title", "Description", "Category"};
+	public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
+	public static final String[] QIESTION_ANSWER_COLUMN = {"id","Disciple_ID","Question_ID", "Answer"};
+
+
 	public static Database myDatabase;
     public static Context myContext;
     public static Intent AlarmIntent;
@@ -113,4 +123,19 @@ public class DeepLife extends Application {
 			}
 		}
 	}
+    public static boolean isConnectingToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager) myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+        }
+        return false;
+    }
+
 }

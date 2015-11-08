@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Fragments.AddDiscipleDialog;
 import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
@@ -29,26 +32,30 @@ import deeplife.gcme.com.deeplife.R;
  */
 public class WinActivity extends FragmentActivity {
 
-    private static final int NUM_PAGES = 5;
-
-
     public static WinViewPager mPager;
-
     private PagerAdapter mPagerAdapter;
 
+    public static final String WIN = "WIN";
+    public int NUM_PAGES;
+    public static ArrayList<Question> questions;
+
+
+    Database dbadapter;
+    DeepLife dbhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winactivity);
 
-
-        //mPager = new WinViewPager(this);
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
-        mPager.setSwipeable(false);
 
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        //initialize data
+        init();
+
+        //mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        //mPager.setAdapter(mPagerAdapter);
+        mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
 
         /*
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -59,7 +66,18 @@ public class WinActivity extends FragmentActivity {
         });
         */
     }
+    public void init(){
+        //initialize database files
+        dbadapter = new Database(this);
+        dbhelper = new DeepLife();
 
+        //set the max number of pages from db
+        NUM_PAGES = dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN) + 2;
+        Log.i("Deep Life", "The Page number inside win activity is "+NUM_PAGES+"");
+
+        questions = dbadapter.get_All_Questions(WIN);
+        mPager.setSwipeable(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,13 +138,16 @@ public class WinActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position>3){
-                Win_Thank_You finish = new Win_Thank_You();
-                return finish;
+            /*if(position ==0){
+                return new Win_Thank_You();
             }
-            else {
+            else if(position==NUM_PAGES-1){
+                return new Win_Thank_You();
+            }
+            else{
+            */
                 return WinFragment.create(position);
-            }
+            //}
             }
 
         @Override
@@ -137,19 +158,7 @@ public class WinActivity extends FragmentActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            switch (position){
-                case 0:
-                    return "Welcome";
-                case 1:
-                    return "2 Left";
-                case 2:
-                    return "1 Left";
-                case 3:
-                    return "Last";
-                case 4:
-                    return "Finish";
-            }
-            return null;
+            return WIN;
         }
     }
 

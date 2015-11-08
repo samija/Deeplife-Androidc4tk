@@ -54,6 +54,12 @@ public class Profile_Adapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(position == 0){
             convertView = layoutInflater.inflate(R.layout.profile_layout,null);
+            TextView Labele = (TextView) convertView.findViewById(R.id.profile_state);
+            if(DeepLife.isConnectingToInternet()){
+                Labele.setText("Online");
+            }else{
+                Labele.setText("Offline");
+            }
         }else{
             convertView = layoutInflater.inflate(R.layout.profile_items,null);
             ImageView Icon = (ImageView) convertView.findViewById(R.id.profile_icon);
