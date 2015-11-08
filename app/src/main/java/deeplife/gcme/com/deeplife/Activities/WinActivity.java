@@ -37,9 +37,18 @@ public class WinActivity extends FragmentActivity {
 
     public static final String WIN = "WIN";
     public int NUM_PAGES;
+
     public static ArrayList<Question> questions;
 
+//    public static String[] answers;
+ //   public static String[] answerchoices;
 
+    public static ArrayList<String> answers;
+
+    public static ArrayList<String> answerchoices;
+    public static int answer_index = 0;
+
+    public static int DISCIPLE_ID;
     Database dbadapter;
     DeepLife dbhelper;
 
@@ -49,6 +58,8 @@ public class WinActivity extends FragmentActivity {
         setContentView(R.layout.winactivity);
 
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
+        mPager.setSwipeable(true);
+
 
         //initialize data
         init();
@@ -57,26 +68,53 @@ public class WinActivity extends FragmentActivity {
         //mPager.setAdapter(mPagerAdapter);
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
 
-        /*
+
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                invalidateOptionsMenu();
+                //invalidateOptionsMenu();
+               // answers[position-1] = answerchoices[answer_index].toString();
+                answers.set(position,answerchoices.get(answer_index));
+                Log.i("Deep Life", answers.get(position));
             }
         });
-        */
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbadapter.dispose();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     public void init(){
         //initialize database files
         dbadapter = new Database(this);
         dbhelper = new DeepLife();
 
+
         //set the max number of pages from db
-        NUM_PAGES = dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN) + 2;
+        NUM_PAGES = dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN) + 1;
         Log.i("Deep Life", "The Page number inside win activity is "+NUM_PAGES+"");
 
         questions = dbadapter.get_All_Questions(WIN);
-        mPager.setSwipeable(true);
+
+        answers = new ArrayList<String>();
+        answerchoices = new ArrayList<String>();
+        answerchoices.add("Yes");
+        answerchoices.add("No");
+
+        for(int i=0; i<NUM_PAGES;i++){
+            answers.add("");
+        }
+        Log.i("Deep Life", "Array size for answers is " +answers.size());
+
+        //answers = new String[NUM_PAGES-1];
     }
 
     @Override
@@ -138,16 +176,14 @@ public class WinActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            /*if(position ==0){
+
+
+            if(position==NUM_PAGES-1){
                 return new Win_Thank_You();
             }
-            else if(position==NUM_PAGES-1){
-                return new Win_Thank_You();
-            }
-            else{
-            */
-                return WinFragment.create(position);
-            //}
+
+            return WinFragment.create(position);
+
             }
 
         @Override

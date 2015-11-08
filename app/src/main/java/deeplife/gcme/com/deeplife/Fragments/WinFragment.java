@@ -59,30 +59,33 @@ public class WinFragment extends Fragment {
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
         tv_note = (TextView) rootView.findViewById(R.id.win_note);
-        Log.i("Deep Life", "The Page number inside win fragment is "+getPageNumber() + "");
-        if(getPageNumber()>4) {
-            tv_qdisc.setText(WinActivity.questions.get(getPageNumber() - 2).getDescription());
-            tv_note.setText(WinActivity.questions.get(getPageNumber() - 2).getNote());
+        Log.i("Deep Life", "The Page number inside win fragment is " + getPageNumber() + "");
+
+        if(getPageNumber()<WinActivity.questions.size()) {
+            tv_qdisc.setText(WinActivity.questions.get(getPageNumber()).getDescription());
+            tv_note.setText(WinActivity.questions.get(getPageNumber()).getNote());
+
+            if(!rb_no.isChecked() & !rb_yes.isChecked()){
+                WinActivity.mPager.setSwipeable(false);
+            }
         }
 
-        if(!rb_no.isSelected() & !rb_yes.isSelected()){
-            WinActivity.mPager.setSwipeable(false);
-        }
-
+        rb_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WinActivity.answer_index = 0;
+                WinActivity.mPager.setSwipeable(true);
+            }
+        });
 
         rb_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WinActivity.answer_index = 1;
+                WinActivity.mPager.setSwipeable(true);
+            }
+        });
 
-                WinActivity.mPager.setSwipeable(true);
-            }
-        });
-        rb_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WinActivity.mPager.setSwipeable(true);
-            }
-        });
 
         //rb_no.setSelected(true);
 
@@ -92,5 +95,11 @@ public class WinFragment extends Fragment {
 
     public int getPageNumber() {
         return mPageNumber;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }
