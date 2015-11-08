@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,12 +32,9 @@ public class WinActivity extends FragmentActivity {
     private static final int NUM_PAGES = 5;
 
 
-    private ViewPager mPager;
+    public static WinViewPager mPager;
 
     private PagerAdapter mPagerAdapter;
-
-    public static boolean ALLOW_SWIPE = false;
-
 
 
     @Override
@@ -45,30 +43,23 @@ public class WinActivity extends FragmentActivity {
         setContentView(R.layout.winactivity);
 
 
+        //mPager = new WinViewPager(this);
+        mPager = (WinViewPager) findViewById(R.id.win_viewpager);
+        mPager.setSwipeable(false);
 
-        mPager = (ViewPager) findViewById(R.id.win_viewpage);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        mPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                    if(ALLOW_SWIPE){
-                        return false;
-                    }
-                return true;
-            }
-
-
-        });
+        /*
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-
                 invalidateOptionsMenu();
             }
         });
+        */
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +110,8 @@ public class WinActivity extends FragmentActivity {
         */
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {

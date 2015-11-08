@@ -57,12 +57,11 @@ public class Splash extends Activity {
 
 	public synchronized void getNextActivity() {
 
-       /* Intent intent = new Intent(this, MainMenu.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
-        finish();*/
+        finish();
 
-
+		/*
         Database myDatabase = new Database(this);
 
         int count = myDatabase.count(DeepLife.Table_USER);
@@ -78,7 +77,7 @@ public class Splash extends Activity {
             finish();
         }
 
-
+		*/
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class Database {
         myDatabase.close();
     }
 
+
     public long insert(String DB_Table,ContentValues cv){
         long state = myDatabase.insert(DB_Table, null, cv);
         return state;

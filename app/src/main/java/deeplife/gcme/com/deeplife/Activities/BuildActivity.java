@@ -39,7 +39,7 @@ public class BuildActivity extends FragmentActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.win_viewpage);
+        //mPager = (ViewPager) findViewById(R.id.win_viewpage);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {

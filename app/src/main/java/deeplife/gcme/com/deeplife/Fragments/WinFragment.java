@@ -41,7 +41,7 @@ public class WinFragment extends Fragment {
         args.putInt(ARG_PAGE, pageNumber);
         Bundle b = new Bundle();
         fragment.setArguments(args);
-        WinActivity.ALLOW_SWIPE = false;
+        WinActivity.mPager.setSwipeable(false);
         return fragment;
     }
 
@@ -58,10 +58,6 @@ public class WinFragment extends Fragment {
 
         mPageNumber = getArguments().getInt(ARG_PAGE);
 
-        if(rb_yes.isSelected() | rb_no.isSelected()){
-            WinActivity.ALLOW_SWIPE = true;
-        }
-
     }
 
     @Override
@@ -71,15 +67,25 @@ public class WinFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.winfragment, container, false);
 
-        // Set the title view to show the page number.
         //((TextView) rootView.findViewById(android.R.id.text1)).setText(
          //       getString(R.string.title_template_step, mPageNumber + 1));
+
          tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
 
         tv_qdisc.setText(questions.get(mPageNumber).getDescription());
 
+
+        rb_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                WinActivity.mPager.setSwipeable(true);
+            }
+        });
+
+        //rb_no.setSelected(true);
 
         return rootView;
     }
