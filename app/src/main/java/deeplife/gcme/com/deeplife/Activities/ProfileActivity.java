@@ -25,8 +25,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.Adapters.Profile_Adapter;
 import deeplife.gcme.com.deeplife.Fragments.Profile;
+import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Registration.Login;
 
@@ -78,8 +81,14 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 			}
 			
 		};
-		
-		dlist = (ListView) findViewById(R.id.drawerList);
+
+        ArrayList<Disciples> ben = new ArrayList<>();
+        ben.add(new Disciples());
+        ben.add(new Disciples());
+        ben.add(new Disciples());
+
+        dlist = (ListView) findViewById(R.id.drawerList);
+        dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
         dlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -87,7 +96,6 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
                 return false;
             }
         });
-		dlist.setOnItemClickListener(this);
 		
 		//drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
