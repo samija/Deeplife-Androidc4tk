@@ -128,9 +128,10 @@ public class Profile extends Fragment {
             String picture = data.getString(data.getColumnIndex(DeepLife.DISCIPLES_FIELDS[6]));
 
             tv_email.setText(email);
-            if(build.endsWith("SEND"))
+            if(build.endsWith("SEND")){
                 tv_build.setText("COMPLETED");
-            tv_build.setText(build);
+            }
+            else{tv_build.setText(build);}
             tv_name.setText(name);
             tv_phone.setText(phone);
             tv_gender.setText(gender);
