@@ -34,7 +34,7 @@ public class DeepLife extends Application {
     public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
     public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
-    public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country" };
+    public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture" };
 
     public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
 
@@ -45,7 +45,7 @@ public class DeepLife extends Application {
     public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
 
     public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
-    public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country" };
+    public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_ID", "Question_ID", "Answer"};
 
@@ -89,6 +89,7 @@ public class DeepLife extends Application {
                 sch_vals.put(USER_FIELDS[2], obj.getString(USER_FIELDS[2]));
                 sch_vals.put(USER_FIELDS[3], obj.getString(USER_FIELDS[3]));
                 sch_vals.put(USER_FIELDS[4], obj.getString(USER_FIELDS[4]));
+                sch_vals.put(USER_FIELDS[5], obj.getString(USER_FIELDS[4]));
                 myDatabase.insert(Table_USER, sch_vals);
             }
         }
