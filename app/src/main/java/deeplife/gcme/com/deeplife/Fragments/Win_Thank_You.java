@@ -25,9 +25,14 @@ import deeplife.gcme.com.deeplife.R;
 
 public class Win_Thank_You extends Fragment {
 
+    String stage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        stage = getArguments().getString("stage");
     }
 
     @Override
@@ -35,6 +40,8 @@ public class Win_Thank_You extends Fragment {
 
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.winbuild_thankyou,container,false);
         final Button finish = (Button) viewGroup.findViewById(R.id.win_btn_finish);
+
+
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

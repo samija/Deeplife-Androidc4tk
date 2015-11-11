@@ -192,7 +192,12 @@ public class WinActivity extends FragmentActivity {
 
 
             if(position==NUM_PAGES-1){
-                return new Win_Thank_You();
+                Bundle b = new Bundle();
+                b.putString("stage", "WIN");
+                Fragment win = new Win_Thank_You();
+                win.setArguments(b);
+                return win;
+                //return new Win_Thank_You();
             }
 
             return WinFragment.create(position);
