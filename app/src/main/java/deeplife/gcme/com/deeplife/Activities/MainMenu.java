@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -28,6 +31,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +46,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import deeplife.gcme.com.deeplife.Adapters.Profile_Adapter;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
@@ -49,6 +59,7 @@ import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
 import deeplife.gcme.com.deeplife.Models.Disciples;
+import deeplife.gcme.com.deeplife.Parsers.JSONParser;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Registration.Login;
 
@@ -61,6 +72,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
     private Context myContext;
 	private FileManager myFileManager;
 	private Database myDatabase;
+	JSONParser jsonParser = new JSONParser();
+	private static final String LOGIN_URL = "http://api.cccsea.org/API.php";
 	
 	String[] drawerlistitems;
 	
@@ -101,6 +114,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
         ben.add(new Disciples());
         ben.add(new Disciples());
 		ben.add(new Disciples());
+		ben.add(new Disciples());
 
 		dlist = (ListView) findViewById(R.id.drawerList);
 		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
@@ -112,6 +126,9 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 					intent.setType("image/*");
 					startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
+				}else if(position == 4) {
+					Show_DialogBox(100);
+
 				}else{
 					Show_DialogBox(position);
 				}
@@ -217,6 +234,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			txt_view.setText("Email");
 
 		}
+		if(type == 100){
+			txt_view.setText("Logging out ... Are you sure?");
+			txt.setVisibility(View.GONE);
+
+		}
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -234,6 +256,12 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 							}
 
 						}
+						if(type == 100){
+							myDatabase.Delete_All(DeepLife.Table_USER);
+							Intent intent = new Intent(myContext,Splash.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+							myContext.startActivity(intent);
+						}
 
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -245,7 +273,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
         builder = new AlertDialog.Builder(myContext);
         builder.setView(view1);
 
-        builder.setPositiveButton("Save", dialogClickListener)
+        builder.setPositiveButton("Ok", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener).show();
     }
 	
@@ -435,6 +463,79 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		// TODO Auto-generated method stub
 		dlist.setItemChecked(arg2, true);
 		setTitle(drawerlistitems[arg2]);
+	}
+
+	public class AttemptLogin extends AsyncTask<String, String, String> {
+
+		boolean failure = false;
+		private JSONArray Req_Res = new JSONArray();
+		String success,phone,password,msg;
+		private ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+
+			pDialog = new ProgressDialog(myContext);
+			pDialog.setMessage("Attempting login...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+			msg = "";
+		}
+
+		@Override
+		protected String doInBackground(String... args) {
+			// TODO Auto-generated method stub
+			// Check for success tag
+
+			try {
+
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("Task", "Authenticate"));
+				params.add(new BasicNameValuePair("Email_Phone", phone));
+				params.add(new BasicNameValuePair("Password", password));
+
+				JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
+				Req_Res = json.getJSONArray("User_Profile");
+
+				// json success tag
+				success = json.getString("Task");
+				msg = json.toString();
+			} catch (JSONException e) {
+				e.printStackTrace();
+				msg = e.toString();
+			}
+
+			return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(String s) {
+			super.onPostExecute(s);
+			pDialog.dismiss();
+			if (Req_Res.length() >0) {
+				// Log.d("Login Successful!", json.toString());
+				Toast.makeText(myContext, "Successful", Toast.LENGTH_SHORT).show();
+				try {
+					DeepLife.Register_Profile(Req_Res);
+
+					Intent i = new Intent(myContext, MainMenu.class);
+					startActivity(i);
+
+					finish();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				// return json.getString(TAG_MESSAGE);
+			}else{
+				// Log.d("Login Failure!", json.getString("Msg"));
+				Toast.makeText(myContext, msg, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 }
