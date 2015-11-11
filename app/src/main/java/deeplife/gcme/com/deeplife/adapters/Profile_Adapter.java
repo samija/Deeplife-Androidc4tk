@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class Profile_Adapter extends BaseAdapter {
     private Database myDatabase;
     private AlertDialog.Builder myBuilder;
     private FileManager myFileManager;
+    private AlertDialog.Builder builder;
 
     public Profile_Adapter(Context context,ArrayList<Disciples> entries){
         myEntries = entries;
@@ -60,18 +62,37 @@ public class Profile_Adapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(position == 0){
             convertView = layoutInflater.inflate(R.layout.profile_layout,null);
             TextView Labele = (TextView) convertView.findViewById(R.id.profile_state);
-            ImageView Pic = (ImageView) convertView.findViewById(R.id.profile_image_);
-            ImageView Pic_bg = (ImageView) convertView.findViewById(R.id.profile_image);
+            final ImageView Pic = (ImageView) convertView.findViewById(R.id.profile_image_);
 
+            final ImageView Pic_bg = (ImageView) convertView.findViewById(R.id.profile_image);
             BitmapFactory.Options option = new BitmapFactory.Options();
             option.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-            File myFile = myFileManager.getFileAt("Profile","Profile.png");
+            final File myFile = myFileManager.getFileAt("Profile","Profile.png");
+
+            Pic_bg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(myFile.isFile()){
+                        //Toast.makeText(myContext,myFile.getAbsolutePath(),Toast.LENGTH_LONG).show();
+                        Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
+
+                        Pic.setImageBitmap(image);
+                        Pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                        Pic_bg.setImageBitmap(image);
+                        Pic_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    }
+
+
+                }
+            });
 
             //Toast.makeText(myContext,myFile.getAbsolutePath(),Toast.LENGTH_LONG).show();
             Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
@@ -85,12 +106,12 @@ public class Profile_Adapter extends BaseAdapter {
 
 
 
+
             //if(DeepLife.isConnectingToInternet()){
             //    Labele.setText("Online");
             //}else{
              //   Labele.setText("Offline");
            // }
-            Labele.setText(myFile.getAbsolutePath());
 
 
 
@@ -98,20 +119,40 @@ public class Profile_Adapter extends BaseAdapter {
         }else{
             convertView = layoutInflater.inflate(R.layout.profile_items,null);
             ImageView Icon = (ImageView) convertView.findViewById(R.id.profile_icon);
-            TextView Labele = (TextView) convertView.findViewById(R.id.profile_item_name);
+            final TextView Labele = (TextView) convertView.findViewById(R.id.profile_item_name);
+            LinearLayout Item = (LinearLayout) convertView.findViewById(R.id.profile_item);
 
             if(position == 1){
                 Icon.setBackgroundResource(R.drawable.account);
                 String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[0]);
                 Labele.setText(Name);
+
+                Item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Labele.setText(myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[0]));
+                    }
+                });
             }else if(position == 2){
                 Icon.setBackgroundResource(R.drawable.settings_24_512);
                 String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[1]);
                 Labele.setText(Name);
+                Item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Labele.setText(myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[1]));
+                    }
+                });
             }else if(position == 3){
                 Icon.setBackgroundResource(R.drawable.settings_24_512);
                 String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[4]);
                 Labele.setText(Name);
+                Item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Labele.setText(myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[4]));
+                    }
+                });
             }
         }
         return convertView;
