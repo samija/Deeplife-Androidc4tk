@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.Activities.MainMenu;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
@@ -64,6 +66,7 @@ public class Profile_Adapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.profile_layout,null);
             TextView Labele = (TextView) convertView.findViewById(R.id.profile_state);
             ImageView Pic = (ImageView) convertView.findViewById(R.id.profile_image_);
+            ImageView Pic_bg = (ImageView) convertView.findViewById(R.id.profile_image);
 
             BitmapFactory.Options option = new BitmapFactory.Options();
             option.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -74,6 +77,10 @@ public class Profile_Adapter extends BaseAdapter {
             Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
 
             Pic.setImageBitmap(image);
+            Pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            Pic_bg.setImageBitmap(image);
+            Pic_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
 
@@ -84,6 +91,8 @@ public class Profile_Adapter extends BaseAdapter {
              //   Labele.setText("Offline");
            // }
             Labele.setText(myFile.getAbsolutePath());
+
+
 
 
         }else{

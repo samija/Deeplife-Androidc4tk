@@ -142,16 +142,13 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			myFileManager.createFolder("Pics");
 			try {
 				myFileManager.CopyFile(pic,myFileManager.createFileAt("Profile","Profile.png"));
-				File PicFile = myFileManager.getFileAt("Profile","Profile.png");
-				if(PicFile.isFile()){
-					int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
-					ContentValues cv = new ContentValues();
-					cv.put(DeepLife.USER_FIELDS[4],PicFile.getAbsolutePath());
-					myDatabase.update(DeepLife.Table_USER,cv,id);
-				}
+				Intent refresh = new Intent(myContext, MainMenu.class);
+				refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+				myContext.startActivity(refresh);//Start the same Activity
+
 
 			} catch (IOException e) {
-				Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG).show();
+				Toast.makeText(myContext,"File Not Found",Toast.LENGTH_LONG).show();
 			}
 			/*Bitmap bb = getImageBitmap(myContext,"Profile.png");
 			if(bb != null){

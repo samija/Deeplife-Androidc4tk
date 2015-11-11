@@ -26,7 +26,11 @@ public class FileManager {
     }
     public boolean createFolder(String FolderName){
         File Folder = new File(myFile,FolderName);
-        return Folder.mkdir();
+        if(!Folder.isDirectory()){
+            return Folder.mkdir();
+        }else{
+            return true;
+        }
     }
     public File getFile(String name){
         File file = new File(myFile,name);
