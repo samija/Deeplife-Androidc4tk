@@ -183,7 +183,13 @@ public class SendActivity extends FragmentActivity {
 
 
             if(position==NUM_PAGES-1){
-                return new Send_Thank_You();
+                Bundle b = new Bundle();
+                b.putString("stage", "SEND");
+                Fragment win = new Win_Thank_You();
+                win.setArguments(b);
+                return win;
+
+                //return new Send_Thank_You();
             }
 
             return SendFragment.create(position);

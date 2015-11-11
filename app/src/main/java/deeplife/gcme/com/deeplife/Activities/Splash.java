@@ -58,14 +58,14 @@ public class Splash extends Activity {
 	}
 
 	public synchronized void getNextActivity() {
+
+
+        Database myDatabase = new Database(this);
+
 /*
         Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
         finish();
-
-*/
-
-        Database myDatabase = new Database(this);
 
 
         //Populate questions
@@ -107,6 +107,8 @@ public class Splash extends Activity {
             Log.i("Deep Life", "send question added");
         }
 
+
+*/
 
         int count = myDatabase.count(DeepLife.Table_USER);
         if(count == 1){
