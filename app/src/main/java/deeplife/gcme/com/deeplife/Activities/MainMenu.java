@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Adapters.Profile_Adapter;
@@ -98,6 +100,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
         ben.add(new Disciples());
         ben.add(new Disciples());
         ben.add(new Disciples());
+		ben.add(new Disciples());
 
 		dlist = (ListView) findViewById(R.id.drawerList);
 		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
@@ -110,7 +113,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 					intent.setType("image/*");
 					startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
 				}else{
-					Show_DialogBox("Change Value",1);
+					Show_DialogBox(position);
 				}
 
             }
@@ -142,10 +145,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			myFileManager.createFolder("Pics");
 			try {
 				myFileManager.CopyFile(pic,myFileManager.createFileAt("Profile","Profile.png"));
-				Intent refresh = new Intent(myContext, MainMenu.class);
-				refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-				myContext.startActivity(refresh);//Start the same Activity
 
+				int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
+				ContentValues cv = new ContentValues();
+				cv.put(DeepLife.USER_FIELDS[5],selectedImagePath);
+				myDatabase.update(DeepLife.Table_USER,cv,id);
 
 			} catch (IOException e) {
 				Toast.makeText(myContext,"File Not Found",Toast.LENGTH_LONG).show();
@@ -159,17 +163,6 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 		}
 
-	}
-	public Bitmap getImageBitmap(Context context,String FileName){
-		try{
-			FileInputStream fis = context.openFileInput(FileName);
-			Bitmap b = BitmapFactory.decodeStream(fis);
-			fis.close();
-			return b;
-		}
-		catch(Exception e){
-		}
-		return null;
 	}
 	private void savePicture(String filename, Bitmap b, Context ctx){
 		try {
@@ -208,45 +201,39 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		return uri.getPath();
 	}
 
-	public void user_input(){
-		Toast.makeText(myContext,"Toasted",Toast.LENGTH_LONG).show();
-        LayoutInflater LI = LayoutInflater.from(myContext);
-        View view1 = LI.inflate(R.layout.dialog_1,null);
-        myBuilder.setView(view1);
+    public void Show_DialogBox(final int type){
+		LayoutInflater LI = LayoutInflater.from(myContext);
+		View view1 = LI.inflate(R.layout.dialog_1, null);
+		TextView txt_view = (TextView) view1.findViewById(R.id.textView1);
+		final EditText txt = (EditText) view1.findViewById(R.id.editTextDialogUserInput);
+		if(type == 1){
+			txt_view.setText("Full Name");
+		}
+		if(type == 2){
+			txt_view.setText("Phone Number");
+			txt.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
+		}
+		if(type == 3){
+			txt_view.setText("Email");
 
-        final EditText userInput = (EditText) view1.findViewById(R.id.editTextDialogUserInput);
-        // set dialog message
-        myBuilder
-                .setCancelable(false)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // get user input and set it to result
-                                // edit text
+		}
 
-                            }
-                        })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        // create alert dialog
-        AlertDialog alertDialog = myBuilder.create();
-
-        // show it
-        alertDialog.show();
-
-    }
-    public void Show_DialogBox(String messge,int type){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
+						if(type == 1){
+
+							if(txt.getText().toString().length()>5){
+								int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
+								ContentValues cv = new ContentValues();
+								cv.put(DeepLife.USER_FIELDS[0],txt.getText().toString());
+								myDatabase.update(DeepLife.Table_USER,cv,id);
+							}
+
+						}
 
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -256,9 +243,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
             }
         };
         builder = new AlertDialog.Builder(myContext);
-        LayoutInflater LI = LayoutInflater.from(myContext);
-        View view1 = LI.inflate(R.layout.dialog_1,null);
         builder.setView(view1);
+
         builder.setPositiveButton("Save", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener).show();
     }
