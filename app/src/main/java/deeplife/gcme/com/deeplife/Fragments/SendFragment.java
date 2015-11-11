@@ -68,9 +68,18 @@ public class SendFragment extends Fragment {
             tv_qdisc.setText(SendActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(SendActivity.questions.get(getPageNumber()).getNote());
 
-            if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                SendActivity.mPager.setSwipeable(false);
+            if (SendActivity.answers.get(getPageNumber()) != " ") {
+                SendActivity.mPager.setSwipeable(true);
             }
+            else{
+                SendActivity.mPager.setSwipeable(false);
+
+            }
+/*
+            if(!rb_no.isChecked() & !rb_yes.isChecked()){
+                BuildActivity.mPager.setSwipeable(false);
+            }
+  */
         }
 
 
@@ -78,6 +87,7 @@ public class SendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SendActivity.answer_index = 0;
+                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(WinActivity.answer_index));
                 SendActivity.mPager.setSwipeable(true);
             }
         });
@@ -86,6 +96,8 @@ public class SendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SendActivity.answer_index = 1;
+                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(WinActivity.answer_index));
+
                 SendActivity.mPager.setSwipeable(true);
             }
         });

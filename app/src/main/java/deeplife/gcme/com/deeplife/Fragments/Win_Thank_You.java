@@ -61,6 +61,7 @@ public class Win_Thank_You extends Fragment {
     }
 
 
+
     public void handleWin(){
 
         finish.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +72,24 @@ public class Win_Thank_You extends Fragment {
                 if(WinActivity.answers.size()>0) {
                     for (int i = 0; i < WinActivity.answers.size(); i++) {
 
+                        if(i<WinActivity.questions.size()) {
+                            Log.i("Deep Life", "i is less than question");
+                            Log.i("Deep Life", "Mandatory = " +WinActivity.questions.get(i).getMandatory());
+
+                            if (WinActivity.questions.get(i).getMandatory() == "MANDATORY") {
+                                Log.i("Deep Life", "Mandatory = " +WinActivity.questions.get(i).getMandatory());
+
+                                if (WinActivity.answers.get(i) == "No") {
+                                    Log.i("Deep Life", "User answer no to a mandatory question");
+
+                                    Toast.makeText(getActivity(), "Thank You!! Please come again and fill mandatory questions!", Toast.LENGTH_LONG).show();
+                                    getNextActivity();
+                                    Log.i("Deep Life", "closed without saving");
+
+                                    return;
+                                }
+                            }
+                        }
                         ContentValues cv = new ContentValues();
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], WinActivity.DISCIPLE_ID);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
@@ -113,6 +132,21 @@ public class Win_Thank_You extends Fragment {
 
                 if(BuildActivity.answers.size()>0) {
                     for (int i = 0; i < BuildActivity.answers.size(); i++) {
+
+                        if(i<BuildActivity.questions.size()) {
+
+                            if (BuildActivity.questions.get(i).getMandatory().endsWith("MANDATORY")) {
+
+                                if (BuildActivity.answers.get(i) == "No") {
+
+                                    Toast.makeText(getActivity(), "Thank You!! Please come again and fill mandatory questions!", Toast.LENGTH_LONG).show();
+                                    getNextActivity();
+                                    Log.i("Deep Life", "closed without saving");
+                                    return;
+                                }
+                            }
+                        }
+
 
                         ContentValues cv = new ContentValues();
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], BuildActivity.DISCIPLE_ID);

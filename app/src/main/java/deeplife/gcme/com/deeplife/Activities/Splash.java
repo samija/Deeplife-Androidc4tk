@@ -80,7 +80,7 @@ public class Splash extends Activity {
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[0],"BUILD");
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[1],"Is your disciple engaging in active groups like churches, fellowships, small groups, online communities? ");
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[2],"This is build Note");
-        cv2.put(DeepLife.QUESTION_LIST_FIELDS[3], "MANDATORY");
+        cv2.put(DeepLife.QUESTION_LIST_FIELDS[3],"MANDATORY");
 
         //populate
         ContentValues cv3 = new ContentValues();

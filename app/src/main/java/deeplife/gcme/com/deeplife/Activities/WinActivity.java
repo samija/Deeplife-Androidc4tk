@@ -85,11 +85,7 @@ public class WinActivity extends FragmentActivity {
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                //invalidateOptionsMenu();
-                answers.set(position,answerchoices.get(answer_index));
-                BuildActivity.mPager.setSwipeable(true);
 
-                Log.i("Deep Life", answers.get(position));
             }
         });
 
@@ -125,7 +121,7 @@ public class WinActivity extends FragmentActivity {
         answerchoices.add("Yes");
         answerchoices.add("No");
 
-        for(int i=0; i<NUM_PAGES;i++){
+        for(int i=0; i<NUM_PAGES-1;i++){
             answers.add("");
         }
         Log.i("Deep Life", "Array size for answers is " +answers.size());
@@ -179,6 +175,7 @@ public class WinActivity extends FragmentActivity {
                 return true;
         }
         */
+
         return super.onOptionsItemSelected(item);
     }
 

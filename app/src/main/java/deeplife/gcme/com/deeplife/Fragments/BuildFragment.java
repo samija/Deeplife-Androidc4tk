@@ -46,6 +46,7 @@ public class BuildFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
+
     }
 
     @Override
@@ -63,14 +64,23 @@ public class BuildFragment extends Fragment {
 
         iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.buildicon));
 
-
         if(getPageNumber()< BuildActivity.questions.size()) {
             tv_qdisc.setText(BuildActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(BuildActivity.questions.get(getPageNumber()).getNote());
 
+
+             if (BuildActivity.answers.get(getPageNumber()) != " ") {
+                    BuildActivity.mPager.setSwipeable(true);
+             }
+            else{
+                 BuildActivity.mPager.setSwipeable(false);
+
+             }
+/*
             if(!rb_no.isChecked() & !rb_yes.isChecked()){
                 BuildActivity.mPager.setSwipeable(false);
             }
+  */
         }
 
 
@@ -78,6 +88,7 @@ public class BuildFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BuildActivity.answer_index = 0;
+                BuildActivity.answers.set(mPageNumber, BuildActivity.answerchoices.get(BuildActivity.answer_index));
                 BuildActivity.mPager.setSwipeable(true);
             }
         });
@@ -86,12 +97,12 @@ public class BuildFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BuildActivity.answer_index = 1;
+                BuildActivity.answers.set(mPageNumber, BuildActivity.answerchoices.get(BuildActivity.answer_index));
                 BuildActivity.mPager.setSwipeable(true);
             }
         });
 
 
-        //rb_no.setSelected(true);
 
         return rootView;
     }

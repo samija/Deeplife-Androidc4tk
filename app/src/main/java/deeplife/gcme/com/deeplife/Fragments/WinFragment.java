@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import deeplife.gcme.com.deeplife.Activities.BuildActivity;
 import deeplife.gcme.com.deeplife.Activities.WinActivity;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
@@ -50,6 +51,8 @@ public class WinFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
+
+
     }
 
     @Override
@@ -72,9 +75,21 @@ public class WinFragment extends Fragment {
             tv_qdisc.setText(WinActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(WinActivity.questions.get(getPageNumber()).getNote());
 
-            if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                    WinActivity.mPager.setSwipeable(false);
+            if (WinActivity.answers.get(getPageNumber())== "Yes" |WinActivity.answers.get(getPageNumber()) == "No" ) {
+                WinActivity.mPager.setSwipeable(true);
+                Log.i("Deep Life", "if answer is yes or no");
             }
+            else{
+                Log.i("Deep Life", "else if ... swipe off");
+
+                WinActivity.mPager.setSwipeable(false);
+
+            }
+/*
+            if(!rb_no.isChecked() & !rb_yes.isChecked()){
+                BuildActivity.mPager.setSwipeable(false);
+            }
+  */
         }
 
 
@@ -82,6 +97,7 @@ public class WinFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WinActivity.answer_index = 0;
+                WinActivity.answers.set(mPageNumber, WinActivity.answerchoices.get(WinActivity.answer_index));
                 WinActivity.mPager.setSwipeable(true);
             }
         });
@@ -90,6 +106,7 @@ public class WinFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WinActivity.answer_index = 1;
+                WinActivity.answers.set(mPageNumber, WinActivity.answerchoices.get(WinActivity.answer_index));
                 WinActivity.mPager.setSwipeable(true);
             }
         });

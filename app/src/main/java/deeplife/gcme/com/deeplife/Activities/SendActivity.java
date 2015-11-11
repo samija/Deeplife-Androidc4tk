@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Fragments.SendFragment;
-import deeplife.gcme.com.deeplife.Fragments.Send_Thank_You;
-import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
@@ -76,9 +74,7 @@ public class SendActivity extends FragmentActivity {
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                //invalidateOptionsMenu();
-                answers.set(position-1,answerchoices.get(answer_index));
-                Log.i("Deep Life", answers.get(position));
+
             }
         });
 
@@ -114,7 +110,7 @@ public class SendActivity extends FragmentActivity {
         answerchoices.add("Yes");
         answerchoices.add("No");
 
-        for(int i=0; i<NUM_PAGES;i++){
+        for(int i=0; i<NUM_PAGES-1;i++){
             answers.add("");
         }
         Log.i("Deep Life", "Array size for answers is " +answers.size());
@@ -189,7 +185,6 @@ public class SendActivity extends FragmentActivity {
                 win.setArguments(b);
                 return win;
 
-                //return new Send_Thank_You();
             }
 
             return SendFragment.create(position);

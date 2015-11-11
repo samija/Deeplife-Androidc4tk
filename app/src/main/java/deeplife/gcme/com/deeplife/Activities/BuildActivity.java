@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Fragments.BuildFragment;
-import deeplife.gcme.com.deeplife.Fragments.Build_Thank_You;
-import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
@@ -72,10 +70,8 @@ public class BuildActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
-                //invalidateOptionsMenu();
-                answers.set(position+1,answerchoices.get(answer_index));
-                BuildActivity.mPager.setSwipeable(true);
-                Log.i("Deep Life", answers.get(position));
+
+
             }
         });
 
@@ -110,8 +106,8 @@ public class BuildActivity extends FragmentActivity {
         answerchoices.add("Yes");
         answerchoices.add("No");
 
-        for(int i=0; i<NUM_PAGES;i++){
-            answers.add("");
+        for(int i=0; i<NUM_PAGES-1;i++){
+            answers.add(" ");
         }
 
     }
@@ -183,7 +179,6 @@ public class BuildActivity extends FragmentActivity {
                 win.setArguments(b);
                 return win;
 
-                //return new Build_Thank_You();
             }
 
             return BuildFragment.create(position);
@@ -197,7 +192,6 @@ public class BuildActivity extends FragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-
             return BUILD;
         }
     }
