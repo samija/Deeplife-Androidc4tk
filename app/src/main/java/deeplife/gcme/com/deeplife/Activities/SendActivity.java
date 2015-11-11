@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Fragments.SendFragment;
 import deeplife.gcme.com.deeplife.Fragments.Send_Thank_You;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
@@ -185,7 +186,7 @@ public class SendActivity extends FragmentActivity {
                 return new Send_Thank_You();
             }
 
-            return WinFragment.create(position);
+            return SendFragment.create(position);
 
             }
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Fragments.BuildFragment;
 import deeplife.gcme.com.deeplife.Fragments.Build_Thank_You;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
@@ -178,7 +179,7 @@ public class BuildActivity extends FragmentActivity {
                 return new Build_Thank_You();
             }
 
-            return WinFragment.create(position);
+            return BuildFragment.create(position);
 
             }
 

@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    >
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:background="#e0f3ff"
+        android:background="@color/white"
         android:padding="10dp"
         android:layout_gravity="center_vertical|center_horizontal"
         android:gravity="center_horizontal|center_vertical"
         >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:id="@+id/win_image"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,8 +40,6 @@
             android:textColor="@color/bg_login"
             android:text="dgasdgasl dkgjalks jd;lkgja;slkdjg;alskjdg; klajs;lkdgja;sd"
             android:id="@+id/win_question" />
-
-
 
         <RadioGroup
             android:id="@+id/win_rg_yes_no"
@@ -55,4 +70,7 @@
 
 
 
+</LinearLayout>
+
+</ScrollView>
 </LinearLayout>

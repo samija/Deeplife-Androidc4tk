@@ -90,7 +90,6 @@ public class Splash extends Activity {
         cv3.put(DeepLife.QUESTION_LIST_FIELDS[3], "NOT_MANDATORY");
 
 
-
         long win = myDatabase.insert(DeepLife.Table_QUESTION_LIST,cv1);
         if(win!=-1){
             Log.i("Deep Life", "Win question added");

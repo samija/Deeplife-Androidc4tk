@@ -1,10 +1,8 @@
 package deeplife.gcme.com.deeplife.Fragments;
 
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
+import deeplife.gcme.com.deeplife.Activities.BuildActivity;
 import deeplife.gcme.com.deeplife.Activities.WinActivity;
-import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
 
 
@@ -25,7 +21,7 @@ import deeplife.gcme.com.deeplife.R;
  */
 
 
-public class WinFragment extends Fragment {
+public class BuildFragment extends Fragment {
 
     public static final String ARG_PAGE = "page";
 
@@ -37,8 +33,8 @@ public class WinFragment extends Fragment {
     RadioButton rb_no;
     TextView tv_qdisc, tv_note;
 
-    public static WinFragment create(int pageNumber) {
-        WinFragment fragment = new WinFragment();
+    public static BuildFragment create(int pageNumber) {
+        BuildFragment fragment = new BuildFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         fragment.setArguments(args);
@@ -65,15 +61,15 @@ public class WinFragment extends Fragment {
         tv_note = (TextView) rootView.findViewById(R.id.win_note);
         iv_build_image = (ImageView) rootView.findViewById(R.id.win_image);
 
-        iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.winicon));
+        iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.buildicon));
 
 
-        if(getPageNumber()<WinActivity.questions.size()) {
-            tv_qdisc.setText(WinActivity.questions.get(getPageNumber()).getDescription());
-            tv_note.setText(WinActivity.questions.get(getPageNumber()).getNote());
+        if(getPageNumber()< BuildActivity.questions.size()) {
+            tv_qdisc.setText(BuildActivity.questions.get(getPageNumber()).getDescription());
+            tv_note.setText(BuildActivity.questions.get(getPageNumber()).getNote());
 
             if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                    WinActivity.mPager.setSwipeable(false);
+                BuildActivity.mPager.setSwipeable(false);
             }
         }
 
@@ -81,16 +77,16 @@ public class WinFragment extends Fragment {
         rb_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WinActivity.answer_index = 0;
-                WinActivity.mPager.setSwipeable(true);
+                BuildActivity.answer_index = 0;
+                BuildActivity.mPager.setSwipeable(true);
             }
         });
 
         rb_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WinActivity.answer_index = 1;
-                WinActivity.mPager.setSwipeable(true);
+                BuildActivity.answer_index = 1;
+                BuildActivity.mPager.setSwipeable(true);
             }
         });
 

@@ -188,7 +188,6 @@ public class DiscipleList extends Fragment {
 		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(), discples));
 	}
 	
-	
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
