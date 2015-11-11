@@ -76,16 +76,26 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4]))));
 				}
 			}else{
-				msg = "dd"+myDatabase.count(DeepLife.Table_DISCIPLES);
+				msg = "dd";
+				// update for disciples
 				if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
 					params.add(new BasicNameValuePair("Task1", "My_Disciples"));
 				}else{
 					params.add(new BasicNameValuePair("Task1", "Get_Disciples"));
 				}
+
+				/// update for Schedule
 				if(myDatabase.count(DeepLife.Table_SCHEDULES)==0){
 					params.add(new BasicNameValuePair("Task2", "My_Schedules"));
 				}else{
 					params.add(new BasicNameValuePair("Task2", "Get_Schedules"));
+				}
+
+				////update for Questions
+				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)==0){
+					params.add(new BasicNameValuePair("Task2", "My_Questions"));
+				}else{
+					params.add(new BasicNameValuePair("Task2", "Get_Questions"));
 				}
 			}
 
@@ -105,8 +115,11 @@ public class Service extends android.app.Service{
 				JSONObject myObject = myParser.makeHttpRequest(	"http://api.cccsea.org/API.php", "POST", init());
 				msg = msg + myObject.toString() +"\n............."+init().toString();
 				Task = myObject.getString("Task");
+
 				DeepLife.Register_disciple(myObject.getJSONArray("Disciples"));
 				DeepLife.Register_Schedule(myObject.getJSONArray("Schedules"));
+				DeepLife.Register_Question(myObject.getJSONArray("Questions"));
+
 				Thread.sleep(10000);
 			} catch (Exception e) {
 				// TODO: handle exception
