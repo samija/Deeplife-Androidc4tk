@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
 
@@ -27,12 +33,14 @@ public class Profile_Adapter extends BaseAdapter {
     private ArrayList<Disciples> myEntries;
     private Database myDatabase;
     private AlertDialog.Builder myBuilder;
+    private FileManager myFileManager;
 
     public Profile_Adapter(Context context,ArrayList<Disciples> entries){
         myEntries = entries;
         myContext = context;
         myDatabase = new Database(myContext);
         myBuilder = new AlertDialog.Builder(myContext);
+        myFileManager = new FileManager(myContext);
     }
     @Override
     public int getCount() {
@@ -55,12 +63,27 @@ public class Profile_Adapter extends BaseAdapter {
         if(position == 0){
             convertView = layoutInflater.inflate(R.layout.profile_layout,null);
             TextView Labele = (TextView) convertView.findViewById(R.id.profile_state);
+            ImageView Pic = (ImageView) convertView.findViewById(R.id.profile_image_);
+
+            BitmapFactory.Options option = new BitmapFactory.Options();
+            option.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+            File myFile = myFileManager.getFileAt("Profile","Profile.png");
+
+            //Toast.makeText(myContext,myFile.getAbsolutePath(),Toast.LENGTH_LONG).show();
+            Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
+
+            Pic.setImageBitmap(image);
+
+
+
+
             //if(DeepLife.isConnectingToInternet()){
             //    Labele.setText("Online");
             //}else{
              //   Labele.setText("Offline");
            // }
-            Labele.setText("Offline");
+            Labele.setText(myFile.getAbsolutePath());
 
 
         }else{
