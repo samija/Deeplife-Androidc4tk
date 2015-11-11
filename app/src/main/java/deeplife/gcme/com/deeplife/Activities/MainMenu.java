@@ -1,14 +1,25 @@
 package deeplife.gcme.com.deeplife.Activities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +41,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Adapters.Profile_Adapter;
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
 import deeplife.gcme.com.deeplife.Models.Disciples;
@@ -43,6 +57,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
     private AlertDialog.Builder builder;
     private AlertDialog.Builder myBuilder;
     private Context myContext;
+	private FileManager myFileManager;
+	private Database myDatabase;
 	
 	String[] drawerlistitems;
 	
@@ -56,6 +72,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		setContentView(R.layout.welcome);
 		getActionBar().setTitle("Welcome");
         myContext = this;
+		myDatabase = new Database(myContext);
+		myFileManager = new FileManager(myContext);
 		drawerlistitems = getResources().getStringArray(R.array.drawerentry);
 		//view pager
 		viewpager = (ViewPager) findViewById(R.id.welcome_viewpager);
@@ -87,7 +105,14 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
         dlist.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Show_DialogBox("Change Value",1);
+				if(position == 0){
+					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					intent.setType("image/*");
+					startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
+				}else{
+					Show_DialogBox("Change Value",1);
+				}
+
             }
         });
 		
@@ -98,8 +123,96 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 
 		getOverflowMenu();
 	}
-    public void user_input(){
-        Toast.makeText(myContext,"Toasted",Toast.LENGTH_LONG).show();
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == 1 && resultCode == -1){
+			Uri selectedImageUri = data.getData();
+			String selectedImagePath = getPath(selectedImageUri);
+
+			BitmapFactory.Options option = new BitmapFactory.Options();
+			option.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+			Bitmap bmp = BitmapFactory.decodeFile(selectedImagePath);
+			//savePicture("Profile.png", bmp, myContext);
+
+			File pic = new File(selectedImagePath);
+
+			myFileManager.createFolder("Pics");
+			try {
+				myFileManager.CopyFile(pic,myFileManager.createFileAt("Profile","Profile.png"));
+				File PicFile = myFileManager.getFileAt("Profile","Profile.png");
+				if(PicFile.isFile()){
+					int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
+					ContentValues cv = new ContentValues();
+					cv.put(DeepLife.USER_FIELDS[4],PicFile.getAbsolutePath());
+					myDatabase.update(DeepLife.Table_USER,cv,id);
+				}
+
+			} catch (IOException e) {
+				Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG).show();
+			}
+			/*Bitmap bb = getImageBitmap(myContext,"Profile.png");
+			if(bb != null){
+				Toast.makeText(getApplicationContext(),bmp.toString(),Toast.LENGTH_LONG).show();
+			}else{
+				Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG).show();
+			}*/
+
+		}
+
+	}
+	public Bitmap getImageBitmap(Context context,String FileName){
+		try{
+			FileInputStream fis = context.openFileInput(FileName);
+			Bitmap b = BitmapFactory.decodeStream(fis);
+			fis.close();
+			return b;
+		}
+		catch(Exception e){
+		}
+		return null;
+	}
+	private void savePicture(String filename, Bitmap b, Context ctx){
+		try {
+			ObjectOutputStream oos;
+			FileOutputStream out;
+			out = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
+			oos = new ObjectOutputStream(out);
+			b.compress(Bitmap.CompressFormat.PNG, 100, oos);
+
+			oos.close();
+			oos.notifyAll();
+			out.notifyAll();
+			out.close();
+			Toast.makeText(myContext,"File Saved",Toast.LENGTH_LONG).show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(myContext,e.toString(),Toast.LENGTH_LONG).show();
+		}
+	}
+	public String getPath(Uri uri) {
+		// just some safety built in
+		if( uri == null ) {
+			// TODO perform some logging or show user feedback
+			return null;
+		}
+		// try to retrieve the image from the media store first
+		// this will only work for images selected from gallery
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if( cursor != null ){
+			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		}
+		// this is our fallback here
+		return uri.getPath();
+	}
+
+	public void user_input(){
+		Toast.makeText(myContext,"Toasted",Toast.LENGTH_LONG).show();
         LayoutInflater LI = LayoutInflater.from(myContext);
         View view1 = LI.inflate(R.layout.dialog_1,null);
         myBuilder.setView(view1);
