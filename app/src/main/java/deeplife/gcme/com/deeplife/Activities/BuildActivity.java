@@ -68,12 +68,13 @@ public class BuildActivity extends FragmentActivity {
 
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
 
-
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
             @Override
             public void onPageSelected(int position) {
                 //invalidateOptionsMenu();
-                answers.set(position-1,answerchoices.get(answer_index));
+                answers.set(position+1,answerchoices.get(answer_index));
+                BuildActivity.mPager.setSwipeable(true);
                 Log.i("Deep Life", answers.get(position));
             }
         });
@@ -176,7 +177,13 @@ public class BuildActivity extends FragmentActivity {
 
 
             if(position==NUM_PAGES-1){
-                return new Build_Thank_You();
+                Bundle b = new Bundle();
+                b.putString("stage", "BUILD");
+                Fragment win = new Win_Thank_You();
+                win.setArguments(b);
+                return win;
+
+                //return new Build_Thank_You();
             }
 
             return BuildFragment.create(position);

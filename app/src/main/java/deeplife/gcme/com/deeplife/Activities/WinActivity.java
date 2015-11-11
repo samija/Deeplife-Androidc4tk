@@ -86,7 +86,9 @@ public class WinActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 //invalidateOptionsMenu();
-                answers.set(position-1,answerchoices.get(answer_index));
+                answers.set(position,answerchoices.get(answer_index));
+                BuildActivity.mPager.setSwipeable(true);
+
                 Log.i("Deep Life", answers.get(position));
             }
         });
@@ -197,7 +199,8 @@ public class WinActivity extends FragmentActivity {
                 Fragment win = new Win_Thank_You();
                 win.setArguments(b);
                 return win;
-                //return new Win_Thank_You();
+
+               // return new Win_Thank_You();
             }
 
             return WinFragment.create(position);
