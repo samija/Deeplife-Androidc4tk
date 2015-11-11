@@ -11,21 +11,23 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal|center_vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/crop_image">
-            </LinearLayout>
             <ImageView
                 android:id="@+id/profile_image_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/pic"/>
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circleimage">
+            </LinearLayout>
+
         </FrameLayout>
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/profilebg"/>
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
