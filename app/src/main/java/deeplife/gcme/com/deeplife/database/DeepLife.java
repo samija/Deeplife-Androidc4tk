@@ -68,7 +68,7 @@ public class DeepLife extends Application {
         myDatabase = new Database(getApplicationContext());
         Intent intent = new Intent(this, Service.class);
         if(myDatabase.count(Table_USER)==1){
-            //startService(intent);
+            startService(intent);
         }
         AlarmIntent = new Intent(this, Alarm_BroadCast.class);
         AlarmPendingIntent = PendingIntent.getBroadcast(this,0,AlarmIntent,0);
