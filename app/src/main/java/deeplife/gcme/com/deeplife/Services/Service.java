@@ -105,7 +105,6 @@ public class Service extends android.app.Service{
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-
 			//Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_SHORT).show();
 		}
 		@Override
