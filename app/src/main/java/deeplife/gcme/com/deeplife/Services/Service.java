@@ -74,9 +74,18 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2]))));
 					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3]))));
 					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4]))));
-				}else if(type.equals("Send_Schedule")){
+				}else if(type.equals("Delete_User")){
 					params.add(new BasicNameValuePair("Task", "Delete_User"));
 					params.add(new BasicNameValuePair("Email_Phone", id));
+				}else if(type.equals("Update_Full_Name")){
+					params.add(new BasicNameValuePair("Task", "Update_Full_Name"));
+					params.add(new BasicNameValuePair("Full_Name", id));
+				}else if(type.equals("Update_Password")){
+					params.add(new BasicNameValuePair("Task", "Update_Password"));
+					params.add(new BasicNameValuePair("Password", id));
+				}else if(type.equals("Update_Phone")){
+					params.add(new BasicNameValuePair("Task", "Update_Phone"));
+					params.add(new BasicNameValuePair("Phone", id));
 				}
 			}else{
 				msg = "dd";
