@@ -110,7 +110,7 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		ben.add(new Disciples());
 
 		dlist = (ListView) findViewById(R.id.drawerList);
-		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
+		dlist.setAdapter(new Profile_Adapter(getApplicationContext(), ben));
 		dlist.setOnItemClickListener(this);
 		dlist.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -129,9 +129,11 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 			}
 		});
 
-		//drawerLayout.setDrawerListener(drawerListener);
+		drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setSubtitle("DeepLife");
+		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.transparent));
 		getOverflowMenu();
 
 
