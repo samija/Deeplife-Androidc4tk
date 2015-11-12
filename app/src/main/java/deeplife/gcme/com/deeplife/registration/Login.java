@@ -204,8 +204,8 @@ public class Login extends Activity {
                     Intent i = new Intent(Login.this, MainMenu.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
-
                     finish();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

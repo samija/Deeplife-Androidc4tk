@@ -18,6 +18,7 @@
     <string name="btn_register">REGISTER</string>
     <string name="btn_add_disciple">ADD DISCIPLE</string>
     <string name="add_schedule">ADD SCHEDULE</string>
+    <string name="description">Description</string>
 
     <string name="register_a_disciple">Please add your disciple correctly</string>
 
