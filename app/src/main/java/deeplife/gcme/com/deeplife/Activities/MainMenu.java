@@ -261,7 +261,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 							myDatabase.Delete_All(DeepLife.Table_DISCIPLES);
 							myDatabase.Delete_All(DeepLife.Table_LOGS);
 							myDatabase.Delete_All(DeepLife.Table_SCHEDULES);
-							
+
 							Intent intent = new Intent(myContext,Splash.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 							myContext.startActivity(intent);

@@ -93,9 +93,9 @@ public class Service extends android.app.Service{
 
 				////update for Questions
 				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)==0){
-					params.add(new BasicNameValuePair("Task2", "My_Questions"));
+					params.add(new BasicNameValuePair("Task1", "My_Questions"));
 				}else{
-					params.add(new BasicNameValuePair("Task2", "Get_Questions"));
+					params.add(new BasicNameValuePair("Task1", "Get_Questions"));
 				}
 			}
 
@@ -105,7 +105,8 @@ public class Service extends android.app.Service{
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_SHORT).show();
+
+			//Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_SHORT).show();
 		}
 		@Override
 		protected String doInBackground(String... arg0) {
@@ -140,7 +141,7 @@ public class Service extends android.app.Service{
 			//Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 			if(Task.equals("1")){
 				myDatabase.deleteTop(DeepLife.Table_LOGS);
-				Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
 			}
 			new Make_Service().execute();
 		}

@@ -199,6 +199,7 @@ public class Login extends Activity {
                     DeepLife.Register_Profile(Req_Res);
 
                     Intent i = new Intent(Login.this, MainMenu.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
 
                     finish();
