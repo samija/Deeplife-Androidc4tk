@@ -1,7 +1,6 @@
 package deeplife.gcme.com.deeplife.Fragments;
 
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,11 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import deeplife.gcme.com.deeplife.Activities.BuildActivity;
 import deeplife.gcme.com.deeplife.Activities.WinActivity;
-import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.R;
 
 

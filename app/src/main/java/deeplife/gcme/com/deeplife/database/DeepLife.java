@@ -33,12 +33,14 @@ public class DeepLife extends Application {
 
     public static final String[] LOGS_FIELDS = { "Type", "Loc_ID" };
     public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
-
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture" };
-
     public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
+<<<<<<< HEAD
 
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer","Build_Stage"};
+=======
+    public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer"};
+>>>>>>> origin/master
 
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
@@ -71,7 +73,7 @@ public class DeepLife extends Application {
         myDatabase = new Database(getApplicationContext());
         Intent intent = new Intent(this, Service.class);
         if(myDatabase.count(Table_USER)==1){
-            //startService(intent);
+            startService(intent);
         }
         AlarmIntent = new Intent(this, Alarm_BroadCast.class);
         AlarmPendingIntent = PendingIntent.getBroadcast(this,0,AlarmIntent,0);
@@ -120,6 +122,19 @@ public class DeepLife extends Application {
                 sch_vals.put(SCHEDULES_FIELDS[2], obj.getString(SCHEDULES_FIELDS[2]));
                 sch_vals.put(SCHEDULES_FIELDS[3], obj.getString(SCHEDULES_FIELDS[3]));
                 myDatabase.insert(Table_SCHEDULES, sch_vals);
+            }
+        }
+    }
+    public static void Register_Question(JSONArray NOTIS) throws JSONException {
+        if (NOTIS.length() > 0) {
+            for (int i = 0; i < NOTIS.length(); i++) {
+                JSONObject obj = NOTIS.getJSONObject(i);
+                ContentValues sch_vals = new ContentValues();
+                sch_vals.put(QUESTION_LIST_FIELDS[0], obj.getString(QUESTION_LIST_FIELDS[0]));
+                sch_vals.put(QUESTION_LIST_FIELDS[1], obj.getString(QUESTION_LIST_FIELDS[1]));
+                sch_vals.put(QUESTION_LIST_FIELDS[2], obj.getString(QUESTION_LIST_FIELDS[2]));
+                sch_vals.put(QUESTION_LIST_FIELDS[3], obj.getString(QUESTION_LIST_FIELDS[3]));
+                myDatabase.insert(Table_QUESTION_LIST, sch_vals);
             }
         }
     }

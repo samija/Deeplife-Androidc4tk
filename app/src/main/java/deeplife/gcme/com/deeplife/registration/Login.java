@@ -2,6 +2,7 @@ package deeplife.gcme.com.deeplife.Registration;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -39,6 +41,7 @@ public class Login extends Activity {
      // Progress Dialog
     private ProgressDialog pDialog;
 
+    private Context myContext;
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
 
@@ -63,6 +66,8 @@ public class Login extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        myContext = this;
 
         ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
         ed_password = (EditText) findViewById(R.id.login_password);
@@ -135,24 +140,28 @@ public class Login extends Activity {
 
         boolean failure = false;
         private JSONArray Req_Res = new JSONArray();
-        String success;
+        String success,phone,password,msg;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            phone = ed_phoneNumber.getText().toString();
+            password = ed_password.getText().toString();
+
             pDialog = new ProgressDialog(Login.this);
             pDialog.setMessage("Attempting login...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+            msg = "";
         }
 
         @Override
         protected String doInBackground(String... args) {
             // TODO Auto-generated method stub
             // Check for success tag
-            String phone = ed_phoneNumber.getText().toString();
-            String password = ed_password.getText().toString();
+
             try {
 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -169,9 +178,10 @@ public class Login extends Activity {
 
                 // json success tag
                 success = json.getString("Task");
-
+                msg = json.toString();
             } catch (JSONException e) {
                 e.printStackTrace();
+                msg = e.toString();
             }
 
             return null;
@@ -184,6 +194,7 @@ public class Login extends Activity {
             pDialog.dismiss();
             if (Req_Res.length() >0) {
                 // Log.d("Login Successful!", json.toString());
+                Toast.makeText(myContext, "Successful", Toast.LENGTH_SHORT).show();
                 try {
                     DeepLife.Register_Profile(Req_Res);
 
@@ -198,6 +209,7 @@ public class Login extends Activity {
                 // return json.getString(TAG_MESSAGE);
             }else{
                 // Log.d("Login Failure!", json.getString("Msg"));
+                Toast.makeText(myContext, msg, Toast.LENGTH_SHORT).show();
             }
         }
     }

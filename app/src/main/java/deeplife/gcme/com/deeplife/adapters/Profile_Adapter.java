@@ -153,6 +153,9 @@ public class Profile_Adapter extends BaseAdapter {
                         Labele.setText(myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[4]));
                     }
                 });
+            }else if(position == 4){
+                Icon.setBackgroundResource(R.drawable.check_out_512);
+                Labele.setText("Log Out");
             }
         }
         return convertView;
