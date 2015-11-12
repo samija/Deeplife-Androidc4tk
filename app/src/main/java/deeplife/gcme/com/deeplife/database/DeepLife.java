@@ -100,9 +100,9 @@ public class DeepLife extends Application {
                 sch_vals.put(DISCIPLES_FIELDS[1], obj.getString(DISCIPLES_FIELDS[1]));
                 sch_vals.put(DISCIPLES_FIELDS[2], obj.getString(DISCIPLES_FIELDS[2]));
                 sch_vals.put(DISCIPLES_FIELDS[3], obj.getString(DISCIPLES_FIELDS[3]));
-                sch_vals.put(DISCIPLES_FIELDS[4], obj.getString(DISCIPLES_FIELDS[3]));
-                sch_vals.put(DISCIPLES_FIELDS[5], obj.getString(DISCIPLES_FIELDS[3]));
-                sch_vals.put(DISCIPLES_FIELDS[6], obj.getString(DISCIPLES_FIELDS[3]));
+                sch_vals.put(DISCIPLES_FIELDS[4], obj.getString(DISCIPLES_FIELDS[4]));
+                sch_vals.put(DISCIPLES_FIELDS[5], obj.getString(DISCIPLES_FIELDS[5]));
+                sch_vals.put(DISCIPLES_FIELDS[6], obj.getString(DISCIPLES_FIELDS[6]));
                 myDatabase.insert(Table_DISCIPLES, sch_vals);
             }
         }
