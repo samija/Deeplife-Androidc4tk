@@ -66,7 +66,6 @@ public class Win_Thank_You extends Fragment {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), WinActivity.answers.toString(), Toast.LENGTH_LONG).show();
 
                 if(WinActivity.answers.size()>0) {
                     for (int i = 0; i < WinActivity.answers.size(); i++) {
@@ -85,7 +84,6 @@ public class Win_Thank_You extends Fragment {
 
                                             long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                                             if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
                                             cv.clear();
                                         }
 
@@ -99,7 +97,6 @@ public class Win_Thank_You extends Fragment {
 
                                             long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
                                             if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
                                             cv.clear();
                                         }
                                     }
@@ -117,8 +114,6 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                        if (check != -1)
-                            Log.i("Deep Life", "Question Answer field updated");
                     }
 
                     ContentValues cv_build = new ContentValues();
@@ -148,8 +143,6 @@ public class Win_Thank_You extends Fragment {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), BuildActivity.answers.toString(), Toast.LENGTH_LONG).show();
-
 
                 if(BuildActivity.answers.size()>0) {
                     for (int i = 0; i < BuildActivity.answers.size(); i++) {
@@ -167,8 +160,6 @@ public class Win_Thank_You extends Fragment {
 
 
                                             long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                                            if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
                                             cv.clear();
                                         }
 
@@ -181,8 +172,6 @@ public class Win_Thank_You extends Fragment {
 
 
                                             long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
-                                            if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
                                             cv.clear();
                                         }
                                     }
@@ -201,15 +190,14 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "BUILD");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                        if (check != -1)
-                            Log.i("Deep Life", "Question Answer field updated");
+
                     }
 
                     ContentValues cv_build = new ContentValues();
                     cv_build.put(DeepLife.DISCIPLES_FIELDS[4], "BUILD");
                     long update_state = db.update(DeepLife.Table_DISCIPLES, cv_build, BuildActivity.DISCIPLE_ID);
                     if (update_state != -1) {
-                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Successfully Finished Build Stage!", Toast.LENGTH_LONG).show();
                         BuildActivity.answers.clear();
                         BuildActivity.answer_index = 0;
                         BuildActivity.answerchoices.clear();
@@ -231,8 +219,6 @@ public class Win_Thank_You extends Fragment {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), SendActivity.answers.toString(), Toast.LENGTH_LONG).show();
-
 
                 if(SendActivity.answers.size()>0) {
                     for (int i = 0; i < SendActivity.answers.size(); i++) {
@@ -250,8 +236,7 @@ public class Win_Thank_You extends Fragment {
 
 
                                             long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                                            if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
+
                                             cv.clear();
                                         }
 
@@ -264,8 +249,7 @@ public class Win_Thank_You extends Fragment {
 
 
                                             long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
-                                            if (check != -1)
-                                                Log.i("Deep Life", "saved with out updating build phase");
+
                                             cv.clear();
                                         }
                                     }
@@ -284,15 +268,14 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "SEND");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
-                        if (check != -1)
-                            Log.i("Deep Life", "Question Answer field updated");
+
                     }
 
                     ContentValues cv_build = new ContentValues();
                     cv_build.put(DeepLife.DISCIPLES_FIELDS[4], "SEND");
                     long update_state = db.update(DeepLife.Table_DISCIPLES, cv_build, SendActivity.DISCIPLE_ID);
                     if (update_state != -1) {
-                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Successfully Finished Send Stage!", Toast.LENGTH_LONG).show();
                         SendActivity.answers.clear();
                         SendActivity.answer_index = 0;
                         SendActivity.answerchoices.clear();

@@ -47,10 +47,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Meet"
+                            android:text="@string/schedule_with"
                             android:gravity="center_horizontal"
                             android:textColor="#3eb1c8"
-                            android:textSize="20dp" />
+                            android:textSize="16dp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

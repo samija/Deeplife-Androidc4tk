@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,6 +74,9 @@ public class Schedules extends Fragment {
 
 	Database dbadapter;
 	DeepLife dbhelper;
+
+    static String scheduled_disciple_id_phone;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,7 +120,6 @@ public class Schedules extends Fragment {
     public void populateList(Context context){
         ArrayList<Schedule> schedules = dbadapter.get_All_Schedule();
         lv_schedule.setAdapter(new MyDiscipleListAdapter(context,schedules));
-
     }
 
 
@@ -140,31 +144,31 @@ public class Schedules extends Fragment {
         int height = (int) hei;
         add.getWindow().setLayout(width, height);
 
-
         add.show();
 
-        ArrayList<String> list = dbadapter.get_all_in_column(dbhelper.Table_DISCIPLES,dbhelper.DISCIPLES_FIELDS[0]);
+       // ArrayList<String> list_names = dbadapter.get_all_in_column(dbhelper.Table_DISCIPLES,dbhelper.DISCIPLES_FIELDS[0]);
 
-
+        final ArrayList<Disciples> list_names = dbadapter.getDisciples();
 
         final Spinner names = (Spinner) add.findViewById(R.id.schedule_add_name);
         final EditText ed_disc = (EditText) add.findViewById(R.id.schedule_add_disc);
         final DatePicker dp_date = (DatePicker) add.findViewById(R.id.schedule_add_date);
         final TimePicker tp_time = (TimePicker) add.findViewById(R.id.schedule_add_time_picker);
+        final TextView hidden_id = (TextView) add.findViewById(R.id.schedule_disciple_id);
 
-        final String phone = "091177";
-        names.setAdapter(new MySpinnerAdapter(getActivity(), R.layout.countries_spinner, list));
 
+        names.setAdapter(new NameSpinnerAdapter(getActivity(), R.layout.countries_spinner, list_names));
 
         names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //int i = names.getSelectedItemPosition();
+                int i = names.getSelectedItemPosition();
+                scheduled_disciple_id_phone = list_names.get(i).getPhone().toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                scheduled_disciple_id_phone = list_names.get(0).getPhone().toString();
             }
         });
 
@@ -188,8 +192,8 @@ public class Schedules extends Fragment {
                 calendar.set(Calendar.MINUTE,tp_time.getCurrentMinute());
                 Date date = calendar.getTime();
 
-                        ContentValues values = new ContentValues();
-                values.put(dbhelper.SCHEDULES_FIELDS[0], phone);
+                ContentValues values = new ContentValues();
+                values.put(dbhelper.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
                 values.put(dbhelper.SCHEDULES_FIELDS[1], calendar.getTime().toString());
                 values.put(dbhelper.SCHEDULES_FIELDS[2],0);
                 values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
@@ -203,7 +207,6 @@ public class Schedules extends Fragment {
                     cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Schedule");
                     cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
                     if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
-                        Log.i("Deep Life", "Successfully Added to Log");
                     }
 
                     Toast.makeText(getActivity(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
@@ -331,7 +334,7 @@ public class Schedules extends Fragment {
                                   ViewGroup parent) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
-                    false);
+                     false);
             TextView main_text = (TextView) mySpinner
                     .findViewById(R.id.spinner_text);
             main_text.setText(object.get(position));
@@ -340,6 +343,35 @@ public class Schedules extends Fragment {
         }
     }
 
+
+    public class NameSpinnerAdapter extends ArrayAdapter<Disciples> {
+
+        ArrayList<Disciples> object;
+        public NameSpinnerAdapter(Context ctx, int txtViewResourceId, ArrayList<Disciples> objects) {
+            super(ctx, txtViewResourceId, objects);
+            this.object = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+            return getCustomView(position, cnvtView, prnt);
+        }
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt) {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
+                    false);
+            TextView main_text = (TextView) mySpinner
+                    .findViewById(R.id.spinner_text);
+            main_text.setText(object.get(position).getFull_Name().toString());
+
+            return mySpinner;
+        }
+    }
 
 
 
@@ -389,7 +421,11 @@ public class Schedules extends Fragment {
             final String discription = schedule.get(position).getDescription();
             final int id = Integer.parseInt(schedule.get(position).getID());
 
-            tv_name.setText(" Roger");
+            //get name from disciples table
+            String name_from_phone = dbadapter.get_Name_by_phone(phone);
+
+            //set the values
+            tv_name.setText(name_from_phone);
             tv_phone.setText(phone);
             tv_time.setText(time);
             tv_disc.setText(discription);

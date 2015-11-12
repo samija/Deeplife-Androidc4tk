@@ -108,6 +108,17 @@ public class Database {
         Cursor cur = myDatabase.rawQuery("select * from "+DB_Table+" where id="+id, null);
         return cur;
     }
+
+    public String get_Name_by_phone(String phone){
+        String name = "";
+        String DB_Table = DeepLife.Table_DISCIPLES;
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.DISCIPLES_FIELDS[2]+" = '"+phone+"'", null, null, null, null);
+        c.moveToLast();
+        name = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_FIELDS[0]));
+        return name;
+    }
+
+
 /*
     public Cursor get_value_by_colum_id(String Db_Table, String column, String id,String build){
         Cursor c = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' &",null,null,null,null);

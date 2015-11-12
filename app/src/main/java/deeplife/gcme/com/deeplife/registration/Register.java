@@ -39,7 +39,7 @@ public class Register extends Activity{
 	//private EditText ed_name,ed_password,ed_phone,ed_email,ed_country;
 	private Button  Register;
     private EditText Full_Name,Email,Phone,Country,Pass,Ed_Codes;
-    private Spinner sp_countries;
+    private Spinner sp_countries, sp_gender;
     // Progress Dialog
     private ProgressDialog pDialog;
 
@@ -98,7 +98,7 @@ public class Register extends Activity{
         Pass = (EditText) findViewById(R.id.signup_password);
         Ed_Codes = (EditText) findViewById(R.id.signup_code);
         Register =  (Button) findViewById(R.id.btnregister);
-
+        sp_gender = (Spinner) findViewById(R.id.register_gender_spinner);
 
 
         Register.setOnClickListener(new OnClickListener() {
@@ -111,9 +111,9 @@ public class Register extends Activity{
                 params.add(new BasicNameValuePair("Full_Name", Full_Name.getText().toString()));
                 params.add(new BasicNameValuePair("Password", Pass.getText().toString()));
                 params.add(new BasicNameValuePair("Email", Email.getText().toString()));
-                params.add(new BasicNameValuePair("Phone", Phone.getText().toString()));
+                params.add(new BasicNameValuePair("Phone", Ed_Codes.getText().toString() + Phone.getText().toString()));
                 params.add(new BasicNameValuePair("Build_phase", "Added"));
-                params.add(new BasicNameValuePair("Gender", "Male"));
+                params.add(new BasicNameValuePair("Gender", sp_gender.getSelectedItem().toString()));
                 params.add(new BasicNameValuePair("Build_phase", Phone.getText().toString()));
                 params.add(new BasicNameValuePair("Picture", null));
                 params.add(new BasicNameValuePair("Country", sp_countries.getSelectedItem().toString()));
