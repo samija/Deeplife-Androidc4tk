@@ -171,6 +171,10 @@ public class Profile extends Fragment {
                         Intent intent = new Intent(Profile.this.getActivity(), SendActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("disciple_id", disciple_id);
+
+                        if(dbadapter.checkExistence(DeepLife.Table_QUESTION_ANSWER,DeepLife.QUESTION_ANSWER_FIELDS[0],disciple_id)>0){
+                            bundle.putString("answer","yes");
+                        }
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }

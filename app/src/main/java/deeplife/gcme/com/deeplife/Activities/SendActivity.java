@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Fragments.SendFragment;
-import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.Models.QuestionAnswer;
@@ -171,7 +169,7 @@ public class SendActivity extends FragmentActivity {
 
             if(position==NUM_PAGES-1){
                 Bundle b = new Bundle();
-                b.putString("stage", "WIN");
+                b.putString("stage", SEND);
                 Fragment win = new Win_Thank_You();
                 win.setArguments(b);
                 return win;

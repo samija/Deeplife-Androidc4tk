@@ -92,7 +92,7 @@ public class SendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SendActivity.answer_index = 0;
-                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(WinActivity.answer_index));
+                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(SendActivity.answer_index));
                 SendActivity.mPager.setSwipeable(true);
             }
         });
@@ -101,7 +101,7 @@ public class SendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SendActivity.answer_index = 1;
-                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(WinActivity.answer_index));
+                SendActivity.answers.set(mPageNumber, SendActivity.answerchoices.get(SendActivity.answer_index));
 
                 SendActivity.mPager.setSwipeable(true);
             }
