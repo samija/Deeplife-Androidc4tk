@@ -93,9 +93,9 @@ public class Service extends android.app.Service{
 
 				////update for Questions
 				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)==0){
-					params.add(new BasicNameValuePair("Task1", "My_Questions"));
+					params.add(new BasicNameValuePair("Task3", "My_Questions"));
 				}else{
-					params.add(new BasicNameValuePair("Task1", "Get_Questions"));
+					params.add(new BasicNameValuePair("Task3", "Get_Questions"));
 				}
 			}
 
