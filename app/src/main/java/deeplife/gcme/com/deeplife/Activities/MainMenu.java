@@ -98,13 +98,13 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			@Override
 			public void onDrawerOpened(View drawerView) {
 				// TODO Auto-generated method stub
-				Toast.makeText(MainMenu.this, "Opened", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(MainMenu.this, "Opened", Toast.LENGTH_SHORT).show();
 			}
 			@Override
 					public void onDrawerClosed(View drawerView) {
 						// TODO Auto-generated method stub
 					//	super.onDrawerClosed(drawerView);
-				Toast.makeText(MainMenu.this, "Closed", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(MainMenu.this, "Closed", Toast.LENGTH_SHORT).show();
 					
 			}
 			
@@ -139,8 +139,6 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		//drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 		getOverflowMenu();
 	}
 
@@ -150,19 +148,10 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		if(requestCode == 1 && resultCode == -1){
 			Uri selectedImageUri = data.getData();
 			String selectedImagePath = getPath(selectedImageUri);
-
-			BitmapFactory.Options option = new BitmapFactory.Options();
-			option.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-			Bitmap bmp = BitmapFactory.decodeFile(selectedImagePath);
-			//savePicture("Profile.png", bmp, myContext);
-
 			File pic = new File(selectedImagePath);
-
 			myFileManager.createFolder("Pics");
 			try {
 				myFileManager.CopyFile(pic,myFileManager.createFileAt("Profile","Profile.png"));
-
 				int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
 				ContentValues cv = new ContentValues();
 				cv.put(DeepLife.USER_FIELDS[5],selectedImagePath);
@@ -171,33 +160,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			} catch (IOException e) {
 				Toast.makeText(myContext,"File Not Found",Toast.LENGTH_LONG).show();
 			}
-			/*Bitmap bb = getImageBitmap(myContext,"Profile.png");
-			if(bb != null){
-				Toast.makeText(getApplicationContext(),bmp.toString(),Toast.LENGTH_LONG).show();
-			}else{
-				Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG).show();
-			}*/
-
 		}
 
-	}
-	private void savePicture(String filename, Bitmap b, Context ctx){
-		try {
-			ObjectOutputStream oos;
-			FileOutputStream out;
-			out = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
-			oos = new ObjectOutputStream(out);
-			b.compress(Bitmap.CompressFormat.PNG, 100, oos);
-
-			oos.close();
-			oos.notifyAll();
-			out.notifyAll();
-			out.close();
-			Toast.makeText(myContext,"File Saved",Toast.LENGTH_LONG).show();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(myContext,e.toString(),Toast.LENGTH_LONG).show();
-		}
 	}
 	public String getPath(Uri uri) {
 		// just some safety built in
@@ -261,6 +225,9 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 							myDatabase.Delete_All(DeepLife.Table_DISCIPLES);
 							myDatabase.Delete_All(DeepLife.Table_LOGS);
 							myDatabase.Delete_All(DeepLife.Table_SCHEDULES);
+
+
+							myFileManager.getFileAt("Profile","Profile.png").delete();
 
 							Intent intent = new Intent(myContext,Splash.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
