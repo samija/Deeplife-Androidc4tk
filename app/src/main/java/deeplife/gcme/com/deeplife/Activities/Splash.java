@@ -68,26 +68,27 @@ public class Splash extends Activity {
         finish();
 
 
+
         //Populate questions
         ContentValues cv1 = new ContentValues();
         cv1.put(DeepLife.QUESTION_LIST_FIELDS[0],"WIN");
         cv1.put(DeepLife.QUESTION_LIST_FIELDS[1],"Have you presented the ministry of the Holy Spirit to your disciple?");
         cv1.put(DeepLife.QUESTION_LIST_FIELDS[2],"This is win Note");
-        cv1.put(DeepLife.QUESTION_LIST_FIELDS[3],"NOT_MANDATORY");
+        cv1.put(DeepLife.QUESTION_LIST_FIELDS[3],"1");
 
         //populate
         ContentValues cv2 = new ContentValues();
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[0],"BUILD");
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[1],"Is your disciple engaging in active groups like churches, fellowships, small groups, online communities? ");
         cv2.put(DeepLife.QUESTION_LIST_FIELDS[2],"This is build Note");
-        cv2.put(DeepLife.QUESTION_LIST_FIELDS[3],"MANDATORY");
+        cv2.put(DeepLife.QUESTION_LIST_FIELDS[3],"0");
 
         //populate
         ContentValues cv3 = new ContentValues();
         cv3.put(DeepLife.QUESTION_LIST_FIELDS[0],"SEND");
         cv3.put(DeepLife.QUESTION_LIST_FIELDS[1],"Has your disciple been entrusted with an opportunity for action?  ");
         cv3.put(DeepLife.QUESTION_LIST_FIELDS[2],"This is send Note");
-        cv3.put(DeepLife.QUESTION_LIST_FIELDS[3], "NOT_MANDATORY");
+        cv3.put(DeepLife.QUESTION_LIST_FIELDS[3], "1");
 
 
         long win = myDatabase.insert(DeepLife.Table_QUESTION_LIST,cv1);
@@ -106,7 +107,6 @@ public class Splash extends Activity {
         if(send!=-1){
             Log.i("Deep Life", "send question added");
         }
-
 
 */
 

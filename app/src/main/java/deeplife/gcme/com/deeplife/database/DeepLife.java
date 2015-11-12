@@ -38,7 +38,7 @@ public class DeepLife extends Application {
 
     public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
 
-    public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer"};
+    public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer","Build_Stage"};
 
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
@@ -47,7 +47,7 @@ public class DeepLife extends Application {
     public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
-    public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_ID", "Question_ID", "Answer"};
+    public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_ID", "Question_ID", "Answer","Build_Stage"};
 
 
     public static Database myDatabase;

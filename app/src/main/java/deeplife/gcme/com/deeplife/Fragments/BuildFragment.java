@@ -3,6 +3,7 @@ package deeplife.gcme.com.deeplife.Fragments;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import deeplife.gcme.com.deeplife.Activities.BuildActivity;
-import deeplife.gcme.com.deeplife.Activities.WinActivity;
 import deeplife.gcme.com.deeplife.R;
 
 
@@ -64,23 +64,27 @@ public class BuildFragment extends Fragment {
 
         iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.buildicon));
 
-        if(getPageNumber()< BuildActivity.questions.size()) {
+        if(getPageNumber()<BuildActivity.questions.size()) {
             tv_qdisc.setText(BuildActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(BuildActivity.questions.get(getPageNumber()).getNote());
 
+            //if already answered , update the radio buttons
+            if(BuildActivity.answers.get(getPageNumber()).equals("Yes")){
+                rb_yes.setChecked(true);
+                rb_no.setChecked(false);
+                BuildActivity.mPager.setSwipeable(true);
+            }
+            else if(BuildActivity.answers.get(getPageNumber()).equals("No")){
+                rb_no.setChecked(true);
+                rb_yes.setChecked(false);
+                BuildActivity.mPager.setSwipeable(true);
 
-             if (BuildActivity.answers.get(getPageNumber()) != " ") {
-                    BuildActivity.mPager.setSwipeable(true);
-             }
+            }
+
             else{
-                 BuildActivity.mPager.setSwipeable(false);
-
-             }
-/*
-            if(!rb_no.isChecked() & !rb_yes.isChecked()){
                 BuildActivity.mPager.setSwipeable(false);
             }
-  */
+
         }
 
 

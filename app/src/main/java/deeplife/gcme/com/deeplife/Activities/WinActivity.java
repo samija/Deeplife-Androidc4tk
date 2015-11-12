@@ -1,5 +1,6 @@
 package deeplife.gcme.com.deeplife.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +26,7 @@ import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;
+import deeplife.gcme.com.deeplife.Models.QuestionAnswer;
 import deeplife.gcme.com.deeplife.R;
 
 /**
@@ -37,18 +39,19 @@ public class WinActivity extends FragmentActivity {
 
     public static final String WIN = "WIN";
     public int NUM_PAGES;
+    public static boolean answered_state;
+    public static ArrayList<Integer> answer_from_db_id;
 
     public static ArrayList<Question> questions;
-
-//    public static String[] answers;
- //   public static String[] answerchoices;
-
     public static ArrayList<String> answers;
-
     public static ArrayList<String> answerchoices;
+    public static ArrayList<QuestionAnswer> answered_from_db = null;
+
     public static int answer_index = 0;
 
     public static int DISCIPLE_ID;
+
+
     Database dbadapter;
     DeepLife dbhelper;
 
@@ -60,27 +63,27 @@ public class WinActivity extends FragmentActivity {
 
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
         mPager.setSwipeable(true);
-
+        
         Bundle extras = this.getIntent().getExtras();
-
+        answered_state = false;
         if(extras!=null){
             DISCIPLE_ID = Integer.parseInt(extras.getString("disciple_id").toString());
+            if(extras.containsKey("answer")) {
+                if (extras.getString("answer").toString() != null) {
+                    answered_state = true;
+                }
+            }
         }
         else{
             return;
         }
 
-
-
-        Log.i("Deep Life","The disciple Id is: "+DISCIPLE_ID+"");
-
+        clear();
+        
         //initialize data
         init();
 
-        //mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        //mPager.setAdapter(mPagerAdapter);
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
-
 
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -89,6 +92,15 @@ public class WinActivity extends FragmentActivity {
             }
         });
 
+    }
+
+    private void clear() {
+        answers = new ArrayList<String>();
+        answered_from_db = new ArrayList<QuestionAnswer>();
+        questions = new ArrayList<Question>();
+        answers.clear();
+        answered_from_db.clear();
+        questions.clear();
     }
 
     @Override
@@ -116,17 +128,30 @@ public class WinActivity extends FragmentActivity {
 
         questions = dbadapter.get_All_Questions(WIN);
 
-        answers = new ArrayList<String>();
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
         answerchoices.add("No");
 
-        for(int i=0; i<NUM_PAGES-1;i++){
-            answers.add("");
-        }
-        Log.i("Deep Life", "Array size for answers is " +answers.size());
+        answers = new ArrayList<String>();
 
-        //answers = new String[NUM_PAGES-1];
+        //if answer in database
+        if(answered_state){
+            answered_from_db = dbadapter.get_Answer(DISCIPLE_ID+"",WIN);
+            answer_from_db_id = new ArrayList<Integer>();
+
+            for(int i=0; i<NUM_PAGES-1;i++){
+                answers.add(answered_from_db.get(i).getAnswer());
+                answer_from_db_id.add(Integer.parseInt(answered_from_db.get(i).getId()));
+            }
+        }
+
+        //if answer not in database
+        else {
+            for (int i = 0; i < NUM_PAGES - 1; i++) {
+                answers.add("");
+            }
+        }
+
     }
 
     @Override

@@ -73,27 +73,49 @@ public class Win_Thank_You extends Fragment {
                     for (int i = 0; i < WinActivity.answers.size(); i++) {
 
                         if(i<WinActivity.questions.size()) {
-                            Log.i("Deep Life", "i is less than question");
-                            Log.i("Deep Life", "Mandatory = " +WinActivity.questions.get(i).getMandatory());
-
-                            if (WinActivity.questions.get(i).getMandatory() == "MANDATORY") {
-                                Log.i("Deep Life", "Mandatory = " +WinActivity.questions.get(i).getMandatory());
-
+                            if (WinActivity.questions.get(i).getMandatory().endsWith("1")) {
                                 if (WinActivity.answers.get(i) == "No") {
-                                    Log.i("Deep Life", "User answer no to a mandatory question");
+                                    for(int j=0;j<WinActivity.answers.size();j++) {
+                                        if(!WinActivity.answered_state) {
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], WinActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
+
+                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+
+                                        else if(WinActivity.answered_state){
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], WinActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
+
+
+                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+                                    }
                                     Toast.makeText(getActivity(), "Thank You!! Please come again and fill mandatory questions!", Toast.LENGTH_LONG).show();
                                     getNextActivity();
-                                    Log.i("Deep Life", "closed without saving");
-
                                     return;
                                 }
                             }
                         }
+
                         ContentValues cv = new ContentValues();
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], WinActivity.DISCIPLE_ID);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(i));
+                        cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                         if (check != -1)
@@ -134,14 +156,39 @@ public class Win_Thank_You extends Fragment {
                     for (int i = 0; i < BuildActivity.answers.size(); i++) {
 
                         if(i<BuildActivity.questions.size()) {
-
-                            if (BuildActivity.questions.get(i).getMandatory().endsWith("MANDATORY")) {
-
+                            if (BuildActivity.questions.get(i).getMandatory().endsWith("1")) {
                                 if (BuildActivity.answers.get(i) == "No") {
+                                    for(int j=0;j<BuildActivity.answers.size();j++) {
+                                        if(!BuildActivity.answered_state) {
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], BuildActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], BuildActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
+
+                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+
+                                        else if(BuildActivity.answered_state){
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], BuildActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], BuildActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
+
+
+                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+                                    }
                                     Toast.makeText(getActivity(), "Thank You!! Please come again and fill mandatory questions!", Toast.LENGTH_LONG).show();
                                     getNextActivity();
-                                    Log.i("Deep Life", "closed without saving");
                                     return;
                                 }
                             }
@@ -152,6 +199,7 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], BuildActivity.DISCIPLE_ID);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], BuildActivity.answers.get(i));
+                        cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "BUILD");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                         if (check != -1)
@@ -190,10 +238,51 @@ public class Win_Thank_You extends Fragment {
                 if(SendActivity.answers.size()>0) {
                     for (int i = 0; i < SendActivity.answers.size(); i++) {
 
+                        if(i<SendActivity.questions.size()) {
+                            if (SendActivity.questions.get(i).getMandatory().endsWith("1")) {
+                                if (SendActivity.answers.get(i) == "No") {
+                                    for(int j=0;j<SendActivity.answers.size();j++) {
+                                        if(!WinActivity.answered_state) {
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], SendActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], SendActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
+
+
+                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+
+                                        else if(SendActivity.answered_state){
+                                            ContentValues cv = new ContentValues();
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], SendActivity.DISCIPLE_ID);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], SendActivity.answers.get(j));
+                                            cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
+
+
+                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
+                                            if (check != -1)
+                                                Log.i("Deep Life", "saved with out updating build phase");
+                                            cv.clear();
+                                        }
+                                    }
+                                    Toast.makeText(getActivity(), "Thank You!! Please come again and fill mandatory questions!", Toast.LENGTH_LONG).show();
+                                    getNextActivity();
+                                    return;
+                                }
+                            }
+                        }
+
+
                         ContentValues cv = new ContentValues();
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[0], SendActivity.DISCIPLE_ID);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], SendActivity.answers.get(i));
+                        cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "SEND");
 
                         long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                         if (check != -1)
@@ -230,6 +319,6 @@ public class Win_Thank_You extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        db.dispose();
     }
 }

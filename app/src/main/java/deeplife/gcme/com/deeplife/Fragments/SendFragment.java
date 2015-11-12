@@ -64,22 +64,27 @@ public class SendFragment extends Fragment {
         iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.sendicon));
 
 
-        if(getPageNumber()< SendActivity.questions.size()) {
+       if(getPageNumber()<SendActivity.questions.size()) {
             tv_qdisc.setText(SendActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(SendActivity.questions.get(getPageNumber()).getNote());
 
-            if (SendActivity.answers.get(getPageNumber()) != " ") {
+            //if already answered , update the radio buttons
+            if(SendActivity.answers.get(getPageNumber()).equals("Yes")){
+                rb_yes.setChecked(true);
+                rb_no.setChecked(false);
                 SendActivity.mPager.setSwipeable(true);
             }
-            else{
-                SendActivity.mPager.setSwipeable(false);
+            else if(SendActivity.answers.get(getPageNumber()).equals("No")){
+                rb_no.setChecked(true);
+                rb_yes.setChecked(false);
+                SendActivity.mPager.setSwipeable(true);
 
             }
-/*
-            if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                BuildActivity.mPager.setSwipeable(false);
+
+            else{
+                WinActivity.mPager.setSwipeable(false);
             }
-  */
+
         }
 
 

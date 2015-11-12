@@ -75,21 +75,24 @@ public class WinFragment extends Fragment {
             tv_qdisc.setText(WinActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(WinActivity.questions.get(getPageNumber()).getNote());
 
-            if (WinActivity.answers.get(getPageNumber())== "Yes" |WinActivity.answers.get(getPageNumber()) == "No" ) {
+            //if already answered , update the radio buttons
+            if(WinActivity.answers.get(getPageNumber()).equals("Yes")){
+                rb_yes.setChecked(true);
+                rb_no.setChecked(false);
                 WinActivity.mPager.setSwipeable(true);
-                Log.i("Deep Life", "if answer is yes or no");
             }
+            else if(WinActivity.answers.get(getPageNumber()).equals("No")){
+                rb_no.setChecked(true);
+                rb_yes.setChecked(false);
+                WinActivity.mPager.setSwipeable(true);
+
+            }
+
             else{
                 Log.i("Deep Life", "else if ... swipe off");
-
                 WinActivity.mPager.setSwipeable(false);
+            }
 
-            }
-/*
-            if(!rb_no.isChecked() & !rb_yes.isChecked()){
-                BuildActivity.mPager.setSwipeable(false);
-            }
-  */
         }
 
 
