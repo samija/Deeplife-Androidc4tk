@@ -117,8 +117,21 @@
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
+
+
+
         </LinearLayout>
         <!-- Login Button -->
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/register_gender_spinner"
+            android:entries="@array/gender"
+            android:layout_marginBottom="10dp"
+
+            />
 
         <Button
             android:id="@+id/btnregister"
