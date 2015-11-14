@@ -83,6 +83,24 @@
             </intent-filter>
         </activity>
 
+    <activity android:name=".Activities.BuildActivity"
+        android:label="DeepLife" >
+        <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+
+        </intent-filter>
+
+        </activity>
+
+        <activity android:name=".Activities.SendActivity"
+            android:label="DeepLife" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+
+        </activity>
+
 
         <service
             android:name=".Services.Service"

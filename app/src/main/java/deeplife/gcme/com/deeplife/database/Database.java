@@ -77,9 +77,9 @@ public class Database {
         return c.getCount();
     }
 
-    public long checkExistence(String Db_Table,String column,String id){
+    public long checkExistence(String Db_Table,String column,String id, String build){
 
-        Cursor cursor = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"'",null,null,null,null);
+        Cursor cursor = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' and "+DeepLife.QUESTION_ANSWER_FIELDS[3]+" = '"+ build+"'",null,null,null,null);
         return cursor.getCount();
 
     }
@@ -88,6 +88,7 @@ public class Database {
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
         return c;
     }
+
     public String get_Value_At_Top(String DB_Table,String column){
         String str = "";
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);

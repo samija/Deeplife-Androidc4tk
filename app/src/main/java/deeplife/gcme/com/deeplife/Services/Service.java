@@ -119,6 +119,7 @@ public class Service extends android.app.Service{
 			super.onPreExecute();
 			//Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_SHORT).show();
 		}
+
 		@Override
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
@@ -130,7 +131,11 @@ public class Service extends android.app.Service{
 
 				DeepLife.Register_disciple(myObject.getJSONArray("Disciples"));
 				DeepLife.Register_Schedule(myObject.getJSONArray("Schedules"));
-				DeepLife.Register_Question(myObject.getJSONArray("Questions"));
+
+				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)<1) {
+					DeepLife.Register_Question(myObject.getJSONArray("Questions"));
+				}
+
 
 				Thread.sleep(10000);
 			} catch (Exception e) {
