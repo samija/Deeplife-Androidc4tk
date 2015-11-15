@@ -12,8 +12,11 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.CursorAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -76,16 +79,21 @@ public class Schedules extends Fragment {
 	DeepLife dbhelper;
 
     static String scheduled_disciple_id_phone;
+    private Calendar cal;
 
+    private FragmentManager fragmentManager;
 
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.schedule_list, container,
-				false);
+                false);
+
+        cal = Calendar.getInstance();
+
 
 
 		dbadapter = new Database(getActivity());
@@ -103,7 +111,13 @@ public class Schedules extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-                addScheduleDialog();
+               // addScheduleDialog();
+                try {
+                    showAlert();
+                }catch (Exception e){
+
+                }
+
 
             }
 		});
@@ -115,6 +129,162 @@ public class Schedules extends Fragment {
 		return 	view;
 		
 	}
+    private Button btn_up_day,btn_up_mon,btn_up_yrs,btn_up_hrs,btn_up_min,btn_up_ap,btn_dowm_day,btn_dowm_mon,btn_dowm_yrs,btn_dowm_hrs,btn_dowm_min,btn_dowm_ap,add_disciple;
+    private EditText txt_Day,txt_Mon,txt_Yrs,txt_Hrs,txt_Min,txt_AP,txt_desc;
+    public void showAlert(){
+
+
+
+        cal = Calendar.getInstance();
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View alertDialogView = inflater.inflate(R.layout.calender, null);
+        alertDialog.setView(alertDialogView);
+
+        btn_up_day = (Button) alertDialogView.findViewById(R.id.btn_up_day);
+        btn_up_day.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                updateDialogView(cal);
+
+            }
+        });
+        btn_up_mon = (Button) alertDialogView.findViewById(R.id.btn_up_mon);
+        btn_up_mon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.MONTH,1);
+                updateDialogView(cal);
+            }
+        });
+        btn_up_yrs = (Button) alertDialogView.findViewById(R.id.btn_up_yrs);
+        btn_up_yrs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.YEAR,1);
+                updateDialogView(cal);
+            }
+        });
+        btn_up_hrs = (Button) alertDialogView.findViewById(R.id.btn_up_hrs);
+        btn_up_hrs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.HOUR,1);
+                updateDialogView(cal);
+            }
+        });
+        btn_up_min = (Button) alertDialogView.findViewById(R.id.btn_up_min);
+        btn_up_min.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.MINUTE,1);
+                updateDialogView(cal);
+            }
+        });
+        btn_up_ap = (Button) alertDialogView.findViewById(R.id.btn_up_ap);
+
+        btn_dowm_day = (Button) alertDialogView.findViewById(R.id.btn_down_day);
+        btn_dowm_day.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.DAY_OF_MONTH,-1);
+                updateDialogView(cal);
+            }
+        });
+        btn_dowm_mon = (Button) alertDialogView.findViewById(R.id.btn_down_mon);
+        btn_dowm_mon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.MONTH,-1);
+                updateDialogView(cal);
+            }
+        });
+        btn_dowm_yrs = (Button) alertDialogView.findViewById(R.id.btn_down_yrs);
+        btn_dowm_yrs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.YEAR,-1);
+                updateDialogView(cal);
+            }
+        });
+        btn_dowm_hrs = (Button) alertDialogView.findViewById(R.id.btn_down_hrs);
+        btn_dowm_hrs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.HOUR,-1);
+                updateDialogView(cal);
+            }
+        });
+        btn_dowm_min = (Button) alertDialogView.findViewById(R.id.btn_down_min);
+        btn_dowm_min.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.MINUTE,-1);
+                updateDialogView(cal);
+            }
+        });
+        btn_dowm_ap = (Button) alertDialogView.findViewById(R.id.btn_down_ap);
+
+        txt_Day = (EditText) alertDialogView.findViewById(R.id.txt_day);
+        txt_Mon = (EditText) alertDialogView.findViewById(R.id.txt_mon);
+        txt_Yrs = (EditText) alertDialogView.findViewById(R.id.txt_year);
+        txt_Hrs = (EditText) alertDialogView.findViewById(R.id.txt_hrs);
+        txt_Min = (EditText) alertDialogView.findViewById(R.id.txt_mint);
+        txt_AP = (EditText) alertDialogView.findViewById(R.id.txt_ap);
+        txt_desc = (EditText) alertDialogView.findViewById(R.id.txt_description);
+
+        add_disciple = (Button) alertDialogView.findViewById(R.id.btn_add_disciple);
+
+
+        final ArrayList<Disciples> list_names = dbadapter.getDisciples();
+
+        final Spinner names = (Spinner) alertDialogView.findViewById(R.id.disciples);
+        names.setAdapter(new NameSpinnerAdapter(getActivity(), R.layout.countries_spinner, list_names));
+        names.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int i = names.getSelectedItemPosition();
+                scheduled_disciple_id_phone = list_names.get(i).getPhone().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                scheduled_disciple_id_phone = list_names.get(0).getPhone().toString();
+            }
+        });
+
+        add_disciple.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ContentValues values = new ContentValues();
+                values.put(dbhelper.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
+                values.put(dbhelper.SCHEDULES_FIELDS[1], cal.getTime().toString());
+                values.put(dbhelper.SCHEDULES_FIELDS[2],0);
+                values.put(dbhelper.SCHEDULES_FIELDS[3], txt_desc.getText().toString());
+
+                DeepLife.Set_Alarm(cal);
+                Toast.makeText(getActivity(),"Alarm Set",Toast.LENGTH_LONG).show();
+
+                long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
+                if(i!=-1){
+                    //insert the disciple to log table
+                    ContentValues cv1 = new ContentValues();
+                    cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Schedule");
+                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
+                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                    }
+                    Toast.makeText(getActivity(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
+                    reload();
+                }
+            }
+        });
+
+        alertDialog.show();
+
+    }
 
 
     public void populateList(Context context){
@@ -126,14 +296,36 @@ public class Schedules extends Fragment {
 
 
 
-    public void addScheduleDialog(){
-        Toast.makeText(getActivity(),"Add Schedule",Toast.LENGTH_LONG).show();
-        final Dialog add = new Dialog(getActivity().getBaseContext());
 
+    private void updateDialogView(Calendar cal){
+        txt_Day.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+        txt_Mon.setText(String.valueOf(cal.get(Calendar.MONTH)));
+        txt_Yrs.setText(String.valueOf(cal.get(Calendar.YEAR)));
+
+        txt_Hrs.setText(String.valueOf(cal.get(Calendar.HOUR)));
+        txt_Min.setText(String.valueOf(cal.get(Calendar.MINUTE)));
+        txt_AP.setText(String.valueOf(cal.get(Calendar.AM_PM)));
+
+    }
+
+    public void addScheduleDialog(){
+        Toast.makeText(getActivity(), "Add Schedule", Toast.LENGTH_LONG).show();
+
+        final Dialog add = new Dialog(getActivity().getBaseContext());
+        add.setContentView(R.layout.calender);
         add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         add.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        add.setContentView(R.layout.schedule_add);
+
+
+
+
+
+
+
+
+
+
 
         WindowManager window = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -287,7 +479,6 @@ public class Schedules extends Fragment {
                     //Yes button clicked
 
                     //			            break;
-
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
                         break;
