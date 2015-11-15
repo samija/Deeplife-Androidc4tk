@@ -95,13 +95,13 @@ public class Profile_Adapter extends BaseAdapter {
             });
 
             //Toast.makeText(myContext,myFile.getAbsolutePath(),Toast.LENGTH_LONG).show();
-            Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
+//            Bitmap image = BitmapFactory.decodeFile(myFile.getAbsolutePath());
 
-            Pic.setImageBitmap(image);
-            Pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+   ///         Pic.setImageBitmap(image);
+     //       Pic.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            Pic_bg.setImageBitmap(image);
-            Pic_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //    Pic_bg.setImageBitmap(image);
+        //    Pic_bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
 
