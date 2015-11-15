@@ -7,6 +7,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:textColor="#000000"
+        android:text="Select Disciple"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp">
+
+    </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#000000"
         android:text="Select Day - Month - Year"/>
 
 
@@ -89,6 +105,7 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:editable="false"
                     android:text="12"/>
 
             </LinearLayout>
@@ -107,6 +124,7 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:editable="false"
                     android:text="06"/>
 
             </LinearLayout>
@@ -125,6 +143,7 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:editable="false"
                     android:text="2015"/>
 
             </LinearLayout>
@@ -190,7 +209,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
+        android:textColor="#000000"
         android:text="Select Hour - Minute - AM/PM"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -274,6 +295,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="30sp"
                         android:textStyle="bold"
+                        android:editable="false"
                         android:text="12"/>
 
                 </LinearLayout>
@@ -291,6 +313,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="30sp"
                         android:textStyle="bold"
+                        android:editable="false"
                         android:text="58"/>
 
                 </LinearLayout>
@@ -368,4 +391,30 @@
             android:layout_marginTop="10dp"
             android:background="#b3de02"></LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#000000"
+        android:text="Add Description here"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="10dp"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Add Schedule"/>
 </LinearLayout>
