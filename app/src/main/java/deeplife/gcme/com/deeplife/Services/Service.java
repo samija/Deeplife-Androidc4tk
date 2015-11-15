@@ -17,7 +17,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
+
 
 public class Service extends android.app.Service{
 	private Database myDatabase;
