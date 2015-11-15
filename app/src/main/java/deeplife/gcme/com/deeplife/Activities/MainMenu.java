@@ -136,11 +136,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
             }
         });
 		
-		drawerLayout.setDrawerListener(drawerListener);
+//		drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setSubtitle("DeepLife");
-		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.transparent));
+		//getActionBar().setSubtitle("DeepLife");
+		//getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.transparent));
 		getOverflowMenu();
 	}
 
