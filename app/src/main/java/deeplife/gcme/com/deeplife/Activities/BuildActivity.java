@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Fragments.BuildFragment;
-import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.Models.QuestionAnswer;

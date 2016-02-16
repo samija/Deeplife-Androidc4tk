@@ -1,28 +1,21 @@
 package deeplife.gcme.com.deeplife.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
-import deeplife.gcme.com.deeplife.Fragments.AddDiscipleDialog;
-import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
 import deeplife.gcme.com.deeplife.Fragments.WinFragment;
 import deeplife.gcme.com.deeplife.Fragments.Win_Thank_You;
 import deeplife.gcme.com.deeplife.Models.Question;

@@ -68,7 +68,6 @@ public class Login extends Activity {
         setContentView(R.layout.login);
 
         myContext = this;
-
         ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
         ed_password = (EditText) findViewById(R.id.login_password);
         bt_login = (Button) findViewById(R.id.btnLogin);
@@ -88,11 +87,8 @@ public class Login extends Activity {
             public void onClick(View v){
                 Intent register = new Intent(getBaseContext(), Register.class);
                 startActivity(register);
-
             }
         });
-
-
     }
 
     public void checkLogin(String phone, String password){

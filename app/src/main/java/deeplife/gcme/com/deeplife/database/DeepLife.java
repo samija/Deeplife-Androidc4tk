@@ -5,7 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import deeplife.gcme.com.deeplife.Alarm.Alarm_BroadCast;
-import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Services.Service;
 
 import android.app.AlarmManager;

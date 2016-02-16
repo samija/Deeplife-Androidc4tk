@@ -2,18 +2,13 @@ package deeplife.gcme.com.deeplife.Alarm;
 
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.widget.Toast;
-
-import deeplife.gcme.com.deeplife.Database.DeepLife;
-import deeplife.gcme.com.deeplife.R;
 
 /**
  * Created by BENGEOS on 11/6/2015.

@@ -2,12 +2,10 @@ package deeplife.gcme.com.deeplife.Activities;
 
 
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Window;
 
 
