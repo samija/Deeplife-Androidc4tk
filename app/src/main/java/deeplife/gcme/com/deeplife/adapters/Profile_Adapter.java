@@ -1,9 +1,12 @@
 package deeplife.gcme.com.deeplife.Adapters;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -116,6 +120,7 @@ public class Profile_Adapter extends BaseAdapter {
             LinearLayout Item = (LinearLayout) convertView.findViewById(R.id.profile_item);
 
             if(position == 1){
+                //Fetch the user full name from the database
                 Icon.setBackgroundResource(R.drawable.account);
                 String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[0]);
                 Labele.setText(Name);
@@ -137,16 +142,6 @@ public class Profile_Adapter extends BaseAdapter {
                     }
                 });
             }else if(position == 3){
-                Icon.setBackgroundResource(R.drawable.settings_24_512);
-                String Name = myDatabase.get_Value_At_Top(DeepLife.Table_USER,DeepLife.USER_FIELDS[4]);
-                Labele.setText(Name);
-                Item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Labele.setText(myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[4]));
-                    }
-                });
-            }else if(position == 4){
                 Icon.setBackgroundResource(R.drawable.check_out_512);
                 Labele.setText("Log Out");
             }

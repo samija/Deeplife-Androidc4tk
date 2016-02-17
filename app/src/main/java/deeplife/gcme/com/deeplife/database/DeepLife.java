@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -87,6 +88,8 @@ public class DeepLife extends Application {
                 sch_vals.put(USER_FIELDS[4], obj.getString(USER_FIELDS[4]));
                 sch_vals.put(USER_FIELDS[5], obj.getString(USER_FIELDS[4]));
                 myDatabase.insert(Table_USER, sch_vals);
+                Log.i("Sync_Service", "Registering User_Profile to Phone DataBase:");
+                Log.i("Sync_Service", "User_Full_Name --> " + obj.getString(USER_FIELDS[0]));
             }
         }
     }
@@ -103,6 +106,8 @@ public class DeepLife extends Application {
                 sch_vals.put(DISCIPLES_FIELDS[5], obj.getString(DISCIPLES_FIELDS[5]));
                 sch_vals.put(DISCIPLES_FIELDS[6], obj.getString(DISCIPLES_FIELDS[6]));
                 myDatabase.insert(Table_DISCIPLES, sch_vals);
+                Log.i("Sync_Service", "Registering Disciple to Phone DataBase:");
+                Log.i("Sync_Service", "Full Name--> "+obj.getString(DISCIPLES_FIELDS[0]));
             }
         }
     }
@@ -116,6 +121,8 @@ public class DeepLife extends Application {
                 sch_vals.put(SCHEDULES_FIELDS[2], obj.getString(SCHEDULES_FIELDS[2]));
                 sch_vals.put(SCHEDULES_FIELDS[3], obj.getString(SCHEDULES_FIELDS[3]));
                 myDatabase.insert(Table_SCHEDULES, sch_vals);
+                Log.i("Sync_Service", "Registering Schedule to Phone DataBase:");
+                Log.i("Sync_Service", "Disciple Phone --> " + obj.getString(SCHEDULES_FIELDS[0]));
             }
         }
     }
@@ -129,6 +136,8 @@ public class DeepLife extends Application {
                 sch_vals.put(QUESTION_LIST_FIELDS[2], obj.getString(QUESTION_LIST_FIELDS[2]));
                 sch_vals.put(QUESTION_LIST_FIELDS[3], obj.getString(QUESTION_LIST_FIELDS[3]));
                 myDatabase.insert(Table_QUESTION_LIST, sch_vals);
+                Log.i("Sync_Service", "Registering Question to Phone DataBase:");
+                Log.i("Sync_Service", "Question category --> " + obj.getString(QUESTION_LIST_FIELDS[0]));
             }
         }
     }

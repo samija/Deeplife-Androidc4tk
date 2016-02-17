@@ -80,6 +80,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
                 android:id="@+id/profile_cover"
                 android:src="@drawable/drawericon"/>
 
@@ -129,13 +130,15 @@
              android:layout_width="fill_parent"
             android:layout_height="wrap_content">
                 <Button
-                    android:id="@+id/btn_complete_build"
-                    android:background="@color/bg_logins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bg_login"
+                    android:id="@+id/btn_complete_build"
+                    android:textColor="#ff0000"
                     android:textSize="14dp"
                     android:text="Complete Build"/>
+                    <!--android:background="@color/bg_logins"-->
+
+
             </LinearLayout>
             </LinearLayout>
 
