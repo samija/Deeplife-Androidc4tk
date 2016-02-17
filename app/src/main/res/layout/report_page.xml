@@ -16,6 +16,7 @@
                 android:layout_height="wrap_content"
                 android:weightSum="6"
                 android:padding="10sp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,20 +40,29 @@
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_weight="4">
+
                     <Button
                         android:layout_width="80dp"
                         android:layout_height="50dp"
                         android:background="@drawable/btn_incrs"
                         android:id="@+id/btn_inc" />
-                    <EditText
-                        android:id="@+id/txt_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:textSize="25sp"
-                        android:textColor="#000000"
-                        android:enabled="false"
-                        android:text="1"/>
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/circle_02">
+                        <EditText
+                            android:id="@+id/txt_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textSize="35sp"
+                            android:textColor="#000000"
+                            android:background="@android:color/transparent"
+                            android:enabled="false"
+                            android:text="1"/>
+
+                    </FrameLayout>
+
                     <Button
                         android:layout_width="80dp"
                         android:layout_height="50dp"
@@ -63,7 +73,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:weightSum="6"
                 android:padding="10sp"
                 android:orientation="horizontal">
@@ -95,15 +105,22 @@
 
                         android:background="@drawable/btn_incrs"
                         android:id="@+id/btn2_inc" />
-                    <EditText
-                        android:id="@+id/txt_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:enabled="false"
-                        android:textSize="25sp"
-                        android:textColor="#000000"
-                        android:text="100"/>
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/circle_02">
+                        <EditText
+                            android:id="@+id/txt_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textSize="35sp"
+                            android:textColor="#000000"
+                            android:background="@android:color/transparent"
+                            android:enabled="false"
+                            android:text="1"/>
+
+                    </FrameLayout>
                     <Button
                         android:layout_width="80dp"
                         android:layout_height="50dp"
@@ -114,7 +131,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:weightSum="6"
                 android:background="@color/background_floating_material_light"
                 android:padding="10sp"
