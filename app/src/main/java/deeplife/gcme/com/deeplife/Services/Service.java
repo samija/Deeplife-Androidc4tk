@@ -43,8 +43,7 @@ public class Service extends android.app.Service{
 		myContext = this;
 		new Make_Service().execute();
 		int xx = myDatabase.count(DeepLife.Table_LOGS);
-		Toast.makeText(myContext,"Syncing Service Started for "+xx,Toast.LENGTH_SHORT).show();
-
+		Log.i("Sync_Service", "Sync Service Started");
 	}
 	public class Make_Service extends AsyncTask<String, String, String>{
 		private String msg = "";
@@ -142,31 +141,38 @@ public class Service extends android.app.Service{
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			//Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_SHORT).show();
+			Log.i("Sync_Service", "Preparing Sync Service ...");
 		}
 
 		@Override
 		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
             msg = msg +"00000000000000";
+			Log.i("Sync_Service", "Sync Service Connecting to the server ......");
 			try {
 				JSONObject myObject = myParser.makeHttpRequest(	"http://api.cccsea.org/API.php", "POST", init());
 				msg = msg + myObject.toString() +"\n............."+init().toString();
 				Task = myObject.getString("Task");
-
+				if(myObject != null){
+					Log.i("Sync_Service", "Sync Service Connected");
+				}else{
+					Log.i("Sync_Service", "Sync Service Not Connected");
+				}
 				DeepLife.Register_disciple(myObject.getJSONArray("Disciples"));
 				DeepLife.Register_Schedule(myObject.getJSONArray("Schedules"));
 
 				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)<1) {
 					DeepLife.Register_Question(myObject.getJSONArray("Questions"));
 				}
-
-				Thread.sleep(10000);
+				Log.i("Sync_Service", "Sync Service Slept!");
+				Thread.sleep(1000);
+				Log.i("Sync_Service", "Sync Service awake!");
 			} catch (Exception e) {
 				// TODO: handle exception
 				msg = msg + e.toString();
+				Log.i("Sync_Service", "Sync Error \n"+e.toString());
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -185,10 +191,16 @@ public class Service extends android.app.Service{
 				myDatabase.deleteTop(DeepLife.Table_LOGS);
 				//Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
 				Log.i("Sync_Service", "Server Respond--> 1");
+				Log.i("Sync_Service", "Last Task was Successful.   -->Deleting Last Task Log");
+			}
+			int xx = myDatabase.count(DeepLife.Table_LOGS);
+			if(xx>0){
+				String str = myDatabase.get_Value_At_Top(DeepLife.Table_LOGS,DeepLife.LOGS_FIELDS[0]);
+				Log.i("Sync_Service", "Pending Services "+xx);
+				Log.i("Sync_Service", "Pending Task "+str);
+				Log.i("Sync_Service", "Server Sync Completion Restarting ....");
 			}
 			new Make_Service().execute();
-			int xx = myDatabase.count(DeepLife.Table_LOGS);
-			Log.i("Sync_Service", "Server Sync Completion");
 		}
 
 	}

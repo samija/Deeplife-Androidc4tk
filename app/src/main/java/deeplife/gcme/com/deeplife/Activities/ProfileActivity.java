@@ -105,29 +105,25 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		ben.add(new Disciples());
 		ben.add(new Disciples());
 		ben.add(new Disciples());
-		ben.add(new Disciples());
 
 		dlist = (ListView) findViewById(R.id.drawerList);
-		dlist.setAdapter(new Profile_Adapter(getApplicationContext(), ben));
+		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
 		dlist.setOnItemClickListener(this);
 		dlist.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == 0) {
+				if(position == 0){
 					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 					intent.setType("image/*");
 					startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
-				} else if (position == 4) {
-					Show_DialogBox(100);
-
-				} else {
+				}else{
 					Show_DialogBox(position);
 				}
 
 			}
 		});
 
-		//drawerLayout.setDrawerListener(drawerListener);
+//		drawerLayout.setDrawerListener(drawerListener);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setSubtitle("DeepLife");
@@ -145,14 +141,10 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 			txt_view.setText("Full Name");
 		}
 		if(type == 2){
-			txt_view.setText("Phone Number");
+			txt_view.setText("Your Email Here");
 			txt.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
 		}
 		if(type == 3){
-			txt_view.setText("Email");
-
-		}
-		if(type == 100){
 			txt_view.setText("Logging out ... Are you sure?");
 			txt.setVisibility(View.GONE);
 
@@ -165,20 +157,41 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 					case DialogInterface.BUTTON_POSITIVE:
 						//Yes button clicked
 						if(type == 1){
+							if(txt.getText().toString().length()>5){
+								int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
+								ContentValues cv = new ContentValues();
+								cv.put(DeepLife.USER_FIELDS[0], txt.getText().toString());
+								myDatabase.update(DeepLife.Table_USER, cv, id);
+								ContentValues cv_task = new ContentValues();
+								cv_task.put(DeepLife.LOGS_FIELDS[0],"Update_Full_Name");
+								cv_task.put(DeepLife.LOGS_FIELDS[1], txt.getText().toString());
+								long r = myDatabase.insert(DeepLife.Table_LOGS, cv_task);
+								Toast.makeText(myContext,"New added Task: "+r,Toast.LENGTH_SHORT).show();
+							}
+
+						}
+						if(type == 2){
 
 							if(txt.getText().toString().length()>5){
 								int id = myDatabase.get_Top_ID(DeepLife.Table_USER);
 								ContentValues cv = new ContentValues();
-								cv.put(DeepLife.USER_FIELDS[0],txt.getText().toString());
-								myDatabase.update(DeepLife.Table_USER,cv,id);
+								cv.put(DeepLife.USER_FIELDS[1], txt.getText().toString());
+								myDatabase.update(DeepLife.Table_USER, cv, id);
+								ContentValues cv_task = new ContentValues();
+								cv_task.put(DeepLife.LOGS_FIELDS[0],"Update_Email");
+								cv_task.put(DeepLife.LOGS_FIELDS[1],txt.getText().toString());
+								myDatabase.insert(DeepLife.Table_LOGS, cv_task);
 							}
 
 						}
-						if(type == 100){
+						if(type == 3){
 							myDatabase.Delete_All(DeepLife.Table_USER);
 							myDatabase.Delete_All(DeepLife.Table_DISCIPLES);
 							myDatabase.Delete_All(DeepLife.Table_LOGS);
 							myDatabase.Delete_All(DeepLife.Table_SCHEDULES);
+
+
+							myFileManager.getFileAt("Profile","Profile.png").delete();
 
 							Intent intent = new Intent(myContext,Splash.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -194,7 +207,6 @@ public class ProfileActivity extends FragmentActivity implements OnItemClickList
 		};
 		builder = new AlertDialog.Builder(myContext);
 		builder.setView(view1);
-
 		builder.setPositiveButton("Ok", dialogClickListener)
 				.setNegativeButton("Cancel", dialogClickListener).show();
 	}
