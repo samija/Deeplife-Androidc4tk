@@ -97,7 +97,7 @@ public class Service extends android.app.Service{
 				}else if(type.equals("Update_Password")){
 					params.add(new BasicNameValuePair("Task", "Update_Email"));
 					params.add(new BasicNameValuePair("Email", id));
-					Log.i("Sync_Service", "Sending update user EMail");
+					Log.i("Sync_Service", "Sending update user Email");
 					Log.i("Sync_Service", "to: --->" + id);
 				}else if(type.equals("Update_Phone")){
 					params.add(new BasicNameValuePair("Task", "Update_Phone"));
@@ -130,8 +130,8 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair("Task3", "My_Questions"));
 					Log.i("Sync_Service", "Requesting the Server for All of the Question list");
 				}else{
-					params.add(new BasicNameValuePair("Task3", "Get_Questions"));
-					Log.i("Sync_Service", "Requesting the Server for New Question list");
+					//params.add(new BasicNameValuePair("Task3", "Get_Questions"));
+					//Log.i("Sync_Service", "Requesting the Server for New Question list");
 				}
 			}
 
@@ -149,12 +149,15 @@ public class Service extends android.app.Service{
 			// TODO Auto-generated method stub
             msg = msg +"00000000000000";
 			Log.i("Sync_Service", "Sync Service Connecting to the server ......");
+			Log.i("Sync_Service", "Sync Request: \n"+init());
 			try {
 				JSONObject myObject = myParser.makeHttpRequest(	"http://api.cccsea.org/API.php", "POST", init());
 				msg = msg + myObject.toString() +"\n............."+init().toString();
 				Task = myObject.getString("Task");
 				if(myObject != null){
 					Log.i("Sync_Service", "Sync Service Connected");
+
+					Log.i("Sync_Service", "Sync Result: \n"+myObject.toString());
 				}else{
 					Log.i("Sync_Service", "Sync Service Not Connected");
 				}
@@ -192,14 +195,14 @@ public class Service extends android.app.Service{
 				//Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
 				Log.i("Sync_Service", "Server Respond--> 1");
 				Log.i("Sync_Service", "Last Task was Successful.   -->Deleting Last Task Log");
+				int xx = myDatabase.count(DeepLife.Table_LOGS);
+				if(xx>0) {
+					String str = myDatabase.get_Value_At_Top(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS[0]);
+					Log.i("Sync_Service", "Pending Services "+xx);
+					Log.i("Sync_Service", "Pending Task "+str);
+				}
 			}
-			int xx = myDatabase.count(DeepLife.Table_LOGS);
-			if(xx>0){
-				String str = myDatabase.get_Value_At_Top(DeepLife.Table_LOGS,DeepLife.LOGS_FIELDS[0]);
-				Log.i("Sync_Service", "Pending Services "+xx);
-				Log.i("Sync_Service", "Pending Task "+str);
-				Log.i("Sync_Service", "Server Sync Completion Restarting ....");
-			}
+			Log.i("Sync_Service", "Server Sync Completion Restarting ....");
 			new Make_Service().execute();
 		}
 

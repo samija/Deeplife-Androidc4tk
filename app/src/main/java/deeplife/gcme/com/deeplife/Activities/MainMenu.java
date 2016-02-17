@@ -50,6 +50,7 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
+import deeplife.gcme.com.deeplife.Fragments.Report_Page;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Parsers.JSONParser;
@@ -379,13 +380,16 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 			if(arg0==1){
 				page = new Schedules();
 			}
+			if(arg0==2){
+				page = new Report_Page();
+			}
 			return page;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 2;
+			return 3;
 		}
 		
 		@Override
@@ -395,7 +399,8 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 				return "Disciple List";
 			case 1:
 				return "Schedule";
-
+			case 2:
+				return "Report";
 		}
 			return null;
 	}
