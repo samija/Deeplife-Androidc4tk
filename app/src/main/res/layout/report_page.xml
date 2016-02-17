@@ -40,9 +40,9 @@
                     android:gravity="center_horizontal"
                     android:layout_weight="4">
                     <Button
-                        android:layout_width="50dp"
+                        android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/btn_up"
+                        android:background="@drawable/btn_incrs"
                         android:id="@+id/btn_inc" />
                     <EditText
                         android:id="@+id/txt_1"
@@ -54,9 +54,9 @@
                         android:enabled="false"
                         android:text="1"/>
                     <Button
-                        android:layout_width="50dp"
+                        android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/btn_down"
+                        android:background="@drawable/btn_decrs"
                         android:id="@+id/btn_dec" />
                 </LinearLayout>
             </LinearLayout>
@@ -90,9 +90,10 @@
                     android:gravity="center_horizontal"
                     android:layout_weight="4">
                     <Button
-                        android:layout_width="50dp"
+                        android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/btn_up"
+
+                        android:background="@drawable/btn_incrs"
                         android:id="@+id/btn2_inc" />
                     <EditText
                         android:id="@+id/txt_2"
@@ -104,9 +105,9 @@
                         android:textColor="#000000"
                         android:text="100"/>
                     <Button
-                        android:layout_width="50dp"
+                        android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/btn_down"
+                        android:background="@drawable/btn_decrs"
                         android:id="@+id/btn2_dec" />
                 </LinearLayout>
             </LinearLayout>
