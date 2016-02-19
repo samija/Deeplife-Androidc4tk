@@ -100,6 +100,14 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".Helps.AppHelps"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="DeepLife" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
 
         <service
