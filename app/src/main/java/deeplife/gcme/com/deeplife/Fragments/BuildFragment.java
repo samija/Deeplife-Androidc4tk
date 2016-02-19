@@ -52,10 +52,8 @@ public class BuildFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
-        ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.winfragment, container, false);
-
-         tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.winfragment, container, false);
+        tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
         tv_note = (TextView) rootView.findViewById(R.id.win_note);

@@ -104,6 +104,17 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair("Phone", id));
 					Log.i("Sync_Service", "Sending update user Phone_Number");
 					Log.i("Sync_Service", "to: --->" + id);
+				}else if(type.equals("Send_Report")){
+					int count = myDatabase.count(DeepLife.Table_Reports);
+					if(count>0){
+						Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_Reports, id);
+						params.add(new BasicNameValuePair("Task", "Send_Report"));
+						for(int i=0;i<DeepLife.REPORTS_FIELDS.length;i++){
+							params.add(new BasicNameValuePair(DeepLife.REPORTS_FIELDS[i],cur.getString(cur.getColumnIndex(DeepLife.REPORTS_FIELDS[i]))));
+						}
+					}
+					Log.i("Sync_Service", "Sending Reports");
+					Log.i("Sync_Service", "to: --->" + id);
 				}
 			}else{
 				msg = "dd";

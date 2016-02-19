@@ -52,6 +52,7 @@ import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Fragments.DiscipleList;
 import deeplife.gcme.com.deeplife.Fragments.Report_Page;
 import deeplife.gcme.com.deeplife.Fragments.Schedules;
+import deeplife.gcme.com.deeplife.Helps.AppHelps;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Parsers.JSONParser;
 import deeplife.gcme.com.deeplife.R;

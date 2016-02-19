@@ -1,6 +1,7 @@
 package deeplife.gcme.com.deeplife.Fragments;
 
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import deeplife.gcme.com.deeplife.Adapters.ReportItems_Adapter;
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.R;
 
@@ -26,8 +33,10 @@ import deeplife.gcme.com.deeplife.R;
  */
 public class Report_Page extends Fragment {
     private static List<ReportItem> Reports;
+    private Database myDatabase;
     public Report_Page(){
         Reports = new ArrayList<ReportItem>();
+        myDatabase = new Database(getActivity());
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,12 +53,27 @@ public class Report_Page extends Fragment {
         btn_Report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"First Report Item Value: "+Reports.get(0).getValue(),Toast.LENGTH_SHORT).show();
+                Save_Report();
             }
         });
         return view;
     }
     public static void Update_Report_Value(int pos,int value){
         Reports.get(pos).setValue(value);
+    }
+    public void Save_Report(){
+        myDatabase.Delete_All(DeepLife.Table_Reports);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = sdf.format(new Date());
+        ContentValues cv = new ContentValues();
+        cv.put(DeepLife.REPORTS_FIELDS[0], currentDate);
+        for(int i=0;i<DeepLife.REPORTS_FIELDS.length - 1;i++){
+            cv.put(DeepLife.REPORTS_FIELDS[i+1],Reports.get(i).getValue());
+        }
+        myDatabase.insert(DeepLife.Table_Reports,cv);
+        ContentValues cv1 = new ContentValues();
+        cv1.put(DeepLife.LOGS_FIELDS[0],"Send_Report");
+        cv1.put(DeepLife.LOGS_FIELDS[1],myDatabase.get_Top_ID(DeepLife.Table_Reports));
+        myDatabase.insert(DeepLife.Table_LOGS,cv1);
     }
 }

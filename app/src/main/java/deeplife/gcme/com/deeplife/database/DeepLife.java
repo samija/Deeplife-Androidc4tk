@@ -24,6 +24,7 @@ public class DeepLife extends Application {
     public static final String Table_SCHEDULES = "SCHEDULES";
     public static final String Table_LOGS = "LOGS";
     public static final String Table_USER = "USER";
+    public static final String Table_Reports = "Reports";
     public static final String Table_QUESTION_LIST = "QUESTION_LIST";
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
 
@@ -35,12 +36,13 @@ public class DeepLife extends Application {
     public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture" };
     public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
+    public static final String[] REPORTS_FIELDS = {"Report_Date","Qst1","Qst2", "Qst3","Qst4","Qst5","Qst6","Qst7","Qst8","Qst9","Qst10","Qst11","Qst12"};
 
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_ID","Question_ID", "Answer","Build_Stage"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] SCHEDULES_COLUMN = { "id","Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
-
+    public static final String[] REPORTS_COLUMN = {"id","Report_Date","Qst1","Qst2", "Qst3","Qst4","Qst5","Qst6","Qst7","Qst8","Qst9","Qst10","Qst11","Qst12"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Loc_ID" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};

@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.view.Window;
 
 
-
+import deeplife.gcme.com.deeplife.Helps.AppHelps;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
@@ -117,7 +117,11 @@ public class Splash extends Activity {
             finish();
         }
         else {
-            Intent intent = new Intent(this, Login.class);
+            /*Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            myDatabase.dispose();
+            finish();*/
+            Intent intent = new Intent(this, AppHelps.class);
             startActivity(intent);
             myDatabase.dispose();
             finish();
