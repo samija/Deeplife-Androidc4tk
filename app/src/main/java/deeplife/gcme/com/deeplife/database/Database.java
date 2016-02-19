@@ -30,6 +30,7 @@ public class Database {
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
         mySQL.createTables(DeepLife.Table_QUESTION_LIST,DeepLife.QUESTION_LIST_FIELDS);
         mySQL.createTables(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS);
+        mySQL.createTables(DeepLife.Table_Reports, DeepLife.REPORTS_FIELDS);
     }
 
     public void dispose(){
@@ -303,9 +304,10 @@ public class Database {
             strs = DeepLife.SCHEDULES_COLUMN;
         } else if(DB_Table == DeepLife.Table_QUESTION_LIST){
             strs = DeepLife.QUESTION_LIST_COLUMN;
-        }
-        else if(DB_Table == DeepLife.Table_QUESTION_ANSWER){
+        } else if(DB_Table == DeepLife.Table_QUESTION_ANSWER){
             strs = DeepLife.QUESTION_ANSWER_COLUMN;
+        } else if(DB_Table == DeepLife.Table_Reports){
+            strs = DeepLife.REPORTS_COLUMN;
         }
         return strs;
     }
