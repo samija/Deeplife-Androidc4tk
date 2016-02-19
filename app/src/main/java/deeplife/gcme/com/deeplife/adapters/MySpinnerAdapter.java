@@ -30,8 +30,7 @@ public class MySpinnerAdapter extends ArrayAdapter<String> {
     public View getView(int pos, View cnvtView, ViewGroup prnt) {
         return getCustomView(pos, cnvtView, prnt);
     }
-    public View getCustomView(int position, View convertView,
-                              ViewGroup parent) {
+    public View getCustomView(int position, View convertView,ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
                 false);
