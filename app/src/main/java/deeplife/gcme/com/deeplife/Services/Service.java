@@ -130,8 +130,8 @@ public class Service extends android.app.Service{
 					params.add(new BasicNameValuePair("Task3", "My_Questions"));
 					Log.i("Sync_Service", "Requesting the Server for All of the Question list");
 				}else{
-					//params.add(new BasicNameValuePair("Task3", "Get_Questions"));
-					//Log.i("Sync_Service", "Requesting the Server for New Question list");
+					params.add(new BasicNameValuePair("Task3", "Get_Questions"));
+					Log.i("Sync_Service", "Requesting the Server for New Question list");
 				}
 			}
 
