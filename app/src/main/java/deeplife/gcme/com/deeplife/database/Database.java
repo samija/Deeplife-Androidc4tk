@@ -29,7 +29,7 @@ public class Database {
         mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
         mySQL.createTables(DeepLife.Table_QUESTION_LIST,DeepLife.QUESTION_LIST_FIELDS);
-        mySQL.createTables(DeepLife.Table_QUESTION_ANSWER,DeepLife.QUESTION_ANSWER_FIELDS);
+        mySQL.createTables(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS);
     }
 
     public void dispose(){
@@ -91,9 +91,15 @@ public class Database {
 
     public String get_Value_At_Top(String DB_Table,String column){
         String str = "";
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-        c.moveToFirst();
-        str = c.getString(c.getColumnIndex(column));
+        try {
+
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            str = c.getString(c.getColumnIndex(column));
+        }catch (Exception e){
+
+        }
+
         return str;
     }
 
