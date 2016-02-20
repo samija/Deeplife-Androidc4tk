@@ -23,7 +23,6 @@ public class HelpSlideAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Bundle b = new Bundle();
-        b.putString("ID", Helps.get(position).getID());
         b.putString("Title", Helps.get(position).getTitle());
         if(position == 0){
             b.putInt("isStart", 1);

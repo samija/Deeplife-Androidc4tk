@@ -36,13 +36,14 @@ public class Report_Page extends Fragment {
     private Database myDatabase;
     public Report_Page(){
         Reports = new ArrayList<ReportItem>();
-        myDatabase = new Database(getActivity());
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.report_page, container, false);
         ListView ReportLists = (ListView) view.findViewById(R.id.report_items);
+        myDatabase = new Database(getActivity());
         Reports.add(new ReportItem("1"));
         Reports.add(new ReportItem("2"));
         Reports.add(new ReportItem("3"));

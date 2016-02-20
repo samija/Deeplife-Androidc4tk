@@ -111,28 +111,28 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		ben.add(new Disciples());
 
 		dlist = (ListView) findViewById(R.id.drawerList);
-		dlist.setAdapter(new Profile_Adapter(getApplicationContext(),ben));
+		dlist.setAdapter(new Profile_Adapter(getApplicationContext(), ben));
 		dlist.setOnItemClickListener(this);
         dlist.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if(position == 0){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (position == 0) {
 					Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 					intent.setType("image/*");
 					startActivityForResult(Intent.createChooser(intent, "Deep Life"), 1);
-				}else{
+				} else {
 					Show_DialogBox(position);
 				}
 
-            }
-        });
+			}
+		});
 		
-//		drawerLayout.setDrawerListener(drawerListener);
-		getActionBar().setHomeButtonEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//drawerLayout.setDrawerListener(drawerListener);
+		//getActionBar().setHomeButtonEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setSubtitle("DeepLife");
-		//getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.transparent));
-		getOverflowMenu();
+	//	getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.transparent));
+		//getOverflowMenu();
 	}
 
 	@Override
@@ -292,13 +292,15 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-        if(drawerListener.onOptionsItemSelected(item)){
-            return true;
-        }
+       /* if(drawerListener.onOptionsItemSelected(item)){
+          //  return true;
+
+        }*/
 
 	//	if(drawerListener.onOptionsItemSelected(item)){
 	//		return true;
 	//	}
+
 		switch(item.getItemId()){
 			case R.id.about:
 			//	Log.e("EEEEEEEEEEEEEEE", "about page ");
@@ -328,7 +330,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 				exist_DialogBox();
 				break;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 	
