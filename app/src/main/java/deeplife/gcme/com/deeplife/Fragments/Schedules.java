@@ -585,7 +585,6 @@ public class Schedules extends Fragment {
 
 
             TextView tv_name=(TextView)convertView.findViewById(R.id.schedulename);
-            TextView tv_phone=(TextView)convertView.findViewById(R.id.schedulephone);
             TextView tv_disc=(TextView)convertView.findViewById(R.id.scheduledisciption);
             TextView tv_time=(TextView)convertView.findViewById(R.id.scheduletime);
 
@@ -602,7 +601,6 @@ public class Schedules extends Fragment {
 
             //set the values
             tv_name.setText(name_from_phone);
-            tv_phone.setText(phone);
             tv_time.setText(time);
             tv_disc.setText(discription);
 

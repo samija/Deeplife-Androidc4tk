@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.Parsers.JSONParser;
 import deeplife.gcme.com.deeplife.Activities.MainMenu;
@@ -40,6 +41,7 @@ public class Login extends Activity {
 
      // Progress Dialog
     private ProgressDialog pDialog;
+    private Database myDatabase;
 
     private Context myContext;
     // JSON parser class
@@ -66,7 +68,7 @@ public class Login extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        myDatabase = new Database(this);
         myContext = this;
         ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
         ed_password = (EditText) findViewById(R.id.login_password);
@@ -190,7 +192,7 @@ public class Login extends Activity {
             pDialog.dismiss();
             if (Req_Res.length() >0) {
                 // Log.d("Login Successful!", json.toString());
-                Toast.makeText(myContext, "Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "Successful logged in", Toast.LENGTH_LONG).show();
                 try {
                     DeepLife.Register_Profile(Req_Res);
 
@@ -209,7 +211,7 @@ public class Login extends Activity {
                 // return json.getString(TAG_MESSAGE);
             }else{
                 // Log.d("Login Failure!", json.getString("Msg"));
-                Toast.makeText(myContext, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(myContext, "Invalid user name and password used!", Toast.LENGTH_LONG).show();
             }
         }
     }

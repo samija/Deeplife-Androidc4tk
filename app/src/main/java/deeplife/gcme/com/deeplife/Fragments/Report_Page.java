@@ -44,17 +44,17 @@ public class Report_Page extends Fragment {
         View view = inflater.inflate(R.layout.report_page, container, false);
         ListView ReportLists = (ListView) view.findViewById(R.id.report_items);
         myDatabase = new Database(getActivity());
-        Reports.add(new ReportItem("1"));
-        Reports.add(new ReportItem("2"));
-        Reports.add(new ReportItem("3"));
-        Reports.add(new ReportItem("4"));
-
+        Reports = new ArrayList<ReportItem>();
+        for(int i=0;i<DeepLife.REPORTS_FIELDS.length;i++){
+            Reports.add(new ReportItem("","Text"+i,i));
+        }
         ReportLists.setAdapter(new ReportItems_Adapter(getActivity(), Reports));
         Button btn_Report = (Button) view.findViewById(R.id.btn_send_report);
         btn_Report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Save_Report();
+                Toast.makeText(getActivity(),"Saved to database",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

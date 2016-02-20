@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -118,6 +119,7 @@ public class Register extends Activity{
                 params.add(new BasicNameValuePair("Picture", null));
                 params.add(new BasicNameValuePair("Country", sp_countries.getSelectedItem().toString()));
                 new Make_Request(params).execute();
+                Log.i("Sync_Service", "Registering user");
             }
         });
     }
@@ -141,6 +143,7 @@ public class Register extends Activity{
             myDialog.setCancelable(true);
             myDialog.show();
             Toast.makeText(myContext, "Request Started", Toast.LENGTH_SHORT).show();
+            Log.i("Sync_Service", "Registering service initialized");
         }
         @Override
         protected String doInBackground(String... params) {
@@ -149,9 +152,12 @@ public class Register extends Activity{
                 JSONObject myObject = jsonParser.makeHttpRequest(LOGIN_URL, "POST", _params);
                 Req_Res = myObject.getJSONArray("User_Profile");
                 msg = Req_Res.toString();
+                Log.i("Sync_Service", "Registering process in progress...");
             } catch (Exception e) {
                 // TODO: handle exception
                 msg = e.toString();
+                Log.i("Sync_Service", "Registering error occured \n");
+                Log.i("Sync_Service", msg);
             }
             return null;
         }
@@ -164,10 +170,11 @@ public class Register extends Activity{
                 try {
                     DeepLife.Register_Profile(Req_Res);
                     Toast.makeText(myContext, msg, Toast.LENGTH_LONG).show();
+                    Log.i("Sync_Service", "Registering user profile");
 
                     Intent service = new Intent(Register.this,Service.class);
                     startService(service);
-
+                    Log.i("Sync_Service", "Registering service starting new service");
                     Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -175,6 +182,8 @@ public class Register extends Activity{
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
+                    Log.i("Sync_Service", "Registering user profile incounter error\n");
+                    Log.i("Sync_Service", e.toString());
                 }
             }
             myDialog.cancel();

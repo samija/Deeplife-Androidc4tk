@@ -50,102 +50,108 @@ public class Service extends android.app.Service{
 		private String Task = "";
 		private List<NameValuePair> init(){
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("Email_Phone", myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[2])));
-			params.add(new BasicNameValuePair("Password", myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[3])));
-
-			if(myDatabase.count(DeepLife.Table_LOGS)>0){
-				msg = "Table Log:";
-				Cursor myCursor = myDatabase.getAll(DeepLife.Table_LOGS);
-				myCursor.moveToFirst();
-				String type = myCursor.getString(myCursor.getColumnIndex(DeepLife.LOGS_COLUMN[1]));
-				String id = myCursor.getString(myCursor.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
-				if(type.equals("Send_Disciple")){
-					Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_DISCIPLES, id);
-					cur.moveToFirst();
-					params.add(new BasicNameValuePair("Task", type));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[0], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[1], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[5], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[6], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6]))));
-					params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[7], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7]))));
-					Log.i("Sync_Service", "Sending new disciple");
-					Log.i("Sync_Service","Full Name: "+cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
-				}else if(type.equals("Send_Schedule")){
-					Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_SCHEDULES, id);
-					cur.moveToFirst();
-					params.add(new BasicNameValuePair("Task", type));
-					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[0], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0]))));
-					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[1], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1]))));
-					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2]))));
-					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3]))));
-					params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4]))));
-					Log.i("Sync_Service", "Sending new Schedules");
-					Log.i("Sync_Service", "for User_ID: "+cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-				}else if(type.equals("Delete_User")){
-					params.add(new BasicNameValuePair("Task", "Delete_User"));
-					params.add(new BasicNameValuePair("Email_Phone", id));
-					Log.i("Sync_Service", "Sending Delete User request for server");
-					Log.i("Sync_Service", "for User_ID: " + id);
-				}else if(type.equals("Update_Full_Name")){
-					params.add(new BasicNameValuePair("Task", "Update_Full_Name"));
-					params.add(new BasicNameValuePair("Full_Name", id));
-					Log.i("Sync_Service", "Sending update user Full_Name");
-					Log.i("Sync_Service", "to: --->" + id);
-				}else if(type.equals("Update_Password")){
-					params.add(new BasicNameValuePair("Task", "Update_Email"));
-					params.add(new BasicNameValuePair("Email", id));
-					Log.i("Sync_Service", "Sending update user Email");
-					Log.i("Sync_Service", "to: --->" + id);
-				}else if(type.equals("Update_Phone")){
-					params.add(new BasicNameValuePair("Task", "Update_Phone"));
-					params.add(new BasicNameValuePair("Phone", id));
-					Log.i("Sync_Service", "Sending update user Phone_Number");
-					Log.i("Sync_Service", "to: --->" + id);
-				}else if(type.equals("Send_Report")){
-					int count = myDatabase.count(DeepLife.Table_Reports);
-					if(count>0){
-						Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_Reports, id);
-						params.add(new BasicNameValuePair("Task", "Send_Report"));
-						for(int i=0;i<DeepLife.REPORTS_FIELDS.length;i++){
-							params.add(new BasicNameValuePair(DeepLife.REPORTS_FIELDS[i],cur.getString(cur.getColumnIndex(DeepLife.REPORTS_FIELDS[i]))));
+			try{
+				params.add(new BasicNameValuePair("Email_Phone", myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[2])));
+				params.add(new BasicNameValuePair("Password", myDatabase.get_Value_At_Top(DeepLife.Table_USER, DeepLife.USER_FIELDS[3])));
+				int log_count = myDatabase.count(DeepLife.Table_LOGS);
+				if(log_count>0){
+					msg = "Table Log:";
+					Cursor myCursor = myDatabase.getAll(DeepLife.Table_LOGS);
+					myCursor.moveToFirst();
+					String type = myCursor.getString(myCursor.getColumnIndex(DeepLife.LOGS_COLUMN[1]));
+					String id = myCursor.getString(myCursor.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+					if(type.equals("Send_Disciple")){
+						Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_DISCIPLES, id);
+						cur.moveToFirst();
+						params.add(new BasicNameValuePair("Task", type));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[0], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[1], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[5], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[6], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6]))));
+						params.add(new BasicNameValuePair(DeepLife.DISCIPLES_COLUMN[7], cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7]))));
+						Log.i("Sync_Service", "Sending new disciple");
+						Log.i("Sync_Service","Full Name: "+cur.getString(cur.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+					}else if(type.equals("Send_Schedule")){
+						Cursor cur = myDatabase.get_value_by_ID(DeepLife.Table_SCHEDULES, id);
+						cur.moveToFirst();
+						params.add(new BasicNameValuePair("Task", type));
+						params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[0], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0]))));
+						params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[1], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1]))));
+						params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[2], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2]))));
+						params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[3], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3]))));
+						params.add(new BasicNameValuePair(DeepLife.SCHEDULES_COLUMN[4], cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4]))));
+						Log.i("Sync_Service", "Sending new Schedules");
+						Log.i("Sync_Service", "for User_ID: "+cur.getString(cur.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
+					}else if(type.equals("Delete_User")){
+						params.add(new BasicNameValuePair("Task", "Delete_User"));
+						params.add(new BasicNameValuePair("Email_Phone", id));
+						Log.i("Sync_Service", "Sending Delete User request for server");
+						Log.i("Sync_Service", "for User_ID: " + id);
+					}else if(type.equals("Update_Full_Name")){
+						params.add(new BasicNameValuePair("Task", "Update_Full_Name"));
+						params.add(new BasicNameValuePair("Full_Name", id));
+						Log.i("Sync_Service", "Sending update user Full_Name");
+						Log.i("Sync_Service", "to: --->" + id);
+					}else if(type.equals("Update_Password")){
+						params.add(new BasicNameValuePair("Task", "Update_Email"));
+						params.add(new BasicNameValuePair("Email", id));
+						Log.i("Sync_Service", "Sending update user Email");
+						Log.i("Sync_Service", "to: --->" + id);
+					}else if(type.equals("Update_Phone")){
+						params.add(new BasicNameValuePair("Task", "Update_Phone"));
+						params.add(new BasicNameValuePair("Phone", id));
+						Log.i("Sync_Service", "Sending update user Phone_Number");
+						Log.i("Sync_Service", "to: --->" + id);
+					}else if(type.equals("Send_Report")){
+						int count = myDatabase.count(DeepLife.Table_Reports);
+						if(count>0){
+							Cursor cur = myDatabase.getAll(DeepLife.Table_Reports);
+							cur.moveToFirst();
+							params.add(new BasicNameValuePair("Task", "Send_Report"));
+							for(int i=0;i<DeepLife.REPORTS_FIELDS.length;i++){
+								params.add(new BasicNameValuePair(DeepLife.REPORTS_FIELDS[i],cur.getString(cur.getColumnIndex(DeepLife.REPORTS_FIELDS[i]))));
+							}
 						}
+						Log.i("Sync_Service", "Sending Reports");
+						Log.i("Sync_Service", "to: --->" + id);
 					}
-					Log.i("Sync_Service", "Sending Reports");
-					Log.i("Sync_Service", "to: --->" + id);
-				}
-			}else{
-				msg = "dd";
-				// update for disciples
-				if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
-					params.add(new BasicNameValuePair("Task1", "My_Disciples"));
-					Log.i("Sync_Service", "Requesting the Server for All of the Disciples list");
 				}else{
-					params.add(new BasicNameValuePair("Task1", "Get_Disciples"));
-					Log.i("Sync_Service", "Requesting the Server for New Disciples list");
+					msg = "dd";
+					// update for disciples
+					if(myDatabase.count(DeepLife.Table_DISCIPLES)==0){
+						params.add(new BasicNameValuePair("Task1", "My_Disciples"));
+						Log.i("Sync_Service", "Requesting the Server for All of the Disciples list");
+					}else{
+						params.add(new BasicNameValuePair("Task1", "Get_Disciples"));
+						Log.i("Sync_Service", "Requesting the Server for New Disciples list");
+					}
+
+					/// update for Schedule
+					if(myDatabase.count(DeepLife.Table_SCHEDULES)==0){
+						params.add(new BasicNameValuePair("Task2", "My_Schedules"));
+						Log.i("Sync_Service", "Requesting the Server for All of the Schedule list");
+					}else{
+						params.add(new BasicNameValuePair("Task2", "Get_Schedules"));
+						Log.i("Sync_Service", "Requesting the Server for New Schedule list");
+					}
+
+					////update for Questions
+					if(myDatabase.count(DeepLife.Table_QUESTION_LIST)==0){
+						params.add(new BasicNameValuePair("Task3", "My_Questions"));
+						Log.i("Sync_Service", "Requesting the Server for All of the Question list");
+					}else{
+						params.add(new BasicNameValuePair("Task3", "Get_Questions"));
+						Log.i("Sync_Service", "Requesting the Server for New Question list");
+					}
 				}
 
-				/// update for Schedule
-				if(myDatabase.count(DeepLife.Table_SCHEDULES)==0){
-					params.add(new BasicNameValuePair("Task2", "My_Schedules"));
-					Log.i("Sync_Service", "Requesting the Server for All of the Schedule list");
-				}else{
-					params.add(new BasicNameValuePair("Task2", "Get_Schedules"));
-					Log.i("Sync_Service", "Requesting the Server for New Schedule list");
-				}
-
-				////update for Questions
-				if(myDatabase.count(DeepLife.Table_QUESTION_LIST)==0){
-					params.add(new BasicNameValuePair("Task3", "My_Questions"));
-					Log.i("Sync_Service", "Requesting the Server for All of the Question list");
-				}else{
-					params.add(new BasicNameValuePair("Task3", "Get_Questions"));
-					Log.i("Sync_Service", "Requesting the Server for New Question list");
-				}
+			}catch (Exception e){
+				Log.i("Sync_Service", "Sync service could not be initialized");
+				Log.i("Sync_Service", "Initialization error\n"+e.getMessage());
 			}
-
 			return params;
 		}
 		@Override

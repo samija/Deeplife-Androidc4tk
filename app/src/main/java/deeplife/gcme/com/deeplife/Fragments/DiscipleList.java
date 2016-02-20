@@ -205,7 +205,7 @@ public class DiscipleList extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		dbadapter.dispose();
+		//dbadapter.dispose();
 	}
 
 	public void delete_Dialog(final int id,final String name) {
