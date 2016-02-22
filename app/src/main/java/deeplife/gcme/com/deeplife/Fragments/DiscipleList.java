@@ -52,8 +52,7 @@ public class DiscipleList extends Fragment {
 
     String mCurrentPhotoPath;
 
-	Database dbadapter;
-	DeepLife dbhelper;
+	Database myDatabase;
 
 
     @Override
@@ -62,28 +61,27 @@ public class DiscipleList extends Fragment {
 		
 		
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_disciples_list, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_disciples_list, container, false);
 
-		dbadapter = new Database(getActivity());
-		dbhelper = new DeepLife();
-
+        myDatabase = new Database(getActivity());
 		lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
 
-        populateList(getActivity());
+        ArrayList<Disciples> discples = myDatabase.getDisciples();
+        lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(), discples));
+        //Toast.makeText(getActivity(),"There are: "+discples.size()+" Disciples",Toast.LENGTH_LONG).show();
 
 		addDisciple = (Button) view.findViewById(R.id.bt_add_disciple);
 		addDisciple.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				addDiscipleDialog();
-				}
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                addDiscipleDialog();
+            }
 
 
-		});
-
+        });
+        //populateList(getActivity());
 		return 	view;
 		
 	}
@@ -155,20 +153,20 @@ public class DiscipleList extends Fragment {
                 String phone = ed_code.getText().toString() + ed_phone.getText().toString();
 
                 ContentValues values = new ContentValues();
-                values.put(dbhelper.DISCIPLES_FIELDS[0], name);
-                values.put(dbhelper.DISCIPLES_FIELDS[1], email);
-                values.put(dbhelper.DISCIPLES_FIELDS[2],phone);
-                values.put(dbhelper.DISCIPLES_FIELDS[3], country);
-                values.put(dbhelper.DISCIPLES_FIELDS[4], "Added");
-                values.put(dbhelper.DISCIPLES_FIELDS[5], gender);
+                values.put(DeepLife.DISCIPLES_FIELDS[0], name);
+                values.put(DeepLife.DISCIPLES_FIELDS[1], email);
+                values.put(DeepLife.DISCIPLES_FIELDS[2],phone);
+                values.put(DeepLife.DISCIPLES_FIELDS[3], country);
+                values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
+                values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
 
-                long i = dbadapter.insert(dbhelper.Table_DISCIPLES,values);
+                long i = myDatabase.insert(DeepLife.Table_DISCIPLES,values);
                 if(i!=-1){
                     //insert the disciple to log table
                     ContentValues cv1 = new ContentValues();
                     cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Disciple");
-                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_COLUMN[0]));
-                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                    cv1.put(DeepLife.LOGS_FIELDS[1], myDatabase.get_Value_At_Bottom(DeepLife.Table_DISCIPLES, DeepLife.DISCIPLES_COLUMN[0]));
+                    if(myDatabase.insert(DeepLife.Table_LOGS, cv1)!=-1){
                         Log.i("Deep Life", "Successfully Added to Log");
                     }
 
@@ -184,8 +182,13 @@ public class DiscipleList extends Fragment {
 
 	public void populateList(Context context){
 
-		ArrayList<Disciples> discples = dbadapter.getDisciples();
-		lv_disciple.setAdapter(new MyDiscipleListAdapter(getActivity(), discples));
+        try{
+            ArrayList<Disciples> discples = myDatabase.getDisciples();
+            lv_disciple.setAdapter(new MyDiscipleListAdapter(context, discples));
+        }catch (Exception e){
+            Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
 	}
 	
 	@Override
@@ -217,7 +220,7 @@ public class DiscipleList extends Fragment {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
 
-                        long deleted = dbadapter.remove(DeepLife.Table_DISCIPLES,id);
+                        long deleted = myDatabase.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Toast.makeText(getActivity(),"Successfully Deleted",Toast.LENGTH_SHORT).show();
                             reload();
@@ -226,7 +229,7 @@ public class DiscipleList extends Fragment {
 //				        case DialogInterface.BUTTON_NEUTRAL:
                     //Yes button clicked
 
-                    //			            break;
+                    //break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
@@ -246,7 +249,7 @@ public class DiscipleList extends Fragment {
 
 
     public void reload(){
-        dbadapter.dispose();
+        myDatabase.dispose();
         Intent intent = new Intent(this.getActivity(),MainMenu.class);
         startActivity(intent);
     }
@@ -310,12 +313,13 @@ public class DiscipleList extends Fragment {
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inSampleSize = 4;
                         iv_profilepic.setImageBitmap(BitmapFactory.decodeFile(picture, options));
+                        iv_profilepic.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     }
 
                     convertView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(DiscipleList.this.getActivity().getApplicationContext(), ProfileActivity.class);
+                            Intent intent = new Intent(context.getApplicationContext(), ProfileActivity.class);
                             Bundle b = new Bundle();
                             b.putString("id", idstring);
                             intent.putExtras(b);
@@ -339,12 +343,6 @@ public class DiscipleList extends Fragment {
                             startActivity(intent);
                         }
                     });
-
-
-
-
-
-
 				return convertView;
 				}
 	}

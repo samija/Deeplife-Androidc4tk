@@ -109,6 +109,15 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".Activities.AboutDeepLife"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"
+            android:label="DeepLife" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
 
         <service

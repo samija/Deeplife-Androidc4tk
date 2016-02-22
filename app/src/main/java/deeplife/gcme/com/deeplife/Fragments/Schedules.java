@@ -60,8 +60,7 @@ public class Schedules extends Fragment {
 
 	ArrayList<Schedule> schedules;
 
-	Database dbadapter;
-	DeepLife dbhelper;
+	Database myDatabase;
 
     static String scheduled_disciple_id_phone;
     private Calendar cal;
@@ -78,16 +77,13 @@ public class Schedules extends Fragment {
                 false);
 
         cal = Calendar.getInstance();
-
-
-
-		dbadapter = new Database(getActivity());
-		dbhelper = new DeepLife();
+        myDatabase = new Database(getActivity());
 
         lv_schedule = (ListView) view.findViewById(R.id.ls_schedule);
 
-        
-        populateList(getActivity());
+        ArrayList<Schedule> schedules = myDatabase.get_All_Schedule();
+        lv_schedule.setAdapter(new MyDiscipleListAdapter(getActivity(), schedules));
+       // populateList(getActivity());
 
 
         addSchedule = (Button) view.findViewById(R.id.bt_add_schedule);
@@ -96,11 +92,11 @@ public class Schedules extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-               // addScheduleDialog();
+                //addScheduleDialog();
                 try {
-                    showAlert();
+                    Toast.makeText(getActivity(),"This feature is Disabled",Toast.LENGTH_LONG).show();
                 }catch (Exception e){
-
+                    Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
                 }
 
 
@@ -223,7 +219,7 @@ public class Schedules extends Fragment {
         add_disciple = (Button) alertDialogView.findViewById(R.id.btn_add_disciple);
 
 
-        final ArrayList<Disciples> list_names = dbadapter.getDisciples();
+        final ArrayList<Disciples> list_names = myDatabase.getDisciples();
 
         final Spinner names = (Spinner) alertDialogView.findViewById(R.id.disciples);
         names.setAdapter(new NameSpinnerAdapter(getActivity(), R.layout.countries_spinner, list_names));
@@ -245,21 +241,21 @@ public class Schedules extends Fragment {
             public void onClick(View v) {
 
                 ContentValues values = new ContentValues();
-                values.put(dbhelper.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
-                values.put(dbhelper.SCHEDULES_FIELDS[1], cal.getTime().toString());
-                values.put(dbhelper.SCHEDULES_FIELDS[2],0);
-                values.put(dbhelper.SCHEDULES_FIELDS[3], txt_desc.getText().toString());
+                values.put(DeepLife.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
+                values.put(DeepLife.SCHEDULES_FIELDS[1], cal.getTime().toString());
+                values.put(DeepLife.SCHEDULES_FIELDS[2],0);
+                values.put(DeepLife.SCHEDULES_FIELDS[3], txt_desc.getText().toString());
 
                 DeepLife.Set_Alarm(cal);
                 Toast.makeText(getActivity(),"Alarm Set",Toast.LENGTH_LONG).show();
 
-                long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
+                long i = myDatabase.insert(DeepLife.Table_SCHEDULES,values);
                 if(i!=-1){
                     //insert the disciple to log table
                     ContentValues cv1 = new ContentValues();
                     cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Schedule");
-                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
-                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                    cv1.put(DeepLife.LOGS_FIELDS[1], myDatabase.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
+                    if(myDatabase.insert(DeepLife.Table_LOGS, cv1)!=-1){
                     }
                     Toast.makeText(getActivity(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
                     reload();
@@ -273,7 +269,7 @@ public class Schedules extends Fragment {
 
 
     public void populateList(Context context){
-        ArrayList<Schedule> schedules = dbadapter.get_All_Schedule();
+        ArrayList<Schedule> schedules = myDatabase.get_All_Schedule();
         lv_schedule.setAdapter(new MyDiscipleListAdapter(context,schedules));
     }
 
@@ -296,20 +292,10 @@ public class Schedules extends Fragment {
     public void addScheduleDialog(){
         Toast.makeText(getActivity(), "Add Schedule", Toast.LENGTH_LONG).show();
 
-        final Dialog add = new Dialog(getActivity().getBaseContext());
+        final Dialog add = new Dialog(getActivity());
         add.setContentView(R.layout.calender);
         add.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         add.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-
-
-
-
-
-
-
-
-
 
 
         WindowManager window = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
@@ -325,7 +311,7 @@ public class Schedules extends Fragment {
 
        // ArrayList<String> list_names = dbadapter.get_all_in_column(dbhelper.Table_DISCIPLES,dbhelper.DISCIPLES_FIELDS[0]);
 
-        final ArrayList<Disciples> list_names = dbadapter.getDisciples();
+        final ArrayList<Disciples> list_names = myDatabase.getDisciples();
 
         final Spinner names = (Spinner) add.findViewById(R.id.schedule_add_name);
         final EditText ed_disc = (EditText) add.findViewById(R.id.schedule_add_disc);
@@ -370,20 +356,20 @@ public class Schedules extends Fragment {
                 Date date = calendar.getTime();
 
                 ContentValues values = new ContentValues();
-                values.put(dbhelper.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
-                values.put(dbhelper.SCHEDULES_FIELDS[1], calendar.getTime().toString());
-                values.put(dbhelper.SCHEDULES_FIELDS[2],0);
-                values.put(dbhelper.SCHEDULES_FIELDS[3], disc);
+                values.put(DeepLife.SCHEDULES_FIELDS[0], scheduled_disciple_id_phone);
+                values.put(DeepLife.SCHEDULES_FIELDS[1], calendar.getTime().toString());
+                values.put(DeepLife.SCHEDULES_FIELDS[2],0);
+                values.put(DeepLife.SCHEDULES_FIELDS[3], disc);
 
                 DeepLife.Set_Alarm(calendar);
                 Toast.makeText(getActivity(),"Alarm Set",Toast.LENGTH_LONG).show();
-                long i = dbadapter.insert(dbhelper.Table_SCHEDULES,values);
+                long i = myDatabase.insert(DeepLife.Table_SCHEDULES,values);
                 if(i!=-1){
                     //insert the disciple to log table
                     ContentValues cv1 = new ContentValues();
                     cv1.put(DeepLife.LOGS_FIELDS[0], "Send_Schedule");
-                    cv1.put(DeepLife.LOGS_FIELDS[1], dbadapter.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
-                    if(dbadapter.insert(DeepLife.Table_LOGS, cv1)!=-1){
+                    cv1.put(DeepLife.LOGS_FIELDS[1], myDatabase.get_Value_At_Bottom(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_COLUMN[0]));
+                    if(myDatabase.insert(DeepLife.Table_LOGS, cv1)!=-1){
                     }
 
                     Toast.makeText(getActivity(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
@@ -399,7 +385,7 @@ public class Schedules extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        dbadapter.dispose();
+        myDatabase.dispose();
     }
 
     @Override
@@ -454,7 +440,7 @@ public class Schedules extends Fragment {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
 
-                        long deleted = dbadapter.remove(DeepLife.Table_SCHEDULES,id);
+                        long deleted = myDatabase.remove(DeepLife.Table_SCHEDULES,id);
                         if(deleted!=-1){
                             Toast.makeText(getActivity(),"Successfully Deleted",Toast.LENGTH_SHORT).show();
                             reload();
@@ -481,7 +467,7 @@ public class Schedules extends Fragment {
     }
 
     public void reload(){
-        dbadapter.dispose();
+        myDatabase.dispose();
         Intent intent = new Intent(this.getActivity(),MainMenu.class);
         startActivity(intent);
     }
@@ -597,7 +583,7 @@ public class Schedules extends Fragment {
             final int id = Integer.parseInt(schedule.get(position).getID());
 
             //get name from disciples table
-            String name_from_phone = dbadapter.get_Name_by_phone(phone);
+            String name_from_phone = myDatabase.get_Name_by_phone(phone);
 
             //set the values
             tv_name.setText(name_from_phone);

@@ -1,8 +1,6 @@
 package deeplife.gcme.com.deeplife.Helps;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,18 +35,12 @@ public class HelpContent extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.help_page,container,false);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.help_page, container, false);
         TextView Help_Title = (TextView) viewGroup.findViewById(R.id.help_title);
-        ImageButton Right_btn = (ImageButton) viewGroup.findViewById(R.id.help_right);
-        ImageButton Left_btn = (ImageButton) viewGroup.findViewById(R.id.help_left);
         Button Finish = (Button) viewGroup.findViewById(R.id.help_finish);
         ImageView Help_Image = (ImageView) viewGroup.findViewById(R.id.help_image);
         Finish.setVisibility(View.INVISIBLE);
-        if(isStart == 1){
-            Left_btn.setVisibility(View.GONE);
-        }
         if(isEnd == 1){
-            Right_btn.setVisibility(View.GONE);
             Finish.setVisibility(View.VISIBLE);
         }
         Help_Image.setBackgroundResource(Image);

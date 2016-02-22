@@ -42,12 +42,12 @@ public class ReportItems_Adapter extends BaseAdapter{
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View myView = inflater.inflate(R.layout.report_page_item,null);
+        view = inflater.inflate(R.layout.report_page_item,null);
         Button btn_Up,btn_Down;
         final TextView value,title;
-        value = (TextView) myView.findViewById(R.id.txt_value);
+        value = (TextView) view.findViewById(R.id.txt_value);
         value.setText(""+Reports.get(i).getValue());
-        btn_Up = (Button) myView.findViewById(R.id.btn_inc);
+        btn_Up = (Button) view.findViewById(R.id.btn_inc);
         btn_Up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +57,7 @@ public class ReportItems_Adapter extends BaseAdapter{
                 Report_Page.Update_Report_Value(i,x);
             }
         });
-        btn_Down = (Button) myView.findViewById(R.id.btn_dec);
+        btn_Down = (Button) view.findViewById(R.id.btn_dec);
         btn_Down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +67,6 @@ public class ReportItems_Adapter extends BaseAdapter{
                 Report_Page.Update_Report_Value(i, x);
             }
         });
-        return myView;
+        return view;
     }
 }

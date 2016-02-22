@@ -46,7 +46,8 @@ public class Report_Page extends Fragment {
         myDatabase = new Database(getActivity());
         Reports = new ArrayList<ReportItem>();
         for(int i=0;i<DeepLife.REPORTS_FIELDS.length;i++){
-            Reports.add(new ReportItem("","Text"+i,i));
+            Reports.add(new ReportItem("","Exposing through mass means" +
+                    ""+i,i));
         }
         ReportLists.setAdapter(new ReportItems_Adapter(getActivity(), Reports));
         Button btn_Report = (Button) view.findViewById(R.id.btn_send_report);

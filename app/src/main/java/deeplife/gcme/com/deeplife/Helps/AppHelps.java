@@ -25,10 +25,9 @@ public class AppHelps extends FragmentActivity {
         viewPager = (HelpViewPager) findViewById(R.id.help_viewpage);
         viewPager.setSwipeable(true);
         List<HelpDataType> Helps = new ArrayList<HelpDataType>();
-        Helps.add(new HelpDataType(R.drawable.crop_image,"First"));
-        Helps.add(new HelpDataType(R.drawable.crop_image,"Second"));
-        Helps.add(new HelpDataType(R.drawable.crop_image,"Third"));
-        Helps.add(new HelpDataType(R.drawable.crop_image,"Fourth"));
+        Helps.add(new HelpDataType(R.drawable.help_1,""));
+        Helps.add(new HelpDataType(R.drawable.help_2,""));
+        Helps.add(new HelpDataType(R.drawable.help_3,""));
 
         viewPager.setAdapter(new HelpSlideAdapter(getSupportFragmentManager(),Helps));
     }

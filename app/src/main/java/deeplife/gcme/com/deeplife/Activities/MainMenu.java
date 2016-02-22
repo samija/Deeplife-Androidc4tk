@@ -80,7 +80,7 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
-		getActionBar().setTitle("Welcome");
+		getActionBar().setTitle("DeepLife");
         myContext = this;
 		myDatabase = new Database(myContext);
 		myFileManager = new FileManager(myContext);
@@ -304,9 +304,10 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		switch(item.getItemId()){
 			case R.id.about:
 			//	Log.e("EEEEEEEEEEEEEEE", "about page ");
-				AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+				/*AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
 		        // set the message to display
 		        alertbox.setMessage("This is the Deep Life Community app");
+
 		        
 		        // add a neutral button to the alert box and assign a click listener
 		        alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -316,10 +317,11 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 		                // the button was clicked
 		            
 		            }
-		        });
-
+		        });*/
+				Intent intent_abt = new Intent(getApplicationContext(),AboutDeepLife.class);
+				startActivity(intent_abt);
 	        // show it
-	        	alertbox.show();
+	        //	alertbox.show();
 	        	break;
 			case R.id.options_logout:
 				Intent intent = new Intent(getApplicationContext(),Login.class);

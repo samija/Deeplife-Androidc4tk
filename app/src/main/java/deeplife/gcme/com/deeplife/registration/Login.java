@@ -79,7 +79,13 @@ public class Login extends Activity {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AttemptLogin().execute();
+                try{
+                    new AttemptLogin().execute();
+                }catch (Exception e){
+                    Log.i("Sync_Service", "Logging has incountered error:");
+                    Log.i("Sync_Service", "Error occurred:\n"+e.getMessage());
+                }
+
             }
         });
 
@@ -150,7 +156,7 @@ public class Login extends Activity {
             pDialog = new ProgressDialog(Login.this);
             pDialog.setMessage("Attempting login...");
             pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
+            pDialog.setCancelable(false);
             pDialog.show();
             msg = "";
         }

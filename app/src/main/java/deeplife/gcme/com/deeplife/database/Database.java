@@ -216,21 +216,23 @@ public class Database {
         String DB_Table = DeepLife.Table_DISCIPLES;
         ArrayList<Disciples> found = new ArrayList<Disciples>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-        c.moveToFirst();
-
-        for(int i=0;i<c.getCount();i++){
-            c.moveToPosition(i);
-            Disciples dis = new Disciples();
-            dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
-            dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
-            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
-            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
-            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
-            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
-            dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
-            dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
-            found.add(dis);
+        if(c.getCount()>0){
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                Disciples dis = new Disciples();
+                dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
+                dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+                dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+                dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+                dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+                dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+                dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
+                dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
+                found.add(dis);
+            }
         }
+
         return found;
     }
 
@@ -238,17 +240,19 @@ public class Database {
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-        c.moveToFirst();
-        for(int i=0;i<c.getCount();i++){
-            c.moveToPosition(i);
-            Schedule dis = new Schedule();
-            dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-            dis.setDis_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
-            dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
-            dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
-            dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
-            found.add(dis);
-        }
+         if(c.getCount()>0){
+             c.moveToFirst();
+             for(int i=0;i<c.getCount();i++){
+                 c.moveToPosition(i);
+                 Schedule dis = new Schedule();
+                 dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
+                 dis.setDis_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+                 dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
+                 dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
+                 dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+                 found.add(dis);
+             }
+         }
         return found;
     }
 
