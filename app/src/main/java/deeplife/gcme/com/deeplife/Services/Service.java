@@ -169,6 +169,7 @@ public class Service extends android.app.Service{
 			Log.i("Sync_Service", "Sync Request: \n"+init());
 			try {
 				JSONObject myObject = myParser.makeHttpRequest(	"http://api.cccsea.org/API.php", "POST", init());
+
 				msg = msg + myObject.toString() +"\n............."+init().toString();
 				Task = myObject.getString("Task");
 				if(myObject != null){
