@@ -2,18 +2,15 @@ package deeplife.gcme.com.deeplife.Activities;
 
 
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Bundle;
 import android.view.Window;
 
-
-import deeplife.gcme.com.deeplife.Helps.AppHelps;
-import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Database.DeepLife;
-import deeplife.gcme.com.deeplife.Registration.Login;
+import deeplife.gcme.com.deeplife.Helps.AppHelps;
+import deeplife.gcme.com.deeplife.R;
 
 
 public class Splash extends Activity {
@@ -30,14 +27,6 @@ public class Splash extends Activity {
         //        .penaltyDeath().build());
 
 
-		new Handler().postAtTime(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				getNextActivity();
-			}
-		}, 5000);
 
         Thread splash = new Thread(){
         	@Override

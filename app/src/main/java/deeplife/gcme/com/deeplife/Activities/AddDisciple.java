@@ -27,7 +27,6 @@ import java.lang.reflect.Field;
 
 import deeplife.gcme.com.deeplife.Fragments.AddDiscipleFragment;
 import deeplife.gcme.com.deeplife.R;
-import deeplife.gcme.com.deeplife.Registration.Login;
 
 public class AddDisciple extends FragmentActivity implements OnItemClickListener {
 	DrawerLayout drawerLayout;
@@ -141,7 +140,7 @@ public class AddDisciple extends FragmentActivity implements OnItemClickListener
 	        	alertbox.show();
 	        	break;
 			case R.id.options_logout:
-				Intent intent = new Intent(getApplicationContext(),Login.class);
+				Intent intent = new Intent(getApplicationContext(), deeplife.gcme.com.deeplife.Registration.Login.class);
                 startActivity(intent);
                 finish();
 				break;

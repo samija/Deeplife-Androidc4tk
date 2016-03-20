@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import deeplife.gcme.com.deeplife.R;
 /**
  * Created by BENGEOS on 2/21/16.
  */
+
 public class AboutDeepLife extends Activity {
     private Button Finish;
     private TextView Email_Link,FaceBook_Link;
