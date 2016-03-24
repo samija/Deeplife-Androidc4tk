@@ -102,7 +102,6 @@ public class MainMenu extends FragmentActivity implements OnItemClickListener {
 						// TODO Auto-generated method stub
 					//	super.onDrawerClosed(drawerView);
 				//Toast.makeText(MainMenu.this, "Closed", Toast.LENGTH_SHORT).show();
-					
 			}
 			
 		};
